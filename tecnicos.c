@@ -123,6 +123,6 @@ void excluir_Tecnico(){
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
-    fgets(cpf, 19, stdin);
+    fgets(cpf, 15, stdin);
 
 }
