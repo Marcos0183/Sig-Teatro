@@ -13,7 +13,7 @@ void ingresso() {
         system("clear||cls");
         printf("#####################################################################################\n");
         func_Ani(tempo_Ingresso);
-        printf("   +++                                INGRESSO                                 +++\n");
+        printf("+++                                    INGRESSO                                   +++\n");
         func_Ani(tempo_Ingresso);
         printf("#####################################################################################\n");
         func_Ani(tempo_Ingresso);
@@ -33,7 +33,7 @@ void ingresso() {
         func_Ani(tempo_Ingresso);
         printf("###                                                                               ###\n");
         func_Ani(tempo_Ingresso);
-        printf("##                              0 - VOLTAR AO MENU ANTERIOR...  ");
+        printf("###                             0 - VOLTAR AO MENU ANTERIOR...                    ###\n");
         
         scanf(" %d",&executar_I);
         getchar();
