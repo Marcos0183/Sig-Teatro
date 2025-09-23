@@ -9,12 +9,45 @@
 #include "shows.h"
 #include "utils.h"
 
-//INFO
-void proj_Descrit();
-void equipe();
+int tempo_Main = 100;
 
-//DATA E HORA
-//void mostrar_data_hora();
+
+void menu_Principal(); {
+    limparTela();
+    printf("\n");
+    func_Ani(tempo_Main);
+    printf("╔══════════════════════════════════════════════════╗\n");
+    func_Ani(tempo_Main);
+    printf("║             SISTEMA DE TEATRO                    ║\n");
+    func_Ani(tempo_Main);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_Main);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 1. Módulo Ingressos                            ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 2. Módulo Espetáculos (Shows/Peças)            ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 3. Módulo Sessões                              ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 4. Módulo Técnicos                             ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 5. Módulo Relatórios                           ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 6. sobre o SIG-THEATER                         ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 7. Equipe SIG-THEATER                          ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 0. Encerrar o Programa                         ║\n");
+    func_Ani(tempo_Main);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_Main);
+    printf("╚══════════════════════════════════════════════════╝\n");
+    func_Ani(tempo_Main);
+    printf("--> Digite a opção desejada: ");
+
+}
+
 
 void equipe(){
     limparTela();
@@ -134,44 +167,10 @@ void proj_Descrit(){
 int tempo_Main = 100;
 int main() {
     
-    bool parada = true;
+    
     do { 
-        system("clear||cls");
         int executar;
-        
-        //proj_Descrit();
-        //equipe();
-    printf("\n");
-    func_Ani(tempo_Main);
-    printf("╔══════════════════════════════════════════════════╗\n");
-    func_Ani(tempo_Main);
-    printf("║             SISTEMA DE TEATRO                    ║\n");
-    func_Ani(tempo_Main);
-    printf("╠══════════════════════════════════════════════════╣\n");
-    func_Ani(tempo_Main);
-    printf("║                                                  ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 1. Módulo Ingressos                            ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 2. Módulo Espetáculos (Shows/Peças)            ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 3. Módulo Sessões                              ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 4. Módulo Técnicos                             ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 5. Módulo Relatórios                           ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 6. sobre o SIG-THEATER                         ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 7. Equipe SIG-THEATER                          ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 0. Encerrar o Programa                         ║\n");
-    func_Ani(tempo_Main);
-    printf("║                                                  ║\n");
-    func_Ani(tempo_Main);
-    printf("╚══════════════════════════════════════════════════╝\n");
-    func_Ani(tempo_Main);
-    printf("--> Digite a opção desejada: ");
+        menu_Principal();
         
         scanf("%d",&executar);
         getchar();
@@ -201,7 +200,6 @@ int main() {
                 break;
 
             case 0:
-                parada = false;
                 break;
             
             default:
@@ -210,7 +208,7 @@ int main() {
                 pausar();
                 break;
         }
-    } while (parada);
+    } while (executar != 0);
     ani_Encerrar();
 
     return 0;            
