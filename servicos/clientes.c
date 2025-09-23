@@ -33,3 +33,32 @@ void menu_cliente(){
         func_Ani(tempo_cliente);
         printf("--> Digite a opção desejada: ");
 }   
+
+
+
+void cadastro_cliente() {
+    char cpf[15];
+    char nome[30];
+    char email[40];
+    char telefone[16];
+    
+    char titulo[19] = "CADASTRAR CLIENTE";
+    func_Ani_Left(titulo);
+    printf("\n \n");
+    printf("-----------------------------------\n");
+    printf("|  INSIRA O CPF DO CLIENTE: ");  
+    fgets(cpf, 15, stdin);
+
+    printf("-----------------------------------\n");
+    printf("|  INSIRA O NOME DO CLIENTE: ");
+    fgets(nome, 30, stdin);
+
+    printf("-----------------------------------\n");
+    printf("|  INSIRA O EMAIL DO CLIENTE: ");
+    fgets(email, 40, stdin);
+    printf("-----------------------------------\n");//
+    
+    printf("|  INSIRA O TELEFONE: ");
+    fgets(telefone, 16, stdin);
+    printf("-----------------------------------\n");
+}
