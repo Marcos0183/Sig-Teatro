@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "clientes.h"
+#include "anima.h"
+#include "utils.h"
 
 int tempo_cliente = 100;
 
@@ -36,7 +39,7 @@ void menu_cliente(){
 
 
 
-void cadastro_cliente() {
+void cadastrar_cliente() {
     char cpf[15];
     char nome[30];
     char email[40];
@@ -120,7 +123,7 @@ void listar_cliente(){
 
 
 
-int cliente(){
+void cliente(){
     int executar_C;
 
     do {
@@ -130,7 +133,7 @@ int cliente(){
 
         switch (executar_C) {
             case 1:
-                cadastro_cliente();
+                cadastrar_cliente();
                 break;
             case 2:
                 pesquisar_cliente();
