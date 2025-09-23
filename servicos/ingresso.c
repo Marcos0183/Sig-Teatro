@@ -51,17 +51,19 @@ void vender_Ingresso(){
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME: ");
-    fgets(nome,30,stdin);
+    ler_string(nome, 30);
     printf("V----------------------------------\n");
     printf("|  INSIRA O CÓDIGO DO SHOW: ");
     scanf(" %d",&codigo_Show);
-    getchar();
+    limparBuffer();
     printf("V----------------------------------\n");
     printf("|  ESCOLHA SUA CADEIRA: ");
     fgets(cadeira,3,stdin);
     printf("V----------------------------------\n");
-    system("pause");
+    pausar();
 }
+
+
 
 void excluir_Ingresso(){
     int codigo;
@@ -73,8 +75,10 @@ void excluir_Ingresso(){
     printf("|  INSIRA O CODIGO DO INGRESSO: ");
     scanf("%d",&codigo);
     printf("-----------------------------------\n");
-    system("pause");
+    pausar();
 }
+
+
 
 void atualizar_Ingresso(){
     int codigo;
@@ -86,8 +90,10 @@ void atualizar_Ingresso(){
     printf("|  INSIRA O CODIGO DO INGRESSO: ");
     scanf("%d",&codigo);
     printf("-----------------------------------\n");
-    system("pause");
+    pausar();
 }
+
+
 
 void pesquisar_Ingresso(){
     int codigo;
@@ -100,8 +106,10 @@ void pesquisar_Ingresso(){
     scanf(" %d",&codigo);
     getchar();
     printf("-----------------------------------\n");
-    system("pause");
+    pausar();
 }
+
+
 
 void ingresso(){
     int executar_I;
