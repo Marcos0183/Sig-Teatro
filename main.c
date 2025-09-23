@@ -25,19 +25,21 @@ void menu_Principal() {
     func_Ani(tempo_Main);
     printf("║                                                  ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 1. Módulo Ingressos                            ║\n");
+    printf("║ ► 1. Módulo clientes                             ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 2. Módulo Espetáculos (Shows/Peças)            ║\n");
+    printf("║ ► 2. Módulo Ingressos                            ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 3. Módulo Sessões                              ║\n");
+    printf("║ ► 3. Módulo Espetáculos (Shows/Peças)            ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 4. Módulo Técnicos                             ║\n");
+    printf("║ ► 4. Módulo Sessões                              ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 5. Módulo Relatórios                           ║\n");
+    printf("║ ► 5. Módulo Técnicos                             ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 6. sobre o SIG-THEATER                         ║\n");
+    printf("║ ► 6. Módulo Relatórios                           ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 7. Equipe SIG-THEATER                          ║\n");
+    printf("║ ► 7. sobre o SIG-THEATER                         ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 8. Equipe SIG-THEATER                          ║\n");
     func_Ani(tempo_Main);
     printf("║ ► 0. Encerrar o Programa                         ║\n");
     func_Ani(tempo_Main);
@@ -178,31 +180,42 @@ int main() {
 
         switch (executar) {
             case 1:
+                cliente();
+                break;
+
+            case 2:
                 ingresso();
                 break;
-            case 2:
+
+            case 3:
                 shows();
                 break;
-            case 3:
+
+            case 4:
                 sessoes();
                 break;
-            case 4:
+
+            case 5:
                 tecnicos();
                 break;
-            case 5:
-                printf("Módulo Relatórios em desenvolvimento...\n");
+
+            case 6:
+                limparTela();
+                printf("Módulo Relatórios em construção...\n");
                 pausar();
                 break;
-            case 6:
+
+            case 7:
                 proj_Descrit();
                 break;
-            case 7:
+
+            case 8:
                 equipe();
                 break;
 
             case 0:
                 break;
-            
+
             default:
                 printf("\n \n");
                 printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
