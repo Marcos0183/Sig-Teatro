@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "tecnicos.h"
 #include "anima.h"
+#include "utils.h"
 
 int tempo_Tecnicos = 100;
 void tecnicos(){
@@ -74,6 +75,7 @@ void cadastro_Tecnico(){
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO TECNICO: ");
     fgets(nome, 30, stdin);
+    lerstring(nome, 30);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
