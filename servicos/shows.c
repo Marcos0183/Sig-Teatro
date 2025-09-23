@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "shows.h"
 #include "anima.h"
+#include "utils.h"
 
 int tempo_Shows = 100;
 void shows(){  
