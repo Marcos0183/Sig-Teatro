@@ -117,3 +117,42 @@ void listar_cliente(){
     printf("Listando todos os clientes...\n");
     pausar();
 }
+
+
+
+int cliente(){
+    int executar_C;
+
+    do {
+        menu_cliente();
+        scanf("%d", &executar_C);
+        limparBuffer();
+
+        switch (executar_C) {
+            case 1:
+                cadastro_cliente();
+                break;
+            case 2:
+                pesquisar_cliente();
+                break;
+            case 3:
+                atualizar_cliente();
+                break;
+            case 4:
+                excluir_cliente();
+                break;
+            case 5:
+                listar_cliente();
+                break;
+
+            case 0:
+                break;
+            
+            default:
+                printf("\n \n");
+                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                pausar();
+                break;
+        }
+    } while (executar_C != 0);        
+}
