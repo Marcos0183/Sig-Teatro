@@ -7,12 +7,13 @@
 #include "sessoes.h"
 #include "tecnicos.h"
 #include "shows.h"
+#include "clientes.h"
 #include "utils.h"
 
 int tempo_Main = 100;
 
 
-void menu_Principal(); {
+void menu_Principal() {
     limparTela();
     printf("\n");
     func_Ani(tempo_Main);
@@ -52,7 +53,8 @@ void menu_Principal(); {
 void equipe(){
     limparTela();
     printf("\n \n");
-    int tempo_Eq = 50; 
+    int tempo_Eq = 50;
+    // Desenha a letra U 
     printf(" _    _ \n");
     func_Ani(tempo_Eq);
     printf("| |  | |\n");
@@ -164,15 +166,14 @@ void proj_Descrit(){
     printf("\n \n");
 }
 
-int tempo_Main = 100;
+
 int main() {
-    
+    int executar;
     
     do { 
-        int executar;
         menu_Principal();
         
-        scanf("%d",&executar);
+        scanf("%d", &executar);
         getchar();
 
         switch (executar) {
@@ -210,7 +211,6 @@ int main() {
         }
     } while (executar != 0);
     ani_Encerrar();
-
     return 0;            
 } 
 
