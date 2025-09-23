@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "sessoes.h"
 #include "anima.h"
+#include "utils.h"
 
 int tempo_Sessoes = 100;
 void sessoes(){
