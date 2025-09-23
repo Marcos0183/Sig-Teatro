@@ -17,6 +17,21 @@ void pausar() {
 
 
 
+char* lerString(char* destino, int tamanho) {
+    if (fgets(destino, tamanho, stdin) != NULL) {
+        int len = strcspn(destino, "\n"); 
+
+        if (destino[len] == '\n') {
+            destino[len] = '\0';
+        } else {
+            limparBuffer();      
+        }
+        return destino;
+    }
+    return NULL; 
+}
+
+
 void limparTela() {
     system("clear || cls");
 }
