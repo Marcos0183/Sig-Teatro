@@ -1,67 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "anima.h"
 #include "ingresso.h"
+#include "utils.h"
 
 int tempo_Ingresso = 100;
-void ingresso() {  
 
-    bool parada_I = true;
-    do {  
-        int executar_I;
-        system("clear||cls");
-        printf("#####################################################################################\n");
-        func_Ani(tempo_Ingresso);
-        printf("+++                                    INGRESSO                                   +++\n");
-        func_Ani(tempo_Ingresso);
-        printf("#####################################################################################\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                             1 - VENDER INGRESSO                               ###\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                             2 - PESQUISAR INGRESSO                            ###\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                             3 - ATUALIZAR INGRESSO                            ###\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                             4 - EXCLUIR INGRESSO                              ###\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Ingresso);
-        printf("###                             0 - VOLTAR AO MENU ANTERIOR...                    ###\n");
-        
-        scanf(" %d",&executar_I);
-        getchar();
-        
-        switch (executar_I) {
-            case 1:
-                vender_Ingresso();
-                break;
-            case 2:
-                pesquisar_Ingresso();
-                break;
-            case 3:
-                atualizar_Ingresso();
-                break;
-            case 4:
-                excluir_Ingresso();
-                break;
-            case 0:
-                parada_I = false;
-                break;
-            default:
-                printf("\n \n");
-                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
-            
-        }
-    } while (parada_I);
+
+void menu_Ingresso(){
+    limparTela();
+    printf("\n");
+    func_Ani(tempo_Ingresso);
+    printf("╔══════════════════════════════════════════════════╗\n");
+    func_Ani(tempo_Ingresso);
+    printf("║                MÓDULO INGRESSOS                   ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_Ingresso);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("║ ► 1. Vender Ingresso                             ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("║ ► 2. Pesquisar Ingresso                          ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("║ ► 3. Atualizar Ingresso                          ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("║ ► 4. Excluir Ingresso                            ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("╚══════════════════════════════════════════════════╝\n");
+    func_Ani(tempo_Ingresso);
+    printf("--> Digite a opção desejada: ");
 }
+
+
 
 void vender_Ingresso(){
     char nome[30];
@@ -125,3 +102,36 @@ void pesquisar_Ingresso(){
     printf("-----------------------------------\n");
     system("pause");
 }
+
+void ingresso(){
+    int executar_I;
+
+    do {
+        menu_Ingresso();
+        scanf("%d", &executar_I);
+        limparBuffer();
+        
+        switch (executar_I) {
+            case 1:
+                vender_Ingresso();
+                break;
+            case 2:
+                pesquisar_Ingresso();
+                break;
+            case 3:
+                atualizar_Ingresso();
+                break;
+            case 4:
+                excluir_Ingresso();
+                break;
+            case 0:
+                break;
+            default:
+                printf("\n \n");
+                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                system("pause");
+            
+        }
+    } while (executar_I != 0);
+}
+
