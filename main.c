@@ -7,6 +7,7 @@
 #include "sessoes.h"
 #include "tecnicos.h"
 #include "shows.h"
+#include "utils.h"
 
 //INFO
 void proj_Descrit();
@@ -16,6 +17,8 @@ void equipe();
 //void mostrar_data_hora();
 
 void equipe(){
+    limparTela();
+    printf("\n \n");
     int tempo_Eq = 50; 
     printf(" _    _ \n");
     func_Ani(tempo_Eq);
@@ -102,9 +105,12 @@ void equipe(){
     func_Ani(tempo_Eq);
     printf("#########################################################################\n");
     func_Ani(tempo_Eq);
+    pausar();
     printf("\n \n \n");
 }
 void proj_Descrit(){
+    limparTela();
+    printf("\n \n");
     printf("=========================================================================================\n");
     printf("|                   Universidade Federal do Rio Grande do Norte                          |\n");
     printf("|                        Disciplina DCT1106 -- Programacao                               |\n");
@@ -121,6 +127,7 @@ void proj_Descrit(){
     printf("|                                                                                        |\n");
     printf("|                                                                                        |\n");
     printf("=========================================================================================\n");
+    pausar();
     printf("\n \n");
 }
 
@@ -154,6 +161,10 @@ int main() {
     func_Ani(tempo_Main);
     printf("║ ► 5. Módulo Relatórios                           ║\n");
     func_Ani(tempo_Main);
+    printf("║ ► 6. sobre o SIG-THEATER                         ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 7. Equipe SIG-THEATER                          ║\n");
+    func_Ani(tempo_Main);
     printf("║ ► 0. Encerrar o Programa                         ║\n");
     func_Ani(tempo_Main);
     printf("║                                                  ║\n");
@@ -177,7 +188,18 @@ int main() {
                 break;
             case 4:
                 tecnicos();
-                break;        
+                break;
+            case 5:
+                printf("Módulo Relatórios em desenvolvimento...\n");
+                pausar();
+                break;
+            case 6:
+                proj_Descrit();
+                break;
+            case 7:
+                equipe();
+                break;
+
             case 0:
                 parada = false;
                 break;
@@ -185,7 +207,7 @@ int main() {
             default:
                 printf("\n \n");
                 printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
+                pausar();
                 break;
         }
     } while (parada);
