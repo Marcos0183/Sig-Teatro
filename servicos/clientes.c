@@ -108,3 +108,12 @@ void excluir_cliente(){
     pausar();
 }
 
+
+
+void listar_cliente(){
+    char titulo[16] = "LISTAR CLIENTE";
+    func_Ani_Left(titulo);
+    printf("\n \n");
+    printf("Listando todos os clientes...\n");
+    pausar();
+}
