@@ -62,3 +62,21 @@ void cadastro_cliente() {
     fgets(telefone, 16, stdin);
     printf("-----------------------------------\n");
 }
+
+
+
+void atualizar_cliente(){
+    char cpf[15];
+    char titulo[19] = "ATUALIZAR CLIENTE";
+    func_Ani_Left(titulo);
+
+    printf("\n \n");
+    printf("-----------------------------------\n");
+    printf("|  INSIRA O CPF DO CLIENTE: ");
+    fgets(cpf, 15, stdin);
+    printf("-----------------------------------\n");
+    pausar();
+}
+
+
+
