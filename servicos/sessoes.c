@@ -1,62 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "sessoes.h"
 #include "anima.h"
 #include "utils.h"
 
-int tempo_Sessoes = 100;
-void sessoes(){
-    bool parada_P = true;
-    do {
-        int executar_P;
-        system("clear || cls");
-        printf("#####################################################################################\n");
-        func_Ani(tempo_Sessoes);
-        printf("   +++                                 SESSAO                                    +++\n");
-        func_Ani(tempo_Sessoes);
-        printf("#####################################################################################\n");
-        func_Ani(tempo_Sessoes);
-        printf("###                             1 - CADASTRAR SESSAO                              ###\n");
-        func_Ani(tempo_Sessoes);
-        printf("###                                                                               ###\n");
-        printf("###                             2 - PESQUISAR SESSAO                              ###\n");
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Sessoes);
-        printf("###                             3 - ATUALIZAR SESSAO                              ###\n");
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Sessoes);
-        printf("###                             4 - EXCLUIR SESSAO                                ###\n");
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Sessoes);
-        printf("###                             0 - VOLTAR AO MENU ANTERIOR...                    ###\n");
-        scanf(" %d", &executar_P);
-        getchar();
-
-        switch (executar_P) {
-            case 1:
-                cadastrar_Sessao();
-                break;
-            case 2:
-                pesquisar_Sessao();
-                break;
-            case 3:
-                atualizar_Sessao();
-                break;
-            case 4:
-                excluir_Sessao();
-                break;
-            case 0:
-                parada_P = false;
-                break;
-            default:
-                printf("\n \n");
-                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
-                break;
-        }
-    } while (parada_P);
+void menu_Sessao(){
+    limparTela();
+        printf("╔══════════════════════════════════════════════════╗\n");
+        func_Ani(100);
+        printf("║             SISTEMA DE TEATRO                    ║\n");
+        func_Ani(100);
+        printf("╠══════════════════════════════════════════════════╣\n");
+        func_Ani(100);
+        printf("║                                                  ║\n");
+        func_Ani(100);
+        printf("║ ► 1. Cadastrar Sessão                            ║\n");
+        func_Ani(100);
+        printf("║ ► 2. Pesquisar Sessão                            ║\n");
+        func_Ani(100);
+        printf("║ ► 3. Atualizar Sessão                            ║\n");
+        func_Ani(100);
+        printf("║ ► 4. Excluir Sessão                              ║\n");
+        func_Ani(100);
+        printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
+        func_Ani(100);
+        printf("║                                                  ║\n");
+        func_Ani(100);
+        printf("╚══════════════════════════════════════════════════╝\n");
+        func_Ani(100);
+        printf("--> Digite a opção desejada: ");
 }
+
+
 
 void cadastrar_Sessao(){
     int codigo_show;
@@ -75,15 +52,16 @@ void cadastrar_Sessao(){
     printf("-----------------------------------\n");
     printf("|  INSIRA O CÓDIGO DA SESSÃO: ");  
     scanf("%d", &codigo_show);
-    getchar();
+    limparBuffer();
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO SHOW: ");
-    fgets(nome_show, 50, stdin);
+    lerstring(nome_show, 50);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O PREÇO DO SHOW: ");
     scanf("%f", &preco);
+    limparBuffer();
 
     // printf("-----------------------------------\n");
     // printf("|  DATA DA SESSÃO: %s\n  ", data);
@@ -141,4 +119,37 @@ void excluir_Sessao(){
     scanf(" %d", &codigo_show);
     getchar();
 
+}
+
+
+
+void sessoes(){
+    int executar_se;
+    do {
+        void menu_Sessao();
+        scanf(" %d", &executar_se);
+        getchar();
+
+        switch (executar_se) {
+            case 1:
+                cadastrar_Sessao();
+                break;
+            case 2:
+                pesquisar_Sessao();
+                break;
+            case 3:
+                atualizar_Sessao();
+                break;
+            case 4:
+                excluir_Sessao();
+                break;
+            case 0:
+                break;
+            default:
+                printf("\n \n");
+                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                system("pause");
+                break;
+        }
+    } while (executar_se != 0);
 }
