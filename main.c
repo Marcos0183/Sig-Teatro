@@ -10,6 +10,7 @@
 #include "clientes.h"
 #include "utils.h"
 
+int banner_mostrado = 0;
 int tempo_Main = 100;
 
 
@@ -171,8 +172,19 @@ void proj_Descrit(){
 
 int main() {
     int executar;
+
     
-    do { 
+        
+    
+    do {
+
+        if (!banner_mostrado) {
+            mostrar_banner();
+            usleep(2000000);
+            system("clear");
+            banner_mostrado = 1; 
+        }
+
         menu_Principal();
         
         scanf("%d", &executar);
