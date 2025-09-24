@@ -6,31 +6,33 @@
 #include "anima.h"
 #include "utils.h"
 
+int tempo_Sessao = 100;
+
 void menu_Sessao(){
     limparTela();
-        printf("╔══════════════════════════════════════════════════╗\n");
-        func_Ani(100);
-        printf("║             SISTEMA DE TEATRO                    ║\n");
-        func_Ani(100);
-        printf("╠══════════════════════════════════════════════════╣\n");
-        func_Ani(100);
-        printf("║                                                  ║\n");
-        func_Ani(100);
-        printf("║ ► 1. Cadastrar Sessão                            ║\n");
-        func_Ani(100);
-        printf("║ ► 2. Pesquisar Sessão                            ║\n");
-        func_Ani(100);
-        printf("║ ► 3. Atualizar Sessão                            ║\n");
-        func_Ani(100);
-        printf("║ ► 4. Excluir Sessão                              ║\n");
-        func_Ani(100);
-        printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
-        func_Ani(100);
-        printf("║                                                  ║\n");
-        func_Ani(100);
-        printf("╚══════════════════════════════════════════════════╝\n");
-        func_Ani(100);
-        printf("--> Digite a opção desejada: ");
+    printf("╔══════════════════════════════════════════════════╗\n");
+    func_Ani(tempo_Sessao);
+    printf("║               SISTEMA DE TEATRO                  ║\n");
+    func_Ani(tempo_Sessao);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_Sessao);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_Sessao);
+    printf("║ ► 1. Cadastrar Sessão                            ║\n");
+    func_Ani(tempo_Sessao);
+    printf("║ ► 2. Pesquisar Sessão                            ║\n");
+    func_Ani(tempo_Sessao);
+    printf("║ ► 3. Atualizar Sessão                            ║\n");
+    func_Ani(tempo_Sessao);
+    printf("║ ► 4. Excluir Sessão                              ║\n");
+    func_Ani(tempo_Sessao);
+    printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
+    func_Ani(tempo_Sessao);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_Sessao);
+    printf("╚══════════════════════════════════════════════════╝\n");
+    func_Ani(tempo_Sessao);
+    printf("--> Digite a opção desejada: ");
 }
 
 
@@ -56,7 +58,7 @@ void cadastrar_Sessao(){
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO SHOW: ");
-    lerstring(nome_show, 50);
+    ler_string(nome_show, 50);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O PREÇO DO SHOW: ");
@@ -126,7 +128,7 @@ void excluir_Sessao(){
 void sessoes(){
     int executar_se;
     do {
-        void menu_Sessao();
+        menu_Sessao();
         scanf(" %d", &executar_se);
         getchar();
 
@@ -134,21 +136,26 @@ void sessoes(){
             case 1:
                 cadastrar_Sessao();
                 break;
+
             case 2:
                 pesquisar_Sessao();
                 break;
+
             case 3:
                 atualizar_Sessao();
                 break;
+
             case 4:
                 excluir_Sessao();
                 break;
+
             case 0:
                 break;
+
             default:
                 printf("\n \n");
                 printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
+                pausar();
                 break;
         }
     } while (executar_se != 0);
