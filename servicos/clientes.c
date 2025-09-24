@@ -40,30 +40,42 @@ void menu_cliente(){
 
 
 void cadastrar_cliente() {
-    char cpf[15];
-    char nome[30];
+    char cpf[20];
+    char nome[50];
     char email[40];
     char telefone[16];
+    FILE *arq_clientes;
     
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");  
-    fgets(cpf, 15, stdin);
+    ler_string(cpf, 20);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO CLIENTE: ");
-    fgets(nome, 30, stdin);
+    ler_string(nome, 50);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O EMAIL DO CLIENTE: ");
-    fgets(email, 40, stdin);
+    ler_string(email, 40);
+
     printf("-----------------------------------\n");//
-    
     printf("|  INSIRA O TELEFONE: ");
-    fgets(telefone, 16, stdin);
+    ler_string(telefone, 16);
     printf("-----------------------------------\n");
+
+    arq_clientes = fopen("clientes.csv", "at");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;   
+    }
+    fprintf(arq_clientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
+    fclose(arq_clientes);
+    printf("Cliente cadastrado com sucesso!\n");
+    pausar();
 }
 
 
