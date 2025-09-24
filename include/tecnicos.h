@@ -3,6 +3,8 @@
 
 void tecnicos();
 
+void menu_Tecnicos();
+
 void cadastro_Tecnico();
 
 void atualizar_Tecnico();
