@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "anima.h"
+#define TAM_LINHA 60
+#define TAM_INTERNO (TAM_LINHA - 2)
 #ifdef _WIN64 // Caso windows 64, use:
     #include <windows.h>  //Trecho de código tirado do ChatGPT
 #else // Se não, Linux,Mcos, use:
@@ -37,45 +40,29 @@ void func_Ani(int tempo){  //Função retirada do ChatGPT 4.0
     #endif
 }
 
-void func_Ani_Left(char titulo[30]){
+void func_Ani_Left(const char titulo[]) {
     system("clear||cls");
+
     int i;
-     //Primeira Linha
-    for(i = 0; i<70; i++){  
-        printf("#");
-        func_Ani(1);
-    }
-    printf("\n");
 
-    //Segunda Linha
-    for(i = 0;i<27; i++){
-        if (i > 3 && i < 7){ 
-            printf("+");
-            func_Ani(15);
-        } 
-        else{
-            printf(" ");
-            func_Ani(15);
-        }
-    }
-    printf("%s",titulo);
+    // Linha superior
+    printf("╔");
+    for (i = 0; i < TAM_INTERNO; i++) printf("═");
+    printf("╗\n");
+
+    // Linha do título centralizado
+    int titulo_len = strlen(titulo);  // cuidado: conta bytes!
+    int espacos = (TAM_INTERNO - titulo_len) / 2;
     
-    for(i = 0;i<31;i++){
-        if (i > 19 && i < 24){
-            printf("+");
-            func_Ani(15);
-        }
-        else{
-            printf(" ");
-            func_Ani(1);
-        }
-    }
-    printf("\n");
+    printf("║");
+    for (i = 0; i < espacos; i++) printf(" ");
+    printf("%s", titulo);
+    for (i = 0; i < TAM_INTERNO - espacos - titulo_len; i++) printf(" ");
+    printf("║\n");  // removido espaço antes do ║
 
-    // Terceira Linha   
-    for(i = 0; i<70; i++){  
-        printf("#");
-        func_Ani(1);
-    }
- 
+    // Linha inferior
+    printf("╚");
+    for (i = 0; i < TAM_INTERNO; i++) printf("═");
+    printf("╝\n");
+
 }
