@@ -1,67 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "shows.h"
 #include "anima.h"
 #include "utils.h"
 
 int tempo_Shows = 100;
-void shows(){  
-    bool parada_S = true;
-    do {  
-        int executar_S;
-        system("clear||cls");
-        printf("#####################################################################################\n");
-        func_Ani(tempo_Shows);
-        printf("   +++                                  SHOWS                                 +++\n");
-        func_Ani(tempo_Shows);
-        printf("#####################################################################################\n");
-        func_Ani(tempo_Shows);
-        printf("###                             1 - CADASTRAR SHOW                                ###\n");
-        func_Ani(tempo_Shows);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Shows);
-        printf("###                             2 - PESQUISAR SHOW                                ###\n");
-        func_Ani(tempo_Shows);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Shows);
-        printf("###                             3 - ATUALIZAR SHOW                                ###\n");
-        func_Ani(tempo_Shows);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Shows);
-        printf("###                             4 - EXCLUIR SHOW                                  ###\n");
-        func_Ani(tempo_Shows);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Shows);
-        printf("##                              0 - VOLTAR AO MENU ANTERIOR... ");
-        
-        scanf(" %d",&executar_S);
-        getchar();
 
-        switch (executar_S) {
-            case 1:
-                cadastrar_Show();
-                break;
-            case 2:
-                pesquisar_Show();
-                break;
-            case 3:
-                atualizar_Show();
-                break;
-            case 4:
-                excluir_Show();
-                break;
-            case 0:
-                parada_S = false;
-                break;
-            default:
-                printf("\n \n");
-                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
-                break;
-        }
-    } while (parada_S);
+
+void menu_Shows(){
+    limparTela();
+        printf("╔══════════════════════════════════════════════════╗\n");
+        func_Ani(tempo_Shows);
+        printf("║               SISTEMA DE TEATRO                  ║\n");
+        func_Ani(tempo_Shows);
+        printf("╠══════════════════════════════════════════════════╣\n");
+        func_Ani(tempo_Shows);
+        printf("║                                                  ║\n");
+        func_Ani(tempo_Shows);
+        printf("║ ► 1. Cadastrar Show                              ║\n");
+        func_Ani(tempo_Shows);
+        printf("║ ► 2. Pesquisar Show                              ║\n");
+        func_Ani(tempo_Shows);
+        printf("║ ► 3. Atualizar Show                              ║\n");
+        func_Ani(tempo_Shows);
+        printf("║ ► 4. Excluir Show                                ║\n");
+        func_Ani(tempo_Shows);
+        printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
+        func_Ani(tempo_Shows);
+        printf("║                                                  ║\n");
+        func_Ani(tempo_Shows);
+        printf("╚══════════════════════════════════════════════════╝\n");
+        func_Ani(tempo_Shows);
+        printf("--> Digite a opção desejada: ");
 }
+
+
 
 void cadastrar_Show(){
     char nome[30]; 
@@ -124,4 +99,39 @@ void pesquisar_Show(){
     scanf("%d",&codigo);
     getchar();
     printf("-----------------------------------\n");
+}
+
+
+
+void shows(){ 
+    int executar_S; 
+
+    do {  
+        void menu_Shows();
+        scanf(" %d",&executar_S);
+        limparBuffer();
+
+        switch (executar_S) {
+            case 1:
+                cadastrar_Show();
+                break;
+            case 2:
+                pesquisar_Show();
+                break;
+            case 3:
+                atualizar_Show();
+                break;
+            case 4:
+                excluir_Show();
+                break;
+            case 0:
+                
+                break;
+            default:
+                printf("\n \n");
+                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                system("pause");
+                break;
+        }
+    } while (executar_S != 0);
 }
