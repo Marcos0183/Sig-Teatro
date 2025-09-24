@@ -3,6 +3,8 @@
 
 void sessoes();
 
+void menu_Sessao();
+
 void cadastrar_Sessao();
 
 void pesquisar_Sessao();
