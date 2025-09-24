@@ -7,4 +7,6 @@ void pausar();
 
 void limparTela();
 
+char* ler_string(char* destino, int tamanho);
+
 #endif
