@@ -1,61 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "tecnicos.h"
 #include "anima.h"
 #include "utils.h"
 
 int tempo_Tecnicos = 100;
-void tecnicos(){
-    bool parada_T = true;
-    do {
-        int executar_T;
-        system("clear || cls");
-        printf("#####################################################################################\n");
+
+void menu_Tecnicos(){
+    limparTela();
+        printf("╔══════════════════════════════════════════════════╗\n");
         func_Ani(tempo_Tecnicos);
-        printf("   +++                                 TECNICOS                                  +++\n");
+        printf("║             SISTEMA DE TEATRO                    ║\n");
         func_Ani(tempo_Tecnicos);
-        printf("#####################################################################################\n");
+        printf("╠══════════════════════════════════════════════════╣\n");
         func_Ani(tempo_Tecnicos);
-        printf("###                             1 - CADASTRAR TECNICO                              ###\n");
+        printf("║                                                  ║\n");
         func_Ani(tempo_Tecnicos);
-        printf("###                                                                                ###\n");
-        printf("###                             2 - PESQUISAR TECNICO                              ###\n");
-        printf("###                                                                                ###\n");
+        printf("║ ► 1. Cadastrar Técnico                           ║\n");
         func_Ani(tempo_Tecnicos);
-        printf("###                             3 - ATUALIZAR TECNICO                              ###\n");
-        printf("###                                                                                ###\n");
+        printf("║ ► 2. Pesquisar Técnico                           ║\n");
         func_Ani(tempo_Tecnicos);
-        printf("###                             4 - DELETAR TECNICO                                ###\n");
-        printf("###                                                                                ###\n");
+        printf("║ ► 3. Atualizar Técnico                           ║\n");
         func_Ani(tempo_Tecnicos);
-        printf("###                             0 - VOLTAR AO MENU ANTERIOR...                     ###\n");
-        scanf(" %d", &executar_T);
-        getchar();
-        
-        switch (executar_T){
-            case 1:
-                cadastro_Tecnico();
-                break;
-            case 2:
-                pesquisar_Tecnico();
-                break;
-            case 3:
-                atualizar_Tecnico();
-                break;
-            case 4:
-                excluir_Tecnico();
-                break;
-            case 0:
-                parada_T = false;
-                break;
-            default:
-                printf("\n \n");
-                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
-                break;
-            }
-    } while (parada_T);
+        printf("║ ► 4. Excluir Técnico                             ║\n");
+        func_Ani(tempo_Tecnicos);
+        printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
+        func_Ani(tempo_Tecnicos);
+        printf("║                                                  ║\n");
+        func_Ani(tempo_Tecnicos);
+        printf("╚══════════════════════════════════════════════════╝\n");
+        func_Ani(tempo_Tecnicos);
+        printf("--> Digite a opção desejada: ");
 }
 
 void cadastro_Tecnico(){
@@ -75,7 +52,6 @@ void cadastro_Tecnico(){
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO TECNICO: ");
     fgets(nome, 30, stdin);
-    lerstring(nome, 30);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
@@ -127,4 +103,40 @@ void excluir_Tecnico(){
     printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
     fgets(cpf, 15, stdin);
 
+}
+
+
+
+void tecnicos(){
+    int executar_T;
+    do {
+        void menu_Tecnicos();
+        scanf(" %d",&executar_T);
+        limparBuffer();
+        
+        
+        switch (executar_T){
+            case 1:
+                cadastro_Tecnico();
+                break;
+            case 2:
+                pesquisar_Tecnico();
+                break;
+            case 3:
+                atualizar_Tecnico();
+                break;
+            case 4:
+                excluir_Tecnico();
+                break;
+            case 0:
+                
+            
+                break;
+            default:
+                printf("\n \n");
+                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                system("pause");
+                break;
+            }
+    } while (executar_T != 0);
 }
