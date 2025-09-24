@@ -110,7 +110,7 @@ void excluir_Tecnico(){
 void tecnicos(){
     int executar_T;
     do {
-        void menu_Tecnicos();
+        menu_Tecnicos();
         scanf(" %d",&executar_T);
         limparBuffer();
         
@@ -119,23 +119,26 @@ void tecnicos(){
             case 1:
                 cadastro_Tecnico();
                 break;
+
             case 2:
                 pesquisar_Tecnico();
                 break;
+
             case 3:
                 atualizar_Tecnico();
                 break;
+
             case 4:
                 excluir_Tecnico();
                 break;
+
             case 0:
-                
-            
                 break;
+                
             default:
                 printf("\n \n");
                 printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
+                pausar();
                 break;
             }
     } while (executar_T != 0);
