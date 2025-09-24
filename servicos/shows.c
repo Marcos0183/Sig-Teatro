@@ -107,7 +107,7 @@ void shows(){
     int executar_S; 
 
     do {  
-        void menu_Shows();
+        menu_Shows();
         scanf(" %d",&executar_S);
         limparBuffer();
 
@@ -115,22 +115,25 @@ void shows(){
             case 1:
                 cadastrar_Show();
                 break;
+
             case 2:
                 pesquisar_Show();
                 break;
+
             case 3:
                 atualizar_Show();
                 break;
+
             case 4:
                 excluir_Show();
                 break;
+                 
             case 0:
-                
                 break;
             default:
                 printf("\n \n");
                 printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
+                pausar();
                 break;
         }
     } while (executar_S != 0);
