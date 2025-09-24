@@ -96,16 +96,49 @@ void atualizar_cliente(){
 
 
 void pesquisar_cliente(){
-    char cpf[15];
+    char cpf_lido[20];
+    char cpf[20];
+    char nome[50];
+    char email[40];
+    char telefone[16];
+    FILE *arq_clientes;
+
+    arq_clientes = fopen("clientes.csv", "rt");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;   
+    }
+
     char titulo[19] = "PESQUISAR CLIENTE";
     func_Ani_Left(titulo);
 
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");
-    fgets(cpf, 15, stdin);
+    ler_string(cpf_lido, 20);
     printf("-----------------------------------\n");
-    pausar();
+
+    while (!feof(arq_clientes)) {
+        fscanf(arq_clientes, "%[^;]" ,cpf);
+        fgetc(arq_clientes);
+        fscanf(arq_clientes, "%[^;]", nome);
+        fgetc(arq_clientes);
+        fscanf(arq_clientes, "%[^;]", email);
+        fgetc(arq_clientes);
+        fscanf(arq_clientes, "%[^\n]", telefone);
+        fgetc(arq_clientes);
+        if (strcmp(cpf, cpf_lido) == 0) {
+            printf("\tCliente encontrado:\n");
+            printf("\tCPF: %s\n", cpf);
+            printf("\tNome: %s\n", nome);
+            printf("\tEmail: %s\n", email);
+            printf("\tTelefone: %s\n", telefone);
+            pausar();
+            fclose(arq_clientes);
+            return;
+        }
+    }
 }
 
 
