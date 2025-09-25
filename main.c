@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <unistd.h>
 #include "anima.h"
 #include "ingresso.h"
 #include "sessoes.h"
