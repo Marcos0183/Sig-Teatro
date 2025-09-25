@@ -7,4 +7,6 @@ void func_Ani(int);
 
 void func_Ani_Left();
 
+void mostrar_banner();
+
 #endif
