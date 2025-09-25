@@ -35,9 +35,12 @@ void menu_Tecnicos(){
         printf("--> Digite a opção desejada: ");
 }
 
+
+
 void cadastro_Tecnico(){
-    char cpf[15];
-    char nome[30];
+    FILE *arq_tecnicos;
+    char cpf[20];   
+    char nome[50];
     char funcao[16];
     char email[40];
     char telefone[16];
@@ -47,26 +50,38 @@ void cadastro_Tecnico(){
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO TECNICO: ");  //** Deixarei assim por enquanto, sem validação
-    fgets(cpf, 15, stdin);
+    ler_string(cpf, 20);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO TECNICO: ");
-    fgets(nome, 30, stdin);
+    ler_string(nome, 50);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
-    fgets(funcao, 15, stdin);
+    ler_string(funcao, 16);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O EMAIL DO TECNICO: ");
-    fgets(email, 40, stdin);
+    ler_string(email, 40);
     printf("-----------------------------------\n");//
     
     printf("|  INSIRA O TELEFONE: ");
-    fgets(telefone, 16, stdin);
+    ler_string(telefone, 16);
     printf("-----------------------------------\n");
 
+    arq_tecnicos = fopen("tecnicos.csv", "at");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de tecnicos.\n");
+        limparBuffer();
+        return;   
+    }
+    fprintf(arq_tecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+    fclose(arq_tecnicos);
+    printf("Técnico cadastrado com sucesso!\n");
+    pausar();
 }
+
+
 
 void atualizar_Tecnico(){
     char cpf[15];
@@ -81,6 +96,8 @@ void atualizar_Tecnico(){
     // se sim, para alterar os dados tem que saber quais dados quer alterar
 }
 
+
+
 void pesquisar_Tecnico(){
     char cpf[15];
     
@@ -92,6 +109,8 @@ void pesquisar_Tecnico(){
     fgets(cpf, 15, stdin);
 
 }
+
+
 
 void excluir_Tecnico(){
     char cpf[15];
