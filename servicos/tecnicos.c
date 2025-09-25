@@ -99,14 +99,53 @@ void atualizar_Tecnico(){
 
 
 void pesquisar_Tecnico(){
+    char cpf_lido[15];
     char cpf[15];
+    char nome[50];
+    char funcao[16];
+    char email[40];
+    char telefone[16];
+    FILE *arq_tecnicos;
     
     char titulo[19] = "PESQUISAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
-    fgets(cpf, 15, stdin);
+    ler_string(cpf_lido, 15);
+
+    arq_tecnicos = fopen("tecnicos.csv", "rt");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de tecnicos.\n");
+        limparBuffer();
+        return;   
+    }
+    while (!feof(arq_tecnicos)) {
+        fscanf(arq_tecnicos, "%[^;]" ,cpf);
+        fgetc(arq_tecnicos);
+        fscanf(arq_tecnicos, "%[^;]", nome);
+        fgetc(arq_tecnicos);
+        fscanf(arq_tecnicos, "%[^;]", funcao);
+        fgetc(arq_tecnicos);
+        fscanf(arq_tecnicos, "%[^;]", email);
+        fgetc(arq_tecnicos);
+        fscanf(arq_tecnicos, "%[^\n]", telefone);
+        fgetc(arq_tecnicos);
+        if (strcmp(cpf, cpf_lido) == 0) {
+            printf("\tTécnico encontrado:\n");
+            printf("\tCPF: %s\n", cpf);
+            printf("\tNome: %s\n", nome);
+            printf("\tFunção: %s\n", funcao);
+            printf("\tEmail: %s\n", email);
+            printf("\tTelefone: %s\n", telefone);
+            pausar();
+            fclose(arq_tecnicos);
+            return;
+        }
+    }
+    printf("Técnico não encontrado.\n");
+    pausar();
+
 
 }
 
