@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "utils.h"
 
 
@@ -17,7 +18,7 @@ void pausar() {
 
 
 
-char* lerString(char* destino, int tamanho) {
+char* ler_string(char* destino, int tamanho) {
     if (fgets(destino, tamanho, stdin) != NULL) {
         int len = strcspn(destino, "\n"); 
 
