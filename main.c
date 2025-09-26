@@ -2,21 +2,63 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <unistd.h>
 #include "anima.h"
 #include "ingresso.h"
 #include "sessoes.h"
 #include "tecnicos.h"
 #include "shows.h"
+#include "clientes.h"
+#include "utils.h"
 
-//INFO
-void proj_Descrit();
-void equipe();
+int banner_mostrado = 0;
+int tempo_Main = 100;
 
-//DATA E HORA
-//void mostrar_data_hora();
+
+void menu_Principal() {
+    limparTela();
+    printf("\n");
+    func_Ani(tempo_Main);
+    printf("╔══════════════════════════════════════════════════╗\n");
+    func_Ani(tempo_Main);
+    printf("║             SISTEMA DE TEATRO                    ║\n");
+    func_Ani(tempo_Main);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_Main);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 1. Módulo clientes                             ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 2. Módulo Ingressos                            ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 3. Módulo Espetáculos (Shows/Peças)            ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 4. Módulo Sessões                              ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 5. Módulo Técnicos                             ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 6. Módulo Relatórios                           ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 7. sobre o SIG-THEATER                         ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 8. Equipe SIG-THEATER                          ║\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 0. Encerrar o Programa                         ║\n");
+    func_Ani(tempo_Main);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_Main);
+    printf("╚══════════════════════════════════════════════════╝\n");
+    func_Ani(tempo_Main);
+    printf("--> Digite a opção desejada: ");
+
+}
+
 
 void equipe(){
-    int tempo_Eq = 50; 
+    limparTela();
+    printf("\n \n");
+    int tempo_Eq = 50;
+    // Desenha a letra U 
     printf(" _    _ \n");
     func_Ani(tempo_Eq);
     printf("| |  | |\n");
@@ -102,9 +144,12 @@ void equipe(){
     func_Ani(tempo_Eq);
     printf("#########################################################################\n");
     func_Ani(tempo_Eq);
+    pausar();
     printf("\n \n \n");
 }
 void proj_Descrit(){
+    limparTela();
+    printf("\n \n");
     printf("=========================================================================================\n");
     printf("|                   Universidade Federal do Rio Grande do Norte                          |\n");
     printf("|                        Disciplina DCT1106 -- Programacao                               |\n");
@@ -121,77 +166,77 @@ void proj_Descrit(){
     printf("|                                                                                        |\n");
     printf("|                                                                                        |\n");
     printf("=========================================================================================\n");
+    pausar();
     printf("\n \n");
 }
 
-int tempo_Main = 100;
-int main() {
-    
-    bool parada = true;
-    do { 
-        system("clear||cls");
-        int executar;
-        
-        //proj_Descrit();
-        //equipe();
 
-        printf("#####################################################################################\n");
-        func_Ani(tempo_Main);
-        printf("   +++                           SISTEMA DE TEATRO                             +++\n");
-        func_Ani(tempo_Main);
-        printf("#####################################################################################\n");
-        func_Ani(tempo_Main);
-        printf("###                             1 - ENTRAR NO MODULO INGRESSO                     ###\n");
-        func_Ani(tempo_Main);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Main);
-        printf("###                             2 - ENTRAR NO MODULO SHOWS/PECAS                  ###\n");
-        func_Ani(tempo_Main);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Main);
-        printf("###                             3 - ENTRAR NO MODULO SESSOES                      ###\n");
-        func_Ani(tempo_Main);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Main);
-        printf("###                             4 - ENTRAR NO MODULO TECNICOS                     ###\n");
-        func_Ani(tempo_Main);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Main);
-        printf("###                             5 - ENTRAR NO MODULO RELATORIO                    ###\n");
-        func_Ani(tempo_Main);
-        printf("###                                                                               ###\n");
-        func_Ani(tempo_Main);
-        printf("##                              0 - ENCERRAR PROGRAMA : ");
+int main() {
+    int executar;
+
+    
         
-        scanf("%d",&executar);
+    
+    do {
+
+        if (!banner_mostrado) {
+            mostrar_banner();
+            usleep(2000000);
+            system("clear");
+            banner_mostrado = 1; 
+        }
+
+        menu_Principal();
+        
+        scanf("%d", &executar);
         getchar();
 
         switch (executar) {
             case 1:
+                cliente();
+                break;
+
+            case 2:
                 ingresso();
                 break;
-            case 2:
+
+            case 3:
                 shows();
                 break;
-            case 3:
+
+            case 4:
                 sessoes();
                 break;
-            case 4:
+
+            case 5:
                 tecnicos();
-                break;        
-            case 0:
-                parada = false;
                 break;
-            
+
+            case 6:
+                limparTela();
+                printf("Módulo Relatórios em construção...\n");
+                pausar();
+                break;
+
+            case 7:
+                proj_Descrit();
+                break;
+
+            case 8:
+                equipe();
+                break;
+
+            case 0:
+                break;
+
             default:
                 printf("\n \n");
                 printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
+                pausar();
                 break;
         }
-    } while (parada);
+    } while (executar != 0);
     ani_Encerrar();
-
     return 0;            
 } 
 
