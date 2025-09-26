@@ -59,64 +59,64 @@ void equipe(){
     printf("\n \n");
     int tempo_Eq = 50;
     // Desenha a letra U 
-    printf(" _    _ \n");
-    func_Ani(tempo_Eq);
-    printf("| |  | |\n");
-    func_Ani(tempo_Eq);
-    printf("| |  | |\n");
-    func_Ani(tempo_Eq);
-    printf("| |  | |\n");
-    func_Ani(tempo_Eq);
-    printf("| |  | |\n");
-    func_Ani(tempo_Eq);
-    printf("| |__| |\n");
-    func_Ani(tempo_Eq);
-    printf(" \\____/ \n\n");
-    func_Ani(tempo_Eq);
+    printf("     _   _ \n");
+func_Ani(tempo_Eq);
+printf("    | | | |\n");
+func_Ani(tempo_Eq);
+printf("    | | | |\n");
+func_Ani(tempo_Eq);
+printf("    | | | |\n");
+func_Ani(tempo_Eq);
+printf("    | |_| |\n");
+func_Ani(tempo_Eq);
+printf("     \\___/ \n");
+func_Ani(tempo_Eq);
+printf("           \n");
+func_Ani(tempo_Eq);
 
-    // Desenha a letra F
-    printf(" ______ \n");
-    func_Ani(tempo_Eq);
-    printf("|  ____|\n");
-    func_Ani(tempo_Eq);
-    printf("| |__   \n");
-    func_Ani(tempo_Eq);
-    printf("|  __|  \n");
-    func_Ani(tempo_Eq);
-    printf("| |     \n");
-    func_Ani(tempo_Eq);
-    printf("|_|     \n\n");
-    func_Ani(tempo_Eq);
-                                         // A palavra UFRN foi feita pelo GEMINI
-    // Desenha a letra R
-    printf(" ______ \n");
-    func_Ani(tempo_Eq);
-    printf("|  _  \\\n");
-    func_Ani(tempo_Eq);
-    printf("| | | |\n");
-    func_Ani(tempo_Eq);
-    printf("| | | |\n");
-    func_Ani(tempo_Eq);
-    printf("| |_| |\n");
-    func_Ani(tempo_Eq);
-    printf("|  _  /\n");
-    func_Ani(tempo_Eq);
-    printf("|_| \\_\\\n\n");
-    func_Ani(tempo_Eq);
+printf("    ______ \n");
+func_Ani(tempo_Eq);
+printf("    |  ___|\n");
+func_Ani(tempo_Eq);
+printf("    | |_   \n");
+func_Ani(tempo_Eq);
+printf("    |  _|  \n");
+func_Ani(tempo_Eq);
+printf("    | |    \n");
+func_Ani(tempo_Eq);
+printf("    \\_|    \n");
+func_Ani(tempo_Eq);
+printf("           \n");
+func_Ani(tempo_Eq);
 
-    // Desenha a letra N
-    printf(" _    _ \n");
-    func_Ani(tempo_Eq);
-    printf("| \\  / |\n");
-    func_Ani(tempo_Eq);
-    printf("|  \\/  |\n");
-    func_Ani(tempo_Eq);
-    printf("| |\\/| |\n");
-    func_Ani(tempo_Eq);
-    printf("| |  | |\n");
-    func_Ani(tempo_Eq);
-    printf("|_|  |_|\n");
-    func_Ani(tempo_Eq);
+printf("    ______ \n");
+func_Ani(tempo_Eq);
+printf("    | ___ \\\n");
+func_Ani(tempo_Eq);
+printf("    | |_/ /\n");
+func_Ani(tempo_Eq);
+printf("    |    / \n");
+func_Ani(tempo_Eq);
+printf("    | |\\ \\ \n");
+func_Ani(tempo_Eq);
+printf("    \\_| \\_|\n");
+func_Ani(tempo_Eq);
+printf("           \n");
+func_Ani(tempo_Eq);
+
+printf("     _   _ \n");
+func_Ani(tempo_Eq);
+printf("    | \\ | |\n");
+func_Ani(tempo_Eq);
+printf("    |  \\| |\n");
+func_Ani(tempo_Eq);
+printf("    | . ` |\n");
+func_Ani(tempo_Eq);
+printf("    | |\\  |\n");
+func_Ani(tempo_Eq);
+printf("    \\_| \\_/\n");
+func_Ani(tempo_Eq);
+
 
     printf("\n \n");
     printf("#########################################################################\n");
@@ -140,6 +140,7 @@ void equipe(){
     func_Ani(tempo_Eq);
     printf("             Aluno 2: Marcos Vinícius Dantas da Silva                    \n");
     func_Ani(tempo_Eq);
+    printf("             Aluno 3: Felipe Eduardo Silva Fernandes                     \n");
     printf("\n");
     func_Ani(tempo_Eq);
     printf("#########################################################################\n");
