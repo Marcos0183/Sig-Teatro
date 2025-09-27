@@ -13,7 +13,7 @@ void menu_Shows(){
     limparTela();
         printf("╔══════════════════════════════════════════════════╗\n");
         func_Ani(tempo_Shows);
-        printf("║               SISTEMA DE TEATRO                  ║\n");
+        printf("║                   MODULO SHOWS                   ║\n");
         func_Ani(tempo_Shows);
         printf("╠══════════════════════════════════════════════════╣\n");
         func_Ani(tempo_Shows);
