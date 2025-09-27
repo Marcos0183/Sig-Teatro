@@ -12,7 +12,7 @@ void menu_cliente(){
     limparTela();
         printf("╔══════════════════════════════════════════════════╗\n");
         func_Ani(tempo_cliente);
-        printf("║             SISTEMA DE TEATRO                    ║\n");
+        printf("║                MODULO CLIENTE                    ║\n");
         func_Ani(tempo_cliente);
         printf("╠══════════════════════════════════════════════════╣\n");
         func_Ani(tempo_cliente);
@@ -49,6 +49,7 @@ void cadastrar_cliente() {
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
     printf("\n \n");
+    
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");  
     ler_string(cpf, 20);
@@ -61,9 +62,10 @@ void cadastrar_cliente() {
     printf("|  INSIRA O EMAIL DO CLIENTE: ");
     ler_string(email, 40);
 
-    printf("-----------------------------------\n");//
+    printf("-----------------------------------\n");
     printf("|  INSIRA O TELEFONE: ");
     ler_string(telefone, 16);
+
     printf("-----------------------------------\n");
 
     arq_clientes = fopen("clientes.csv", "at");
