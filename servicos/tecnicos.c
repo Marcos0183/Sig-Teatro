@@ -12,7 +12,7 @@ void menu_Tecnicos(){
     limparTela();
         printf("╔══════════════════════════════════════════════════╗\n");
         func_Ani(tempo_Tecnicos);
-        printf("║             SISTEMA DE TEATRO                    ║\n");
+        printf("║                MODULO TÉCNICO                    ║\n");
         func_Ani(tempo_Tecnicos);
         printf("╠══════════════════════════════════════════════════╣\n");
         func_Ani(tempo_Tecnicos);
