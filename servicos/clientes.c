@@ -12,7 +12,7 @@ void menu_cliente(){
     limparTela();
         printf("╔══════════════════════════════════════════════════╗\n");
         func_Ani(tempo_cliente);
-        printf("║             SISTEMA DE TEATRO                    ║\n");
+        printf("║                MODULO CLIENTE                    ║\n");
         func_Ani(tempo_cliente);
         printf("╠══════════════════════════════════════════════════╣\n");
         func_Ani(tempo_cliente);
@@ -49,6 +49,7 @@ void cadastrar_cliente() {
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
     printf("\n \n");
+    
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");  
     ler_string(cpf, 20);
@@ -61,9 +62,10 @@ void cadastrar_cliente() {
     printf("|  INSIRA O EMAIL DO CLIENTE: ");
     ler_string(email, 40);
 
-    printf("-----------------------------------\n");//
+    printf("-----------------------------------\n");
     printf("|  INSIRA O TELEFONE: ");
     ler_string(telefone, 16);
+
     printf("-----------------------------------\n");
 
     arq_clientes = fopen("clientes.csv", "at");
@@ -144,17 +146,75 @@ void pesquisar_cliente(){
 
 
 void excluir_cliente(){
+    int encontrado = 0;
+    FILE *arq_clientes;
+    FILE *arq_tempclientes;
     char cpf[15];
+    char cpf_lido[15];
+    char nome[50];
+    char email[40];
+    char telefone[16];
     char titulo[19] = "EXCLUIR CLIENTE";
     func_Ani_Left(titulo);
+
+    arq_clientes = fopen("clientes.csv", "rt");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;
+    }
+
+    arq_tempclientes = fopen("clientestemp.csv", "wt");
+    if (arq_tempclientes == NULL) {
+        printf("Erro ao abrir o arquivo temporario de clientes.\n");
+        fclose(arq_clientes);
+        limparBuffer();
+        return;
+    }
 
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");
-    fgets(cpf, 15, stdin);
+    ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
-    pausar();
+
+    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",cpf, nome, email, telefone) == 4) {
+        if (strcmp(cpf, cpf_lido) != 0) {
+            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
+        } else {
+            encontrado = 1;
+        }
 }
+
+fclose(arq_clientes);
+fclose(arq_tempclientes);
+    if (!encontrado) {
+        printf("Cliente com CPF %s não encontrado.\n", cpf_lido);
+        remove("clientestemp.csv");
+        pausar();
+        return;
+    } else {
+        printf("Cliente com CPF %s encontrado e excluido.\n", cpf_lido);
+    
+        if (remove("clientes.csv") != 0) {
+            printf("Erro ao remover clientes.csv\n");
+        }
+        if (rename("clientestemp.csv", "clientes.csv") != 0) {
+            printf("Erro ao renomear clientestemp.csv\n");
+        }
+    }
+     
+    printf("Cliente excluido com sucesso!\n");
+    pausar();
+
+}
+
+    
+
+    
+    
+
+
 
 
 
