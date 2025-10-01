@@ -182,7 +182,7 @@ int main() {
 
         if (!banner_mostrado) {
             mostrar_banner();
-            usleep(2000000);
+            func_Ani(2000000);
             system("clear");
             banner_mostrado = 1; 
         }
@@ -240,22 +240,6 @@ int main() {
     ani_Encerrar();
     return 0;            
 } 
-
-
-//############# FUNÇÕES DE DATA E HORA ##############################
-
-// void mostrar_data_hora(char * data, char * hora){
-
-//     time_t agora; //Função tirada do petbcc.ufscar.br/timefuncoes/#time e adaptada com auxílio de IA
-//     time(&agora); //time_t => EPOCH / 01/01/1970
-
-//     struct tm *t = localtime(&agora); //struct tm *t quebra o epoch e deixa legível e formatado
-
-//     snprintf(data, 32, "%02d/%02d/%04d", t->tm_mday, t->tm_mon + 1, t->tm_year + 1900);
-//     snprintf(hora, 16, "%02d:%02d", t->tm_hour, t-> tm_min); // formatação para data e hora
-    
-//     func_Ani(tempo);
-// }
 
 
                                                                                                                                                                                                                                                                                                                                                                                         
