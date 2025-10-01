@@ -58,7 +58,7 @@ void vender_Ingresso(){
     limparBuffer();
     printf("V----------------------------------\n");
     printf("|  ESCOLHA SUA CADEIRA: ");
-    fgets(cadeira,3,stdin);
+    ler_string(nome,30);
     printf("V----------------------------------\n");
     pausar();
 }
