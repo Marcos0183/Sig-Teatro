@@ -163,8 +163,8 @@ void proj_Descrit(){
     printf("|   padroes.                                                                             |\n");
     printf("|                                                                                        |\n");
     printf("|   O sistema SGT e um software que gerencia e armazena dados referentes a uma casa de   |\n");
-    printf("|   tetro, contanto com 4 modulos: Ingresso, Shows, Sessoes, Tecnicos e Relatorios.      |\n");               
-    printf("|                                                                                        |\n");
+    printf("|   tetro, contanto com 5 modulos: Clientes, Ingresso, Shows, Sessoes, Tecnicos          |\n");               
+    printf("|   e Relatorios.                                                                        |\n");
     printf("|                                                                                        |\n");
     printf("=========================================================================================\n");
     pausar();
