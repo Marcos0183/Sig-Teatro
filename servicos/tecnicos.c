@@ -159,7 +159,6 @@ void atualizar_Tecnico(){
         pausar();
         return;
     } else {
-        printf("Técnico com CPF %s encontrado e atualizado.\n", cpf);
     
         if (remove("tecnicos.csv") != 0) {
             printf("Erro ao remover tecnicos.csv\n");
