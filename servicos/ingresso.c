@@ -41,25 +41,36 @@ void menu_Ingresso(){
 
 
 void vender_Ingresso(){
-    char nome[30];
-    int codigo_Show;
-    char cadeira[3];
+    FILE *arq_Ingresso;
+    char id[6];
+    char codigo_Show[5];
+    char cadeira[5];
     char titulo[16] = "VENDER INGRESSO";
     
     func_Ani_Left(titulo);
     
     printf("\n \n");
     printf("-----------------------------------\n");
-    printf("|  INSIRA O NOME: ");
-    ler_string(nome, 30);
+    printf("|  INSIRA SEU ID DE CLIENTE - SEM ID DIGITE (C) PARA CADASTRAR-SE: ");
+    ler_string(id, 6);
+
+
     printf("V----------------------------------\n");
     printf("|  INSIRA O CÓDIGO DO SHOW: ");
-    scanf(" %d",&codigo_Show);
-    limparBuffer();
+    ler_string(codigo_Show, 5);
+
+
     printf("V----------------------------------\n");
     printf("|  ESCOLHA SUA CADEIRA: ");
-    fgets(cadeira,3,stdin);
+    ler_string(cadeira,5);
     printf("V----------------------------------\n");
+
+
+    arq_Ingresso = fopen("arq_ingresso.csv","at");
+    fprintf(arq_Ingresso,"%s;",id);
+    fprintf(arq_Ingresso,"%s;",codigo_Show);
+    fprintf(arq_Ingresso,"%s;",cadeira);
+    fclose(arq_Ingresso);
     pausar();
 }
 

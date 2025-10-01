@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c,visualstudiocode,cmake
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,visualstudiocode,cmake
 
+
+### Arquivos de texto ###
+*.csv
+*.text
+
 ### C ###
 # Prerequisites
 *.d

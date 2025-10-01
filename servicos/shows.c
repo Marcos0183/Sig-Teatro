@@ -39,29 +39,78 @@ void menu_Shows(){
 
 
 void cadastrar_Show(){
-    char nome[30]; 
-    char data[10];
-    char duracao[4];
-    char personagens[100];
+    char *comp_1 = "S";
+    char *comp_2 = "s";
+    char *comp_3;
+    char lista[150];
+    char nome[32]; 
+    char data[12];
+    char hora[6];
+    char duracao[6];
+    char personagens[27];
     char titulo[16] = "CADASTRAR SHOW";
     func_Ani_Left(titulo);
 
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO SHOW: ");
-    fgets(nome,30,stdin);
-    printf("V----------------------------------\n");
-    printf("|  INSIRA A/AS DATAS DO SHOW: ");
-    fgets(data,10,stdin);
-    printf("V----------------------------------\n");
-    printf("|  INSIRA A/AS DURACAOS DO SHOW: ");
-    fgets(duracao,4,stdin);;
-    printf("V----------------------------------\n");
-    printf("|  INSIRA O/OS PERSONAGENS DO SHOW: ");
-    fgets(personagens,100,stdin);
-    printf("V----------------------------------\n");
-    system("pause");
+    ler_string(nome,32);
+    
 
+    int parar = 1;
+    FILE *arq_Temp_data;
+    arq_Temp_data = fopen("arq_Temp_Data.csv","wt");
+    while(parar){
+        printf("V----------------------------------\n");
+        printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
+        ler_string(data,12);
+        char *comp_3 = data;
+        if(strcmp(comp_3,comp_1) == 0 || strcmp(comp_3,comp_2) == 0) parar = 0;
+        else{
+            printf("V----------------------------------\n");
+            printf("|  INSIRA A HORA DE INÍCO DO SHOW: ");
+            ler_string(hora,6);
+            printf("V----------------------------------\n");
+            printf("|  INSIRA A/AS DURACAOS DO SHOW: ");
+            ler_string(duracao,6);
+            arq_Temp_data = fopen("arq_Temp_Data.csv","at");
+            fprintf(arq_Temp_data,"%s;",data);
+            fprintf(arq_Temp_data,"%s;",hora);
+            fprintf(arq_Temp_data,"%s\n",duracao);
+            fclose(arq_Temp_data);
+        } 
+    }
+
+
+    parar = 1;
+    FILE *arq_Temp_pers;
+    arq_Temp_pers = fopen("arq_Temp_Pers.csv","wt");
+    printf("V----------------------------------\n");
+    while(parar){
+        printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
+        ler_string(personagens,27);
+        printf("V----------------------------------\n");
+        comp_3 = personagens;
+        if(strcmp(comp_3,comp_1) == 0 || strcmp(comp_3,comp_2) == 0) parar = 0;
+        else{
+            arq_Temp_pers = fopen("arq_Temp_Pers.csv","at");
+            fprintf(arq_Temp_pers,"%s;",personagens);
+            fclose(arq_Temp_pers);
+        }
+    }
+
+    
+    FILE *arq_Shows;
+    arq_Shows = fopen("arq_shows.csv","at");
+    fprintf(arq_Shows,"%s;",nome);
+    arq_Temp_data = fopen("arq_Temp_Data.csv","rt");
+    fprintf(arq_Shows,"[");
+    while(fscanf(arq_Temp_data,"%[^\n]",lista) == 1){
+        fprintf(arq_Shows,"%s",lista);
+    }
+    fclose(arq_Temp_data);
+    fprintf(arq_Shows,"];");
+    fclose(arq_Shows);
 }
 
 void excluir_Show(){
