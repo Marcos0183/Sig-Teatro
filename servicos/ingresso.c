@@ -15,7 +15,7 @@ void menu_Ingresso(){
     func_Ani(tempo_Ingresso);
     printf("╔══════════════════════════════════════════════════╗\n");
     func_Ani(tempo_Ingresso);
-    printf("║                MÓDULO INGRESSOS                   ║\n");
+    printf("║                MÓDULO INGRESSOS                  ║\n");
     func_Ani(tempo_Ingresso);
     printf("╠══════════════════════════════════════════════════╣\n");
     func_Ani(tempo_Ingresso);
@@ -123,21 +123,27 @@ void ingresso(){
             case 1:
                 vender_Ingresso();
                 break;
+
             case 2:
                 pesquisar_Ingresso();
                 break;
+
             case 3:
                 atualizar_Ingresso();
                 break;
+
             case 4:
                 excluir_Ingresso();
                 break;
+
             case 0:
                 break;
+
             default:
                 printf("\n \n");
                 printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
-                system("pause");
+                pausar();
+                break;
             
         }
     } while (executar_I != 0);
