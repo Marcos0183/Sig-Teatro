@@ -84,14 +84,87 @@ void cadastrar_cliente() {
 
 void atualizar_cliente(){
     char cpf[15];
+    char cpf_lido[15];
+    char nome[50];
+    char email[40];
+    char telefone[16];
+    FILE *arq_clientes;
+    FILE *arq_tempclientes;
+    int encontrado = 0;
+
+    arq_clientes = fopen("clientes.csv", "rt");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;
+    }
+
+    arq_tempclientes = fopen("clientestemp.csv", "wt");
+    if (arq_tempclientes == NULL) {
+        printf("Erro ao abrir o arquivo temporario de clientes.\n");
+        limparBuffer();
+        fclose(arq_clientes);
+        return;
+    }
+
+        
+
     char titulo[19] = "ATUALIZAR CLIENTE";
     func_Ani_Left(titulo);
 
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");
-    fgets(cpf, 15, stdin);
+    ler_string(cpf, 15);
     printf("-----------------------------------\n");
+
+    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",cpf_lido, nome, email, telefone) == 4) {
+        if (strcmp(cpf, cpf_lido) == 0) {
+            encontrado = 1;
+            printf("Cliente encontrado. Insira os novos dados:\n");
+
+            printf("-----------------------------------\n");
+            printf("|  INSIRA O CPF DO CLIENTE: ");
+            ler_string(cpf, 15);
+
+            printf("-----------------------------------\n");
+            printf("|  INSIRA O NOME DO CLIENTE: ");
+            ler_string(nome, 50);
+
+            printf("-----------------------------------\n");
+            printf("|  INSIRA O EMAIL DO CLIENTE: ");
+            ler_string(email, 40);
+
+            printf("-----------------------------------\n");
+            printf("|  INSIRA O TELEFONE: ");
+            ler_string(telefone, 16);
+            printf("-----------------------------------\n");
+        } else {
+            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
+        }
+    }
+        if (encontrado) {
+            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
+            printf("cliente %s atualizado com sucesso.\n", nome);
+        }
+        fclose(arq_clientes);
+        fclose(arq_tempclientes);
+
+
+        if (!encontrado) {
+            printf("Cliente com CPF %s não encontrado.\n", cpf);
+            remove("clientestemp.csv");
+            pausar();
+            return;
+        } else {
+            printf("Cliente com CPF %s atualizado com sucesso.\n", cpf);
+            if (remove("clientes.csv") != 0) {
+                printf("Erro ao remover clientes.csv\n");
+            }
+            if (rename("clientestemp.csv", "clientes.csv") != 0) {
+                printf("Erro ao renomear clientestemp.csv\n");
+            }  
+        }
     pausar();
 }
 
