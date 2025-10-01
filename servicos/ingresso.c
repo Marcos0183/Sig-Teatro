@@ -58,7 +58,6 @@ void vender_Ingresso(){
     printf("V----------------------------------\n");
     printf("|  INSIRA O CÓDIGO DO SHOW: ");
     ler_string(codigo_Show, 5);
-    limparBuffer();
 
 
     printf("V----------------------------------\n");
@@ -67,10 +66,11 @@ void vender_Ingresso(){
     printf("V----------------------------------\n");
 
 
-    arq_Ingresso = fopen("arq_ingresso","at");
+    arq_Ingresso = fopen("arq_ingresso.csv","at");
     fprintf(arq_Ingresso,"%s",id);
     fprintf(arq_Ingresso,"%s",codigo_Show);
     fprintf(arq_Ingresso,"%s",cadeira);
+    fclose(arq_Ingresso);
     pausar();
 }
 
