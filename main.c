@@ -60,62 +60,62 @@ void equipe(){
     int tempo_Eq = 50;
     // Desenha a letra U 
     printf("     _   _ \n");
-func_Ani(tempo_Eq);
-printf("    | | | |\n");
-func_Ani(tempo_Eq);
-printf("    | | | |\n");
-func_Ani(tempo_Eq);
-printf("    | | | |\n");
-func_Ani(tempo_Eq);
-printf("    | |_| |\n");
-func_Ani(tempo_Eq);
-printf("     \\___/ \n");
-func_Ani(tempo_Eq);
-printf("           \n");
-func_Ani(tempo_Eq);
+    func_Ani(tempo_Eq);
+    printf("    | | | |\n");
+    func_Ani(tempo_Eq);
+    printf("    | | | |\n");
+    func_Ani(tempo_Eq);
+    printf("    | | | |\n");
+    func_Ani(tempo_Eq);
+    printf("    | |_| |\n");
+    func_Ani(tempo_Eq);
+    printf("     \\___/ \n");
+    func_Ani(tempo_Eq);
+    printf("           \n");
+    func_Ani(tempo_Eq);
 
-printf("    ______ \n");
-func_Ani(tempo_Eq);
-printf("    |  ___|\n");
-func_Ani(tempo_Eq);
-printf("    | |_   \n");
-func_Ani(tempo_Eq);
-printf("    |  _|  \n");
-func_Ani(tempo_Eq);
-printf("    | |    \n");
-func_Ani(tempo_Eq);
-printf("    \\_|    \n");
-func_Ani(tempo_Eq);
-printf("           \n");
-func_Ani(tempo_Eq);
+    printf("    ______ \n");
+    func_Ani(tempo_Eq);
+    printf("    |  ___|\n");
+    func_Ani(tempo_Eq);
+    printf("    | |_   \n");
+    func_Ani(tempo_Eq);
+    printf("    |  _|  \n");
+    func_Ani(tempo_Eq);
+    printf("    | |    \n");
+    func_Ani(tempo_Eq);
+    printf("    \\_|    \n");
+    func_Ani(tempo_Eq);
+    printf("           \n");
+    func_Ani(tempo_Eq);
 
-printf("    ______ \n");
-func_Ani(tempo_Eq);
-printf("    | ___ \\\n");
-func_Ani(tempo_Eq);
-printf("    | |_/ /\n");
-func_Ani(tempo_Eq);
-printf("    |    / \n");
-func_Ani(tempo_Eq);
-printf("    | |\\ \\ \n");
-func_Ani(tempo_Eq);
-printf("    \\_| \\_|\n");
-func_Ani(tempo_Eq);
-printf("           \n");
-func_Ani(tempo_Eq);
+    printf("    ______ \n");
+    func_Ani(tempo_Eq);
+    printf("    | ___ \\\n");
+    func_Ani(tempo_Eq);
+    printf("    | |_/ /\n");
+    func_Ani(tempo_Eq);
+    printf("    |    / \n");
+    func_Ani(tempo_Eq);
+    printf("    | |\\ \\ \n");
+    func_Ani(tempo_Eq);
+    printf("    \\_| \\_|\n");
+    func_Ani(tempo_Eq);
+    printf("           \n");
+    func_Ani(tempo_Eq);
 
-printf("     _   _ \n");
-func_Ani(tempo_Eq);
-printf("    | \\ | |\n");
-func_Ani(tempo_Eq);
-printf("    |  \\| |\n");
-func_Ani(tempo_Eq);
-printf("    | . ` |\n");
-func_Ani(tempo_Eq);
-printf("    | |\\  |\n");
-func_Ani(tempo_Eq);
-printf("    \\_| \\_/\n");
-func_Ani(tempo_Eq);
+    printf("     _   _ \n");
+    func_Ani(tempo_Eq);
+    printf("    | \\ | |\n");
+    func_Ani(tempo_Eq);
+    printf("    |  \\| |\n");
+    func_Ani(tempo_Eq);
+    printf("    | . ` |\n");
+    func_Ani(tempo_Eq);
+    printf("    | |\\  |\n");
+    func_Ani(tempo_Eq);
+    printf("    \\_| \\_/\n");
+    func_Ani(tempo_Eq);
 
 
     printf("\n \n");
@@ -148,6 +148,9 @@ func_Ani(tempo_Eq);
     pausar();
     printf("\n \n \n");
 }
+
+
+
 void proj_Descrit(){
     limparTela();
     printf("\n \n");
@@ -182,8 +185,8 @@ int main(void) {
 
         if (!banner_mostrado) {
             mostrar_banner();
-            func_Ani(200000);
-            system("clear");
+            usleep(200000);
+            limparTela();
             banner_mostrado = 1; 
         }
 
