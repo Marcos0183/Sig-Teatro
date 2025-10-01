@@ -67,9 +67,9 @@ void vender_Ingresso(){
 
 
     arq_Ingresso = fopen("arq_ingresso.csv","at");
-    fprintf(arq_Ingresso,"%s",id);
-    fprintf(arq_Ingresso,"%s",codigo_Show);
-    fprintf(arq_Ingresso,"%s",cadeira);
+    fprintf(arq_Ingresso,"%s;",id);
+    fprintf(arq_Ingresso,"%s;",codigo_Show);
+    fprintf(arq_Ingresso,"%s;",cadeira);
     fclose(arq_Ingresso);
     pausar();
 }
