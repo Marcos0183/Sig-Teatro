@@ -6,6 +6,8 @@
 #include "anima.h"
 #include "utils.h"
 
+
+
 int tempo_cliente = 100;
 
 void menu_cliente(){
@@ -39,11 +41,11 @@ void menu_cliente(){
 
 
 
-void cadastrar_cliente() {
-    char cpf[20];
-    char nome[50];
-    char email[40];
-    char telefone[16];
+void cadastrar_cliente(Cliente* clt) { 
+    
+   
+    
+    
     FILE *arq_clientes;
     
     char titulo[19] = "CADASTRAR CLIENTE";
@@ -52,19 +54,19 @@ void cadastrar_cliente() {
     
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");  
-    ler_string(cpf, 20);
+    ler_string(clt->cpf, 20);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO CLIENTE: ");
-    ler_string(nome, 50);
+    ler_string(clt->nome, 50);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O EMAIL DO CLIENTE: ");
-    ler_string(email, 40);
+    ler_string(clt->email, 40);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O TELEFONE: ");
-    ler_string(telefone, 16);
+    ler_string(clt->telefone, 16);
 
     printf("-----------------------------------\n");
 
@@ -74,7 +76,7 @@ void cadastrar_cliente() {
         limparBuffer();
         return;   
     }
-    fprintf(arq_clientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
+    fprintf(arq_clientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
     fclose(arq_clientes);
     printf("Cliente cadastrado com sucesso!\n");
     pausar();
@@ -82,12 +84,8 @@ void cadastrar_cliente() {
 
 
 
-void atualizar_cliente(){
-    char cpf[15];
-    char cpf_lido[15];
-    char nome[50];
-    char email[40];
-    char telefone[16];
+void atualizar_cliente(Cliente* clt){
+    char cpf_lido1[15];
     FILE *arq_clientes;
     FILE *arq_tempclientes;
     int encontrado = 0;
@@ -115,56 +113,59 @@ void atualizar_cliente(){
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");
-    ler_string(cpf, 15);
+    ler_string(cpf_lido1, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",cpf_lido, nome, email, telefone) == 4) {
-        if (strcmp(cpf, cpf_lido) == 0) {
+
+    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",clt->cpf, clt->nome, clt->email, clt->telefone ) == 4) {
+        if (strcmp(clt->cpf, cpf_lido1) == 0) {
             encontrado = 1;
             printf("Cliente encontrado. Insira os novos dados:\n");
 
             printf("-----------------------------------\n");
             printf("|  INSIRA O CPF DO CLIENTE: ");
-            ler_string(cpf, 15);
+            ler_string(clt->cpf, 15);
 
             printf("-----------------------------------\n");
             printf("|  INSIRA O NOME DO CLIENTE: ");
-            ler_string(nome, 50);
+            ler_string(clt->nome, 50);
 
             printf("-----------------------------------\n");
             printf("|  INSIRA O EMAIL DO CLIENTE: ");
-            ler_string(email, 40);
+            ler_string(clt->email, 40);
 
             printf("-----------------------------------\n");
             printf("|  INSIRA O TELEFONE: ");
-            ler_string(telefone, 16);
+            ler_string(clt->telefone, 16);
             printf("-----------------------------------\n");
+
+            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
         } else {
-            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
+            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
         }
     }
-        if (encontrado) {
-            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
-            printf("cliente %s atualizado com sucesso.\n", nome);
-        }
-        fclose(arq_clientes);
-        fclose(arq_tempclientes);
+
+   
+    
+
+    fclose(arq_clientes);
+    fclose(arq_tempclientes);
 
 
-        if (!encontrado) {
-            printf("Cliente com CPF %s não encontrado.\n", cpf);
-            remove("clientestemp.csv");
-            pausar();
-            return;
-        } else {
-            printf("Cliente com CPF %s atualizado com sucesso.\n", cpf);
-            if (remove("clientes.csv") != 0) {
-                printf("Erro ao remover clientes.csv\n");
-            }
-            if (rename("clientestemp.csv", "clientes.csv") != 0) {
-                printf("Erro ao renomear clientestemp.csv\n");
-            }  
+    if (!encontrado) {
+        printf("Cliente com CPF %s não encontrado.\n", cpf_lido1);
+        remove("clientestemp.csv");
+        pausar();
+        return;
+    } else {
+        printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
+        if (remove("clientes.csv") != 0) {
+            printf("Erro ao remover clientes.csv\n");
         }
+        if (rename("clientestemp.csv", "clientes.csv") != 0) {
+            printf("Erro ao renomear clientestemp.csv\n");
+        }  
+    }
     pausar();
 }
 
@@ -172,10 +173,7 @@ void atualizar_cliente(){
 
 void pesquisar_cliente(){
     char cpf_lido[20];
-    char cpf[20];
-    char nome[50];
-    char email[40];
-    char telefone[16];
+    Cliente clt;
     FILE *arq_clientes;
 
     arq_clientes = fopen("clientes.csv", "rt");
@@ -194,21 +192,13 @@ void pesquisar_cliente(){
     ler_string(cpf_lido, 20);
     printf("-----------------------------------\n");
 
-    while (!feof(arq_clientes)) {
-        fscanf(arq_clientes, "%[^;]" ,cpf);
-        fgetc(arq_clientes);
-        fscanf(arq_clientes, "%[^;]", nome);
-        fgetc(arq_clientes);
-        fscanf(arq_clientes, "%[^;]", email);
-        fgetc(arq_clientes);
-        fscanf(arq_clientes, "%[^\n]", telefone);
-        fgetc(arq_clientes);
-        if (strcmp(cpf, cpf_lido) == 0) {
+    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n", clt.cpf, clt.nome, clt.email, clt.telefone) == 4) {    
+        if (strcmp(clt.cpf, cpf_lido) == 0) {
             printf("\tCliente encontrado:\n");
-            printf("\tCPF: %s\n", cpf);
-            printf("\tNome: %s\n", nome);
-            printf("\tEmail: %s\n", email);
-            printf("\tTelefone: %s\n", telefone);
+            printf("\tCPF: %s\n", clt.cpf); 
+            printf("\tNome: %s\n", clt.nome);
+            printf("\tEmail: %s\n", clt.email);
+            printf("\tTelefone: %s\n", clt.telefone);
             pausar();
             fclose(arq_clientes);
             return;
@@ -218,15 +208,13 @@ void pesquisar_cliente(){
 
 
 
-void excluir_cliente(){
+void excluir_cliente(Cliente* clt){
+
     int encontrado = 0;
     FILE *arq_clientes;
     FILE *arq_tempclientes;
-    char cpf[15];
     char cpf_lido[15];
-    char nome[50];
-    char email[40];
-    char telefone[16];
+
     char titulo[19] = "EXCLUIR CLIENTE";
     func_Ani_Left(titulo);
 
@@ -251,9 +239,10 @@ void excluir_cliente(){
     ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",cpf, nome, email, telefone) == 4) {
-        if (strcmp(cpf, cpf_lido) != 0) {
-            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
+
+        while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n", clt->cpf, clt->nome, clt->email, clt->telefone ) == 4) {
+        if (strcmp(clt->cpf, cpf_lido) != 0) {
+            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
         } else {
             encontrado = 1;
         }
@@ -302,6 +291,7 @@ void listar_cliente(){
 
 
 void cliente(){
+    Cliente clt;
     int executar_C;
 
     do {
@@ -311,19 +301,19 @@ void cliente(){
 
         switch (executar_C) {
             case 1:
-                cadastrar_cliente();
+                cadastrar_cliente(&clt);
                 break;
             case 2:
-                pesquisar_cliente();
+                pesquisar_cliente(clt);
                 break;
             case 3:
-                atualizar_cliente();
+                atualizar_cliente(&clt);
                 break;
             case 4:
-                excluir_cliente();
+                excluir_cliente(&clt);
                 break;
             case 5:
-                listar_cliente();
+                listar_cliente(clt);
                 break;
 
             case 0:

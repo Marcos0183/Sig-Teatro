@@ -37,36 +37,32 @@ void menu_Tecnicos(){
 
 
 
-void cadastro_Tecnico(){
+void cadastro_Tecnico(Tecnico* tec){
     FILE *arq_tecnicos;
-    char cpf[20];   
-    char nome[50];
-    char funcao[16];
-    char email[40];
-    char telefone[16];
+    
     
     char titulo[19] = "CADASTRAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO TECNICO: ");  //** Deixarei assim por enquanto, sem validação
-    ler_string(cpf, 20);
+    ler_string(tec->cpf, 15);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO TECNICO: ");
-    ler_string(nome, 50);
+    ler_string(tec->nome, 50);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
-    ler_string(funcao, 16);
+    ler_string(tec->funcao, 16);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O EMAIL DO TECNICO: ");
-    ler_string(email, 40);
+    ler_string(tec->email, 40);
     printf("-----------------------------------\n");//
     
     printf("|  INSIRA O TELEFONE: ");
-    ler_string(telefone, 16);
+    ler_string(tec->telefone, 16);
     printf("-----------------------------------\n");
 
     arq_tecnicos = fopen("tecnicos.csv", "at");
@@ -75,7 +71,7 @@ void cadastro_Tecnico(){
         limparBuffer();
         return;   
     }
-    fprintf(arq_tecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+    fprintf(arq_tecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
     fclose(arq_tecnicos);
     printf("Técnico cadastrado com sucesso!\n");
     pausar();
@@ -83,14 +79,9 @@ void cadastro_Tecnico(){
 
 
 
-void atualizar_Tecnico(){
+void atualizar_Tecnico(Tecnico* tec) {
 
-    char cpf [15];
     char cpf_lido[15];
-    char nome[50];
-    char funcao[16];
-    char email[40];
-    char telefone[16];
     FILE *arq_tecnicos;
     FILE *arq_temptecnicos;
     int encontrado = 0;
@@ -117,36 +108,36 @@ void atualizar_Tecnico(){
     ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n",cpf, nome, funcao, email, telefone) == 5) {
-        if (strcmp(cpf, cpf_lido) == 0) {
+    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
+        if (strcmp(tec->cpf, cpf_lido) == 0) {
             encontrado = 1;
             printf("Técnico encontrado. Insira os novos dados:\n");
 
             printf("-----------------------------------\n");
             printf("|  INSIRA O CPF DO TECNICO: ");
-            ler_string(cpf, 15);
+            ler_string(tec->cpf, 15);
 
             printf("-----------------------------------\n");
             printf("|  INSIRA O NOME DO TECNICO: ");
-            ler_string(nome, 50);
+            ler_string(tec->nome, 50);
 
             printf("-----------------------------------\n");
             printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
-            ler_string(funcao, 16);
+            ler_string(tec->funcao, 16);
 
             printf("-----------------------------------\n");
 
             printf("|  INSIRA O EMAIL DO TECNICO: ");
-            ler_string(email, 40);
-            printf("-----------------------------------\n");
+            ler_string(tec->email, 40);
 
+            printf("-----------------------------------\n");
             printf("|  INSIRA O TELEFONE: ");
-            ler_string(telefone, 16);
+            ler_string(tec->telefone, 16);
             printf("-----------------------------------\n");
 
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
         } else {
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
         }
     }
 
@@ -154,7 +145,7 @@ void atualizar_Tecnico(){
     fclose(arq_temptecnicos);
 
     if (!encontrado) {
-        printf("Técnico com CPF %s não encontrado.\n", cpf);
+        printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
         remove("tecnicostemp.csv");
         pausar();
         return;
@@ -177,13 +168,9 @@ void atualizar_Tecnico(){
 
 
 
-void pesquisar_Tecnico(){
+void pesquisar_Tecnico(Tecnico* tec){
+
     char cpf_lido[15];
-    char cpf[15];
-    char nome[50];
-    char funcao[16];
-    char email[40];
-    char telefone[16];
     FILE *arq_tecnicos;
     
     char titulo[19] = "PESQUISAR TECNICO";
@@ -199,24 +186,14 @@ void pesquisar_Tecnico(){
         limparBuffer();
         return;   
     }
-    while (!feof(arq_tecnicos)) {
-        fscanf(arq_tecnicos, "%[^;]" ,cpf);
-        fgetc(arq_tecnicos);
-        fscanf(arq_tecnicos, "%[^;]", nome);
-        fgetc(arq_tecnicos);
-        fscanf(arq_tecnicos, "%[^;]", funcao);
-        fgetc(arq_tecnicos);
-        fscanf(arq_tecnicos, "%[^;]", email);
-        fgetc(arq_tecnicos);
-        fscanf(arq_tecnicos, "%[^\n]", telefone);
-        fgetc(arq_tecnicos);
-        if (strcmp(cpf, cpf_lido) == 0) {
+    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
+        if (strcmp(tec->cpf, cpf_lido) == 0) {
             printf("\tTécnico encontrado:\n");
-            printf("\tCPF: %s\n", cpf);
-            printf("\tNome: %s\n", nome);
-            printf("\tFunção: %s\n", funcao);
-            printf("\tEmail: %s\n", email);
-            printf("\tTelefone: %s\n", telefone);
+            printf("\tCPF: %s\n", tec->cpf);
+            printf("\tNome: %s\n", tec->nome);
+            printf("\tFunção: %s\n", tec->funcao);
+            printf("\tEmail: %s\n", tec->email);
+            printf("\tTelefone: %s\n", tec->telefone);
             pausar();
             fclose(arq_tecnicos);
             return;
@@ -230,18 +207,13 @@ void pesquisar_Tecnico(){
 
 
 
-void excluir_Tecnico(){
+void excluir_Tecnico(Tecnico* tec){
 
     FILE *arq_tecnicos;
     FILE *arq_temptecnicos;
     int encontrado = 0; 
     char cpf_lido[15];
-    char cpf[15];
-    char nome[50];
-    char funcao[16];
-    char email[40];
-    char telefone[16];
-
+    
     arq_tecnicos = fopen("tecnicos.csv", "rt");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de tecnicos.\n");
@@ -268,9 +240,9 @@ void excluir_Tecnico(){
     ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n",cpf, nome, funcao, email, telefone) == 5) {
-        if (strcmp(cpf, cpf_lido) != 0) {
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n",tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
+        if (strcmp(tec->cpf, cpf_lido) != 0) {
+            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
         } else {
             encontrado = 1;
         }
@@ -292,13 +264,16 @@ void excluir_Tecnico(){
         if (rename("tecnicostemp.csv", "tecnicos.csv") != 0) {
             printf("Erro ao renomear tecnicostemp.csv\n");
         }
-    }
-
+    } 
+    printf("Técnico excluido com sucesso!\n");
+    pausar();
+    
 }
 
 
 
 void tecnicos(){
+    Tecnico tec;
     int executar_T;
     do {
         menu_Tecnicos();
@@ -308,19 +283,19 @@ void tecnicos(){
         
         switch (executar_T){
             case 1:
-                cadastro_Tecnico();
+                cadastro_Tecnico(&tec);
                 break;
 
             case 2:
-                pesquisar_Tecnico();
+                pesquisar_Tecnico(&tec);
                 break;
 
             case 3:
-                atualizar_Tecnico();
+                atualizar_Tecnico(&tec);
                 break;
 
             case 4:
-                excluir_Tecnico();
+                excluir_Tecnico(&tec);
                 break;
 
             case 0:
