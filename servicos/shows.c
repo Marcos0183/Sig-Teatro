@@ -74,9 +74,9 @@ void cadastrar_Show(){
             printf("|  INSIRA A/AS DURACAOS DO SHOW: ");
             ler_string(duracao,6);
             arq_Temp_data = fopen("arq_Temp_Data.csv","at");
-            fprintf(arq_Temp_data,"%s;",data);
-            fprintf(arq_Temp_data,"%s;",hora);
-            fprintf(arq_Temp_data,"%s\n",duracao);
+            fprintf(arq_Temp_data,"%s,",data);
+            fprintf(arq_Temp_data,"%s,",hora);
+            fprintf(arq_Temp_data,"%s,\n",duracao);
             fclose(arq_Temp_data);
         } 
     }
@@ -85,6 +85,7 @@ void cadastrar_Show(){
     parar = 1;
     FILE *arq_Temp_pers;
     arq_Temp_pers = fopen("arq_Temp_Pers.csv","wt");
+    arq_Temp_pers = fopen("arq_Temp_Pers.csv","at");
     printf("V----------------------------------\n");
     while(parar){
         printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
@@ -93,11 +94,11 @@ void cadastrar_Show(){
         comp_3 = personagens;
         if(strcmp(comp_3,comp_1) == 0 || strcmp(comp_3,comp_2) == 0) parar = 0;
         else{
-            arq_Temp_pers = fopen("arq_Temp_Pers.csv","at");
-            fprintf(arq_Temp_pers,"%s;",personagens);
-            fclose(arq_Temp_pers);
+            fprintf(arq_Temp_pers,"%s,",personagens);
         }
     }
+    fprintf(arq_Temp_pers,"\n");
+    fclose(arq_Temp_pers);
 
     
     FILE *arq_Shows;
@@ -107,10 +108,22 @@ void cadastrar_Show(){
     fprintf(arq_Shows,"[");
     while(fscanf(arq_Temp_data,"%[^\n]",lista) == 1){
         fprintf(arq_Shows,"%s",lista);
+        fgetc(arq_Temp_data);
     }
     fclose(arq_Temp_data);
     fprintf(arq_Shows,"];");
+
+    
+    arq_Temp_pers = fopen("arq_Temp_Pers.csv","rt");
+    fprintf(arq_Shows,"[");
+    while(fscanf(arq_Temp_pers,"%[^\n]",lista) == 1){
+        fprintf(arq_Shows,"%s",lista);
+        fgetc(arq_Temp_data);
+    }
+    fprintf(arq_Shows,"]\n");
+    fclose(arq_Temp_pers);
     fclose(arq_Shows);
+    system("pauser");
 }
 
 void excluir_Show(){
