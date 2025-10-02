@@ -85,7 +85,7 @@ void cadastrar_cliente(Cliente* clt) {
 
 
 void atualizar_cliente(Cliente* clt){
-    char cpf_lido[15];
+    char cpf_lido1[15];
     FILE *arq_clientes;
     FILE *arq_tempclientes;
     int encontrado = 0;
@@ -113,11 +113,13 @@ void atualizar_cliente(Cliente* clt){
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO CLIENTE: ");
-    ler_string(cpf_lido, 15);
+    ler_string(cpf_lido1, 15);
     printf("-----------------------------------\n");
 
+    Cliente buffer;
+
     while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",clt->cpf, clt->nome, clt->email, clt->telefone ) == 4) {
-        if (strcmp(clt->cpf, cpf_lido) == 0) {
+        if (strcmp(clt->cpf, cpf_lido1) == 0) {
             encontrado = 1;
             printf("Cliente encontrado. Insira os novos dados:\n");
 
@@ -152,12 +154,12 @@ void atualizar_cliente(Cliente* clt){
 
 
     if (!encontrado) {
-        printf("Cliente com CPF %s não encontrado.\n", cpf_lido);
+        printf("Cliente com CPF %s não encontrado.\n", cpf_lido1);
         remove("clientestemp.csv");
         pausar();
         return;
     } else {
-        printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido);
+        printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
         if (remove("clientes.csv") != 0) {
             printf("Erro ao remover clientes.csv\n");
         }
@@ -172,10 +174,7 @@ void atualizar_cliente(Cliente* clt){
 
 void pesquisar_cliente(){
     char cpf_lido[20];
-    char cpf[20];
-    char nome[50];
-    char email[40];
-    char telefone[16];
+    Cliente clt;
     FILE *arq_clientes;
 
     arq_clientes = fopen("clientes.csv", "rt");
@@ -194,21 +193,13 @@ void pesquisar_cliente(){
     ler_string(cpf_lido, 20);
     printf("-----------------------------------\n");
 
-    while (!feof(arq_clientes)) {
-        fscanf(arq_clientes, "%[^;]" ,cpf);
-        fgetc(arq_clientes);
-        fscanf(arq_clientes, "%[^;]", nome);
-        fgetc(arq_clientes);
-        fscanf(arq_clientes, "%[^;]", email);
-        fgetc(arq_clientes);
-        fscanf(arq_clientes, "%[^\n]", telefone);
-        fgetc(arq_clientes);
-        if (strcmp(cpf, cpf_lido) == 0) {
+    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n", clt.cpf, clt.nome, clt.email, clt.telefone) == 4) {    
+        if (strcmp(clt.cpf, cpf_lido) == 0) {
             printf("\tCliente encontrado:\n");
-            printf("\tCPF: %s\n", cpf);
-            printf("\tNome: %s\n", nome);
-            printf("\tEmail: %s\n", email);
-            printf("\tTelefone: %s\n", telefone);
+            printf("\tCPF: %s\n", clt.cpf); 
+            printf("\tNome: %s\n", clt.nome);
+            printf("\tEmail: %s\n", clt.email);
+            printf("\tTelefone: %s\n", clt.telefone);
             pausar();
             fclose(arq_clientes);
             return;
