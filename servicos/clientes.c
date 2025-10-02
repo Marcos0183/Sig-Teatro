@@ -116,7 +116,6 @@ void atualizar_cliente(Cliente* clt){
     ler_string(cpf_lido1, 15);
     printf("-----------------------------------\n");
 
-    Cliente buffer;
 
     while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",clt->cpf, clt->nome, clt->email, clt->telefone ) == 4) {
         if (strcmp(clt->cpf, cpf_lido1) == 0) {
@@ -209,15 +208,13 @@ void pesquisar_cliente(){
 
 
 
-void excluir_cliente(){
+void excluir_cliente(Cliente* clt){
+
     int encontrado = 0;
     FILE *arq_clientes;
     FILE *arq_tempclientes;
-    char cpf[15];
     char cpf_lido[15];
-    char nome[50];
-    char email[40];
-    char telefone[16];
+
     char titulo[19] = "EXCLUIR CLIENTE";
     func_Ani_Left(titulo);
 
@@ -242,9 +239,10 @@ void excluir_cliente(){
     ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",cpf, nome, email, telefone) == 4) {
-        if (strcmp(cpf, cpf_lido) != 0) {
-            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", cpf, nome, email, telefone);
+
+        while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n", clt->cpf, clt->nome, clt->email, clt->telefone ) == 4) {
+        if (strcmp(clt->cpf, cpf_lido) != 0) {
+            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
         } else {
             encontrado = 1;
         }
