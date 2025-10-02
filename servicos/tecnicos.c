@@ -37,36 +37,32 @@ void menu_Tecnicos(){
 
 
 
-void cadastro_Tecnico(){
+void cadastro_Tecnico(Tecnico* tec){
     FILE *arq_tecnicos;
-    char cpf[20];   
-    char nome[50];
-    char funcao[16];
-    char email[40];
-    char telefone[16];
+    
     
     char titulo[19] = "CADASTRAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO TECNICO: ");  //** Deixarei assim por enquanto, sem validação
-    ler_string(cpf, 20);
+    ler_string(tec->cpf, 15);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO TECNICO: ");
-    ler_string(nome, 50);
+    ler_string(tec->nome, 50);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
-    ler_string(funcao, 16);
+    ler_string(tec->funcao, 16);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O EMAIL DO TECNICO: ");
-    ler_string(email, 40);
+    ler_string(tec->email, 40);
     printf("-----------------------------------\n");//
     
     printf("|  INSIRA O TELEFONE: ");
-    ler_string(telefone, 16);
+    ler_string(tec->telefone, 16);
     printf("-----------------------------------\n");
 
     arq_tecnicos = fopen("tecnicos.csv", "at");
@@ -75,7 +71,7 @@ void cadastro_Tecnico(){
         limparBuffer();
         return;   
     }
-    fprintf(arq_tecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+    fprintf(arq_tecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
     fclose(arq_tecnicos);
     printf("Técnico cadastrado com sucesso!\n");
     pausar();
@@ -299,6 +295,7 @@ void excluir_Tecnico(){
 
 
 void tecnicos(){
+    Tecnico tec;
     int executar_T;
     do {
         menu_Tecnicos();
@@ -308,19 +305,19 @@ void tecnicos(){
         
         switch (executar_T){
             case 1:
-                cadastro_Tecnico();
+                cadastro_Tecnico(&tec);
                 break;
 
             case 2:
-                pesquisar_Tecnico();
+                pesquisar_Tecnico(tec);
                 break;
 
             case 3:
-                atualizar_Tecnico();
+                atualizar_Tecnico(&tec);
                 break;
 
             case 4:
-                excluir_Tecnico();
+                excluir_Tecnico(&tec);
                 break;
 
             case 0:
