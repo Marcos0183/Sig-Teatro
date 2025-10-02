@@ -168,13 +168,9 @@ void atualizar_Tecnico(Tecnico* tec) {
 
 
 
-void pesquisar_Tecnico(){
+void pesquisar_Tecnico(Tecnico* tec){
+
     char cpf_lido[15];
-    char cpf[15];
-    char nome[50];
-    char funcao[16];
-    char email[40];
-    char telefone[16];
     FILE *arq_tecnicos;
     
     char titulo[19] = "PESQUISAR TECNICO";
@@ -190,24 +186,14 @@ void pesquisar_Tecnico(){
         limparBuffer();
         return;   
     }
-    while (!feof(arq_tecnicos)) {
-        fscanf(arq_tecnicos, "%[^;]" ,cpf);
-        fgetc(arq_tecnicos);
-        fscanf(arq_tecnicos, "%[^;]", nome);
-        fgetc(arq_tecnicos);
-        fscanf(arq_tecnicos, "%[^;]", funcao);
-        fgetc(arq_tecnicos);
-        fscanf(arq_tecnicos, "%[^;]", email);
-        fgetc(arq_tecnicos);
-        fscanf(arq_tecnicos, "%[^\n]", telefone);
-        fgetc(arq_tecnicos);
-        if (strcmp(cpf, cpf_lido) == 0) {
+    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
+        if (strcmp(tec->cpf, cpf_lido) == 0) {
             printf("\tTécnico encontrado:\n");
-            printf("\tCPF: %s\n", cpf);
-            printf("\tNome: %s\n", nome);
-            printf("\tFunção: %s\n", funcao);
-            printf("\tEmail: %s\n", email);
-            printf("\tTelefone: %s\n", telefone);
+            printf("\tCPF: %s\n", tec->cpf);
+            printf("\tNome: %s\n", tec->nome);
+            printf("\tFunção: %s\n", tec->funcao);
+            printf("\tEmail: %s\n", tec->email);
+            printf("\tTelefone: %s\n", tec->telefone);
             pausar();
             fclose(arq_tecnicos);
             return;
@@ -221,18 +207,13 @@ void pesquisar_Tecnico(){
 
 
 
-void excluir_Tecnico(){
+void excluir_Tecnico(Tecnico* tec){
 
     FILE *arq_tecnicos;
     FILE *arq_temptecnicos;
     int encontrado = 0; 
     char cpf_lido[15];
-    char cpf[15];
-    char nome[50];
-    char funcao[16];
-    char email[40];
-    char telefone[16];
-
+    
     arq_tecnicos = fopen("tecnicos.csv", "rt");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de tecnicos.\n");
@@ -259,9 +240,9 @@ void excluir_Tecnico(){
     ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n",cpf, nome, funcao, email, telefone) == 5) {
-        if (strcmp(cpf, cpf_lido) != 0) {
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n",tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
+        if (strcmp(tec->cpf, cpf_lido) != 0) {
+            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
         } else {
             encontrado = 1;
         }
@@ -283,8 +264,10 @@ void excluir_Tecnico(){
         if (rename("tecnicostemp.csv", "tecnicos.csv") != 0) {
             printf("Erro ao renomear tecnicostemp.csv\n");
         }
-    }
-
+    } 
+    printf("Técnico excluido com sucesso!\n");
+    pausar();
+    
 }
 
 
@@ -304,7 +287,7 @@ void tecnicos(){
                 break;
 
             case 2:
-                pesquisar_Tecnico(tec);
+                pesquisar_Tecnico(&tec);
                 break;
 
             case 3:
