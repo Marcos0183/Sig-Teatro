@@ -79,14 +79,9 @@ void cadastro_Tecnico(Tecnico* tec){
 
 
 
-void atualizar_Tecnico(){
+void atualizar_Tecnico(Tecnico* tec) {
 
-    char cpf [15];
     char cpf_lido[15];
-    char nome[50];
-    char funcao[16];
-    char email[40];
-    char telefone[16];
     FILE *arq_tecnicos;
     FILE *arq_temptecnicos;
     int encontrado = 0;
@@ -113,36 +108,36 @@ void atualizar_Tecnico(){
     ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n",cpf, nome, funcao, email, telefone) == 5) {
-        if (strcmp(cpf, cpf_lido) == 0) {
+    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
+        if (strcmp(tec->cpf, cpf_lido) == 0) {
             encontrado = 1;
             printf("Técnico encontrado. Insira os novos dados:\n");
 
             printf("-----------------------------------\n");
             printf("|  INSIRA O CPF DO TECNICO: ");
-            ler_string(cpf, 15);
+            ler_string(tec->cpf, 15);
 
             printf("-----------------------------------\n");
             printf("|  INSIRA O NOME DO TECNICO: ");
-            ler_string(nome, 50);
+            ler_string(tec->nome, 50);
 
             printf("-----------------------------------\n");
             printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
-            ler_string(funcao, 16);
+            ler_string(tec->funcao, 16);
 
             printf("-----------------------------------\n");
 
             printf("|  INSIRA O EMAIL DO TECNICO: ");
-            ler_string(email, 40);
-            printf("-----------------------------------\n");
+            ler_string(tec->email, 40);
 
+            printf("-----------------------------------\n");
             printf("|  INSIRA O TELEFONE: ");
-            ler_string(telefone, 16);
+            ler_string(tec->telefone, 16);
             printf("-----------------------------------\n");
 
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
         } else {
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", cpf, nome, funcao, email, telefone);
+            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
         }
     }
 
@@ -150,7 +145,7 @@ void atualizar_Tecnico(){
     fclose(arq_temptecnicos);
 
     if (!encontrado) {
-        printf("Técnico com CPF %s não encontrado.\n", cpf);
+        printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
         remove("tecnicostemp.csv");
         pausar();
         return;
