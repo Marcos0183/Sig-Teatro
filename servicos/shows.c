@@ -6,6 +6,13 @@
 #include "anima.h"
 #include "utils.h"
 
+struct dados_Show{
+    char nome[32]; 
+    char data[12];
+    char hora[6];
+    char duracao[6];
+    char personagens[27];
+};
 int tempo_Shows = 100;
 
 
@@ -43,18 +50,14 @@ void cadastrar_Show(){
     char *comp_2 = "s";
     char *comp_3;
     char lista[150];
-    char nome[32]; 
-    char data[12];
-    char hora[6];
-    char duracao[6];
-    char personagens[27];
+    struct dados_Show dados;
     char titulo[16] = "CADASTRAR SHOW";
     func_Ani_Left(titulo);
 
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO SHOW: ");
-    ler_string(nome,32);
+    ler_string(dados.nome,32);
     
 
     int parar = 1;
@@ -63,20 +66,20 @@ void cadastrar_Show(){
     while(parar){
         printf("V----------------------------------\n");
         printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-        ler_string(data,12);
-        char *comp_3 = data;
+        ler_string(dados.data,12);
+        char *comp_3 = dados.data;
         if(strcmp(comp_3,comp_1) == 0 || strcmp(comp_3,comp_2) == 0) parar = 0;
         else{
             printf("V----------------------------------\n");
             printf("|  INSIRA A HORA DE INÍCO DO SHOW: ");
-            ler_string(hora,6);
+            ler_string(dados.hora,6);
             printf("V----------------------------------\n");
             printf("|  INSIRA A/AS DURACAOS DO SHOW: ");
-            ler_string(duracao,6);
+            ler_string(dados.duracao,6);
             arq_Temp_data = fopen("arq_Temp_Data.csv","at");
-            fprintf(arq_Temp_data,"%s,",data);
-            fprintf(arq_Temp_data,"%s,",hora);
-            fprintf(arq_Temp_data,"%s,\n",duracao);
+            fprintf(arq_Temp_data,"%s,",dados.data);
+            fprintf(arq_Temp_data,"%s,",dados.hora);
+            fprintf(arq_Temp_data,"%s,\n",dados.duracao);
             fclose(arq_Temp_data);
         } 
     }
@@ -89,12 +92,12 @@ void cadastrar_Show(){
     printf("V----------------------------------\n");
     while(parar){
         printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-        ler_string(personagens,27);
+        ler_string(dados.personagens,27);
         printf("V----------------------------------\n");
-        comp_3 = personagens;
+        comp_3 = dados.personagens;
         if(strcmp(comp_3,comp_1) == 0 || strcmp(comp_3,comp_2) == 0) parar = 0;
         else{
-            fprintf(arq_Temp_pers,"%s,",personagens);
+            fprintf(arq_Temp_pers,"%s,",dados.personagens);
         }
     }
     fprintf(arq_Temp_pers,"\n");
@@ -103,7 +106,7 @@ void cadastrar_Show(){
     
     FILE *arq_Shows;
     arq_Shows = fopen("arq_shows.csv","at");
-    fprintf(arq_Shows,"%s;",nome);
+    fprintf(arq_Shows,"%s;",dados.nome);
     arq_Temp_data = fopen("arq_Temp_Data.csv","rt");
     fprintf(arq_Shows,"[");
     while(fscanf(arq_Temp_data,"%[^\n]",lista) == 1){
@@ -125,6 +128,7 @@ void cadastrar_Show(){
     fclose(arq_Shows);
     system("pauser");
 }
+
 
 void excluir_Show(){
     int codigo;
