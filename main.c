@@ -185,7 +185,7 @@ int main(void) {
 
         if (!banner_mostrado) {
             mostrar_banner();
-            usleep(200000);
+            usleep(2000000);
             limparTela();
             banner_mostrado = 1; 
         }
