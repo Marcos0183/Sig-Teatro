@@ -5,7 +5,8 @@
 #include "clientes.h"
 #include "anima.h"
 #include "utils.h"
-
+#define true 1
+#define false 0
 
 
 int tempo_cliente = 100;
@@ -41,12 +42,11 @@ void menu_cliente(){
 
 
 
-void cadastrar_cliente(Cliente* clt) { 
+void cadastrar_cliente() { 
     
-   
-    
-    
+    Cliente *clt;
     FILE *arq_clientes;
+    clt = (Cliente*) malloc(sizeof(Cliente));
     
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
@@ -70,21 +70,26 @@ void cadastrar_cliente(Cliente* clt) {
 
     printf("-----------------------------------\n");
 
-    arq_clientes = fopen("clientes.csv", "at");
+    clt->status = true;
+
+    arq_clientes = fopen("clientes.dat", "ab");
     if (arq_clientes == NULL) {
-        printf("Erro ao abrir o arquivo de clientes.\n");
         limparBuffer();
-        return;   
+        fclose(arq_clientes);
+        return;
     }
-    fprintf(arq_clientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
+    fwrite(clt, sizeof(Cliente), 1, arq_clientes);
     fclose(arq_clientes);
-    printf("Cliente cadastrado com sucesso!\n");
+    free(clt);
+
+        printf("Cliente cadastrado com sucesso!\n");
     pausar();
 }
 
 
 
-void atualizar_cliente(Cliente* clt){
+void atualizar_cliente(){
+    Cliente* clt;
     char cpf_lido1[15];
     FILE *arq_clientes;
     FILE *arq_tempclientes;
@@ -115,7 +120,7 @@ void atualizar_cliente(Cliente* clt){
     printf("|  INSIRA O CPF DO CLIENTE: ");
     ler_string(cpf_lido1, 15);
     printf("-----------------------------------\n");
-
+       
 
     while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",clt->cpf, clt->nome, clt->email, clt->telefone ) == 4) {
         if (strcmp(clt->cpf, cpf_lido1) == 0) {
@@ -208,8 +213,8 @@ void pesquisar_cliente(){
 
 
 
-void excluir_cliente(Cliente* clt){
-
+void excluir_cliente(){
+    Cliente* clt;
     int encontrado = 0;
     FILE *arq_clientes;
     FILE *arq_tempclientes;
@@ -281,17 +286,35 @@ fclose(arq_tempclientes);
 
 
 void listar_cliente(){
+
+    FILE *arq_clientes;
+    Cliente *clt;
+    clt = (Cliente*) malloc(sizeof(Cliente));
+    arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) { 
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;   
+    }
     char titulo[16] = "LISTAR CLIENTE";
     func_Ani_Left(titulo);
     printf("\n \n");
-    printf("Listando todos os clientes...\n");
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        printf("CPF: %s\n", clt->cpf);
+        printf("Nome: %s\n", clt->nome);
+        printf("Email: %s\n", clt->email);
+        printf("Telefone: %s\n", clt->telefone);
+        printf("-------------------------\n");
+    }
+    fclose(arq_clientes);
+    free(clt);
+    
     pausar();
 }
 
 
 
 void cliente(){
-    Cliente clt;
     int executar_C;
 
     do {
@@ -301,19 +324,19 @@ void cliente(){
 
         switch (executar_C) {
             case 1:
-                cadastrar_cliente(&clt);
+                cadastrar_cliente();
                 break;
             case 2:
-                pesquisar_cliente(clt);
+                pesquisar_cliente();
                 break;
             case 3:
-                atualizar_cliente(&clt);
+                atualizar_cliente();
                 break;
             case 4:
-                excluir_cliente(&clt);
+                excluir_cliente();
                 break;
             case 5:
-                listar_cliente(clt);
+                listar_cliente();
                 break;
 
             case 0:
