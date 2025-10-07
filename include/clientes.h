@@ -6,6 +6,7 @@ typedef struct {
     char nome[50];
     char email[40];
     char telefone[16];
+    int status;
 } Cliente; 
 
 void cliente();
