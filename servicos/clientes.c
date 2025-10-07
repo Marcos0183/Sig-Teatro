@@ -178,15 +178,11 @@ void atualizar_cliente(){
 
 void pesquisar_cliente(){
     char cpf_lido[20];
-    Cliente clt;
+    Cliente* clt;
     FILE *arq_clientes;
+    clt = (Cliente*) malloc(sizeof(Cliente));
 
-    arq_clientes = fopen("clientes.csv", "rt");
-    if (arq_clientes == NULL) {
-        printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
-        return;   
-    }
+
 
     char titulo[19] = "PESQUISAR CLIENTE";
     func_Ani_Left(titulo);
@@ -197,21 +193,28 @@ void pesquisar_cliente(){
     ler_string(cpf_lido, 20);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n", clt.cpf, clt.nome, clt.email, clt.telefone) == 4) {    
-        if (strcmp(clt.cpf, cpf_lido) == 0) {
-            printf("\tCliente encontrado:\n");
-            printf("\tCPF: %s\n", clt.cpf); 
-            printf("\tNome: %s\n", clt.nome);
-            printf("\tEmail: %s\n", clt.email);
-            printf("\tTelefone: %s\n", clt.telefone);
-            pausar();
-            fclose(arq_clientes);
-            return;
+    arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;
+    
+    }
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if ((strcmp(clt->cpf, cpf_lido) == 0) && (clt->status == true)) {
+            printf("Cliente encontrado:\n");
+            printf("CPF: %s\n", clt->cpf);
+            printf("Nome: %s\n", clt->nome);
+            printf("Email: %s\n", clt->email);
+            printf("Telefone: %s\n", clt->telefone);
         }
     }
+
+    fclose(arq_clientes);
+    free(clt);
+    pausar();   
+
 }
-
-
 
 void excluir_cliente(){
     Cliente* clt;
