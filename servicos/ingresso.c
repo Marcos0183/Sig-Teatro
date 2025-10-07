@@ -6,13 +6,6 @@
 #include "ingresso.h"
 #include "utils.h"
 
-struct vender_Ingresso
-{
-    char id[6];
-    char codigo_Show[5];
-    char cadeira[5];
-};
-
 int tempo_Ingresso = 100;
 
 
@@ -49,7 +42,8 @@ void menu_Ingresso(){
 
 void vender_Ingresso(){
     FILE *arq_Ingresso;
-    struct vender_Ingresso dados;
+    Dados *dados;
+    dados = (Dados*) malloc(sizeof(Dados));
     char titulo[16] = "VENDER INGRESSO";
     
     func_Ani_Left(titulo);
@@ -57,26 +51,24 @@ void vender_Ingresso(){
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA SEU ID DE CLIENTE - SEM ID DIGITE (C) PARA CADASTRAR-SE: ");
-    ler_string(dados.id, 6);
+    ler_string(dados->id, 6);
 
 
     printf("V----------------------------------\n");
     printf("|  INSIRA O CÓDIGO DO SHOW: ");
-    ler_string(dados.codigo_Show, 5);
+    ler_string(dados->codigo_Show, 5);
 
 
     printf("V----------------------------------\n");
     printf("|  ESCOLHA SUA CADEIRA: ");
-    ler_string(dados.cadeira,5);
+    ler_string(dados->cadeira,5);
     printf("V----------------------------------\n");
 
-
-    arq_Ingresso = fopen("arq_ingresso.csv","at");
-    fprintf(arq_Ingresso,"%s;",dados.id);
-    fprintf(arq_Ingresso,"%s;",dados.codigo_Show);
-    fprintf(arq_Ingresso,"%s;",dados.cadeira);
+    dados->status = "V";
+    arq_Ingresso = fopen("arq_ingresso.dat","ab");
+    fwrite(dados,sizeof(Dados),1,arq_Ingresso);
     fclose(arq_Ingresso);
-    pausar();
+    free(dados);
 }
 
 
