@@ -6,13 +6,6 @@
 #include "anima.h"
 #include "utils.h"
 
-struct dados_Show{
-    char nome[32]; 
-    char data[12];
-    char hora[6];
-    char duracao[6];
-    char personagens[27];
-};
 int tempo_Shows = 100;
 
 
@@ -50,14 +43,14 @@ void cadastrar_Show(){
     char *comp_2 = "s";
     char *comp_3;
     char lista[150];
-    struct dados_Show dados;
+    Dados *dados;
     char titulo[16] = "CADASTRAR SHOW";
     func_Ani_Left(titulo);
 
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO SHOW: ");
-    ler_string(dados.nome,32);
+    ler_string(dados->nome,32);
     
 
     int parar = 1;
