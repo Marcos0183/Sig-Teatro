@@ -181,6 +181,11 @@ void pesquisar_cliente(){
     Cliente* clt;
     FILE *arq_clientes;
     clt = (Cliente*) malloc(sizeof(Cliente));
+    if (clt == NULL) {
+        printf("Erro ao alocar memoria para o cliente.\n");
+        return;
+    }
+    
 
 
 
