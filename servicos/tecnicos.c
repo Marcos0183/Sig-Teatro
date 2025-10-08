@@ -41,13 +41,19 @@ void menu_Tecnicos(){
 
 void cadastro_Tecnico(Tecnico* tec){
     FILE *arq_tecnicos;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
+    if (tec == NULL) {
+        printf("Erro ao alocar memoria para o tecnico.\n");
+        return;
+    }
+
     
     
     char titulo[19] = "CADASTRAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
     printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TECNICO: ");  //** Deixarei assim por enquanto, sem validação
+    printf("|  INSIRA O CPF DO TECNICO: ");  
     ler_string(tec->cpf, 15);
 
     printf("-----------------------------------\n");
@@ -67,14 +73,17 @@ void cadastro_Tecnico(Tecnico* tec){
     ler_string(tec->telefone, 16);
     printf("-----------------------------------\n");
 
-    arq_tecnicos = fopen("tecnicos.csv", "at");
+    tec->status = true; 
+
+    arq_tecnicos = fopen("tecnicos.dat", "ab");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de tecnicos.\n");
         limparBuffer();
         return;   
     }
-    fprintf(arq_tecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
+    fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
     fclose(arq_tecnicos);
+    free(tec);
     printf("Técnico cadastrado com sucesso!\n");
     pausar();
 }
