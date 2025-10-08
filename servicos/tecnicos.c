@@ -39,8 +39,9 @@ void menu_Tecnicos(){
 
 
 
-void cadastro_Tecnico(Tecnico* tec){
+void cadastro_Tecnico() {
     FILE *arq_tecnicos;
+    Tecnico* tec;
     tec = (Tecnico*) malloc(sizeof(Tecnico));
     if (tec == NULL) {
         printf("Erro ao alocar memoria para o tecnico.\n");
@@ -179,10 +180,16 @@ void atualizar_Tecnico(Tecnico* tec) {
 
 
 
-void pesquisar_Tecnico(Tecnico* tec){
-
+void pesquisar_Tecnico(){
+    Tecnico* tec;
     char cpf_lido[15];
+    int encontrado = 0;
     FILE *arq_tecnicos;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
+    if (tec == NULL) { 
+        printf("Erro ao alocar memoria para o tecnico.\n");
+        return;
+    }
     
     char titulo[19] = "PESQUISAR TECNICO";
     func_Ani_Left(titulo);
@@ -191,27 +198,33 @@ void pesquisar_Tecnico(Tecnico* tec){
     printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
     ler_string(cpf_lido, 15);
 
-    arq_tecnicos = fopen("tecnicos.csv", "rt");
+    arq_tecnicos = fopen("tecnicos.dat", "rb");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de tecnicos.\n");
         limparBuffer();
         return;   
     }
-    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
-        if (strcmp(tec->cpf, cpf_lido) == 0) {
-            printf("\tTécnico encontrado:\n");
-            printf("\tCPF: %s\n", tec->cpf);
-            printf("\tNome: %s\n", tec->nome);
-            printf("\tFunção: %s\n", tec->funcao);
-            printf("\tEmail: %s\n", tec->email);
-            printf("\tTelefone: %s\n", tec->telefone);
+    while ((fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) && (!encontrado)) {
+        if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
+            printf("Técnico encontrado:\n");
+            printf("CPF: %s\n", tec->cpf);
+            printf("Nome: %s\n", tec->nome);
+            printf("Função: %s\n", tec->funcao);
+            printf("Email: %s\n", tec->email);
+            printf("Telefone: %s\n", tec->telefone);
+            printf("--------------------------------\n");
             pausar();
-            fclose(arq_tecnicos);
-            return;
+            encontrado = 1;
         }
     }
+    fclose(arq_tecnicos);
+    free(tec);
+
+    if (!encontrado)        {
     printf("Técnico não encontrado.\n");
     pausar();
+    return;
+    }
 
 
 }
