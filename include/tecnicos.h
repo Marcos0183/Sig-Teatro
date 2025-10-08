@@ -7,6 +7,7 @@ typedef struct {
     char funcao[16];
     char email[40];
     char telefone[16];
+    int status;
 } Tecnico;
 
 void tecnicos();
