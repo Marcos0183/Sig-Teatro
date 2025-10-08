@@ -89,29 +89,19 @@ void cadastrar_cliente() {
 
 
 void atualizar_cliente(){
+
     Cliente* clt;
     char cpf_lido1[15];
     FILE *arq_clientes;
-    FILE *arq_tempclientes;
     int encontrado = 0;
-
-    arq_clientes = fopen("clientes.csv", "rt");
-    if (arq_clientes == NULL) {
-        printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
+    clt = (Cliente*) malloc(sizeof(Cliente));
+    if (clt == NULL) {
+        printf("Erro ao alocar memoria para o cliente.\n");
         return;
-    }
+    }   
 
-    arq_tempclientes = fopen("clientestemp.csv", "wt");
-    if (arq_tempclientes == NULL) {
-        printf("Erro ao abrir o arquivo temporario de clientes.\n");
-        limparBuffer();
-        fclose(arq_clientes);
-        return;
-    }
-
+    
         
-
     char titulo[19] = "ATUALIZAR CLIENTE";
     func_Ani_Left(titulo);
 
@@ -120,11 +110,18 @@ void atualizar_cliente(){
     printf("|  INSIRA O CPF DO CLIENTE: ");
     ler_string(cpf_lido1, 15);
     printf("-----------------------------------\n");
-       
 
-    while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n",clt->cpf, clt->nome, clt->email, clt->telefone ) == 4) {
+    arq_clientes = fopen("clientes.dat", "r+b");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;
+    }
+       
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1 && (!encontrado)) {
         if (strcmp(clt->cpf, cpf_lido1) == 0) {
             encontrado = 1;
+
             printf("Cliente encontrado. Insira os novos dados:\n");
 
             printf("-----------------------------------\n");
@@ -144,17 +141,18 @@ void atualizar_cliente(){
             ler_string(clt->telefone, 16);
             printf("-----------------------------------\n");
 
-            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
-        } else {
-            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
-        }
+            clt->status = true;
+            fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
+            fwrite(clt, sizeof(Cliente), 1, arq_clientes);
+
+        } 
     }
 
    
     
 
     fclose(arq_clientes);
-    fclose(arq_tempclientes);
+    free(clt);
 
 
     if (!encontrado) {
@@ -162,17 +160,12 @@ void atualizar_cliente(){
         remove("clientestemp.csv");
         pausar();
         return;
-    } else {
-        printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
-        if (remove("clientes.csv") != 0) {
-            printf("Erro ao remover clientes.csv\n");
-        }
-        if (rename("clientestemp.csv", "clientes.csv") != 0) {
-            printf("Erro ao renomear clientestemp.csv\n");
-        }  
-    }
+    }  
+    printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
     pausar();
 }
+
+
 
 
 
@@ -249,7 +242,6 @@ void excluir_cliente() {
         }
     
     }
-    
     fclose(arq_clientes);
     free(clt);
 
