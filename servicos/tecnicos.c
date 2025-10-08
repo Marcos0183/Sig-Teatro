@@ -5,6 +5,8 @@
 #include "tecnicos.h"
 #include "anima.h"
 #include "utils.h"
+#define true 1
+#define false 0
 
 int tempo_Tecnicos = 100;
 
