@@ -221,65 +221,44 @@ void pesquisar_cliente(){
 
 }
 
-void excluir_cliente(){
+void excluir_cliente() {
     Cliente* clt;
     int encontrado = 0;
     FILE *arq_clientes;
-    FILE *arq_tempclientes;
     char cpf_lido[15];
 
-    char titulo[19] = "EXCLUIR CLIENTE";
-    func_Ani_Left(titulo);
-
-    arq_clientes = fopen("clientes.csv", "rt");
+    clt = (Cliente*) malloc(sizeof(Cliente));
+    if (clt == NULL) {
+        printf("Erro ao alocar memoria para o cliente.\n");
+        return;
+    printf("-----------------------------------\n");
+    }
+    arq_clientes = fopen("clientes.dat", "r+b");
     if (arq_clientes == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
+        free(clt);
         return;
     }
 
-    arq_tempclientes = fopen("clientestemp.csv", "wt");
-    if (arq_tempclientes == NULL) {
-        printf("Erro ao abrir o arquivo temporario de clientes.\n");
-        fclose(arq_clientes);
-        limparBuffer();
-        return;
-    }
-
-    printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO CLIENTE: ");
-    ler_string(cpf_lido, 15);
-    printf("-----------------------------------\n");
-
-
-        while (fscanf(arq_clientes, "%[^;];%[^;];%[^;];%[^\n]\n", clt->cpf, clt->nome, clt->email, clt->telefone ) == 4) {
-        if (strcmp(clt->cpf, cpf_lido) != 0) {
-            fprintf(arq_tempclientes, "%s;%s;%s;%s\n", clt->cpf, clt->nome, clt->email, clt->telefone);
-        } else {
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1 && (!encontrado)) {
+        if ((strcmp(clt->cpf, cpf_lido) == 0) && (clt->status == true)) {
             encontrado = 1;
+            clt->status = false;
+            fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
+            fwrite(clt, sizeof(Cliente), 1, arq_clientes);
         }
-}
+    
+    }
+    
+    fclose(arq_clientes);
+    free(clt);
 
-fclose(arq_clientes);
-fclose(arq_tempclientes);
     if (!encontrado) {
         printf("Cliente com CPF %s não encontrado.\n", cpf_lido);
-        remove("clientestemp.csv");
-        pausar();
-        return;
     } else {
-        printf("Cliente com CPF %s encontrado e excluido.\n", cpf_lido);
-    
-        if (remove("clientes.csv") != 0) {
-            printf("Erro ao remover clientes.csv\n");
-        }
-        if (rename("clientestemp.csv", "clientes.csv") != 0) {
-            printf("Erro ao renomear clientestemp.csv\n");
-        }
+        printf("Cliente com CPF %s encontrado e excluído.\n", cpf_lido);
     }
-     
-    printf("Cliente excluido com sucesso!\n");
+
     pausar();
 
 }
@@ -293,7 +272,7 @@ fclose(arq_tempclientes);
 
 
 
-void listar_cliente(){
+void listar_cliente() {
 
     FILE *arq_clientes;
     Cliente *clt;
@@ -308,11 +287,13 @@ void listar_cliente(){
     func_Ani_Left(titulo);
     printf("\n \n");
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (clt -> status == true) {
         printf("CPF: %s\n", clt->cpf);
         printf("Nome: %s\n", clt->nome);
         printf("Email: %s\n", clt->email);
         printf("Telefone: %s\n", clt->telefone);
         printf("-------------------------\n");
+        }
     }
     fclose(arq_clientes);
     free(clt);
