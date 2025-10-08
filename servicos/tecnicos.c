@@ -39,15 +39,22 @@ void menu_Tecnicos(){
 
 
 
-void cadastro_Tecnico(Tecnico* tec){
+void cadastro_Tecnico() {
     FILE *arq_tecnicos;
+    Tecnico* tec;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
+    if (tec == NULL) {
+        printf("Erro ao alocar memoria para o tecnico.\n");
+        return;
+    }
+
     
     
     char titulo[19] = "CADASTRAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
     printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TECNICO: ");  //** Deixarei assim por enquanto, sem validação
+    printf("|  INSIRA O CPF DO TECNICO: ");  
     ler_string(tec->cpf, 15);
 
     printf("-----------------------------------\n");
@@ -67,40 +74,32 @@ void cadastro_Tecnico(Tecnico* tec){
     ler_string(tec->telefone, 16);
     printf("-----------------------------------\n");
 
-    arq_tecnicos = fopen("tecnicos.csv", "at");
+    tec->status = true; 
+
+    arq_tecnicos = fopen("tecnicos.dat", "ab");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de tecnicos.\n");
         limparBuffer();
         return;   
     }
-    fprintf(arq_tecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
+    fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
     fclose(arq_tecnicos);
+    free(tec);
     printf("Técnico cadastrado com sucesso!\n");
     pausar();
 }
 
 
 
-void atualizar_Tecnico(Tecnico* tec) {
+void atualizar_Tecnico() {
 
+    Tecnico* tec;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
     char cpf_lido[15];
     FILE *arq_tecnicos;
-    FILE *arq_temptecnicos;
     int encontrado = 0;
     
-    arq_tecnicos = fopen("tecnicos.csv", "rt");
-    if (arq_tecnicos == NULL) {
-        printf("Erro ao abrir o arquivo de tecnicos.\n");
-        limparBuffer();
-        return;   
-    }
-    arq_temptecnicos = fopen("tecnicostemp.csv", "wt");
-    if (arq_temptecnicos == NULL) {
-        printf("Erro ao abrir o arquivo temporario de tecnicos.\n");
-        fclose(arq_tecnicos);
-        limparBuffer();
-        return;
-    }
+    
 
     char titulo[19] = "ATUALIZAR TÉCNICO";
     func_Ani_Left(titulo);
@@ -110,8 +109,15 @@ void atualizar_Tecnico(Tecnico* tec) {
     ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
-        if (strcmp(tec->cpf, cpf_lido) == 0) {
+    arq_tecnicos = fopen("tecnicos.dat", "r+b");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de tecnicos.\n");
+        limparBuffer();
+        return;   
+    }
+
+    while (fread(tec, sizeof(Tecnico) , 1, arq_tecnicos)==1 && (!encontrado)) {  
+        if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
             encontrado = 1;
             printf("Técnico encontrado. Insira os novos dados:\n");
 
@@ -137,28 +143,20 @@ void atualizar_Tecnico(Tecnico* tec) {
             ler_string(tec->telefone, 16);
             printf("-----------------------------------\n");
 
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
-        } else {
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
+            tec->status = true;
+            fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
+            fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
         }
     }
 
+
     fclose(arq_tecnicos);
-    fclose(arq_temptecnicos);
 
     if (!encontrado) {
         printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
         remove("tecnicostemp.csv");
         pausar();
         return;
-    } else {
-    
-        if (remove("tecnicos.csv") != 0) {
-            printf("Erro ao remover tecnicos.csv\n");
-        }
-        if (rename("tecnicostemp.csv", "tecnicos.csv") != 0) {
-            printf("Erro ao renomear tecnicostemp.csv\n");
-        }
     }
 
     printf("Técnico atualizado com sucesso!\n");
@@ -170,10 +168,16 @@ void atualizar_Tecnico(Tecnico* tec) {
 
 
 
-void pesquisar_Tecnico(Tecnico* tec){
-
+void pesquisar_Tecnico(){
+    Tecnico* tec;
     char cpf_lido[15];
+    int encontrado = 0;
     FILE *arq_tecnicos;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
+    if (tec == NULL) { 
+        printf("Erro ao alocar memoria para o tecnico.\n");
+        return;
+    }
     
     char titulo[19] = "PESQUISAR TECNICO";
     func_Ani_Left(titulo);
@@ -181,57 +185,49 @@ void pesquisar_Tecnico(Tecnico* tec){
     printf("-----------------------------------\n");
     printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
     ler_string(cpf_lido, 15);
+    printf("-----------------------------------\n");
 
-    arq_tecnicos = fopen("tecnicos.csv", "rt");
+    arq_tecnicos = fopen("tecnicos.dat", "rb");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de tecnicos.\n");
         limparBuffer();
         return;   
     }
-    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
-        if (strcmp(tec->cpf, cpf_lido) == 0) {
-            printf("\tTécnico encontrado:\n");
-            printf("\tCPF: %s\n", tec->cpf);
-            printf("\tNome: %s\n", tec->nome);
-            printf("\tFunção: %s\n", tec->funcao);
-            printf("\tEmail: %s\n", tec->email);
-            printf("\tTelefone: %s\n", tec->telefone);
+    while ((fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) && (!encontrado)) {
+        if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
+            printf("Técnico encontrado:\n");
+            printf("CPF: %s\n", tec->cpf);
+            printf("Nome: %s\n", tec->nome);
+            printf("Função: %s\n", tec->funcao);
+            printf("Email: %s\n", tec->email);
+            printf("Telefone: %s\n", tec->telefone);
+            printf("--------------------------------\n");
             pausar();
-            fclose(arq_tecnicos);
-            return;
+            encontrado = 1;
         }
     }
-    printf("Técnico não encontrado.\n");
+    fclose(arq_tecnicos);
+    free(tec);
+
+    if (!encontrado)        {
+    printf("\tTécnico não encontrado.\n");
     pausar();
+    return;
+    }
 
 
 }
 
 
 
-void excluir_Tecnico(Tecnico* tec){
-
+void excluir_Tecnico(){
+    
+    Tecnico* tec;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
     FILE *arq_tecnicos;
-    FILE *arq_temptecnicos;
     int encontrado = 0; 
     char cpf_lido[15];
     
-    arq_tecnicos = fopen("tecnicos.csv", "rt");
-    if (arq_tecnicos == NULL) {
-        printf("Erro ao abrir o arquivo de tecnicos.\n");
-        limparBuffer();
-        return;   
-    }
-
-    arq_temptecnicos = fopen("tecnicostemp.csv", "wt");
-    if (arq_temptecnicos == NULL) {
-        printf("Erro ao abrir o arquivo temporario de tecnicos.\n");
-        fclose(arq_tecnicos);
-        limparBuffer();
-        return;
-    }
-
-
 
     char titulo[19] = "EXCLUIR TÉCNICO";
     func_Ani_Left(titulo);
@@ -242,32 +238,34 @@ void excluir_Tecnico(Tecnico* tec){
     ler_string(cpf_lido, 15);
     printf("-----------------------------------\n");
 
-    while (fscanf(arq_tecnicos, "%[^;];%[^;];%[^;];%[^;];%[^\n]\n",tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone) == 5) {
-        if (strcmp(tec->cpf, cpf_lido) != 0) {
-            fprintf(arq_temptecnicos, "%s;%s;%s;%s;%s\n", tec->cpf, tec->nome, tec->funcao, tec->email, tec->telefone);
-        } else {
-            encontrado = 1;
-        }
+    arq_tecnicos = fopen("tecnicos.dat", "r+b");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de tecnicos.\n");
+        limparBuffer();
+        return;   
     }
+
+    while (fread(tec, sizeof(Tecnico) , 1, arq_tecnicos)==1 && (!encontrado)) {  
+        if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
+            encontrado = 1;
+            tec->status = false;
+            fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
+            fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
+        }        
+    }
+
     fclose(arq_tecnicos);
-    fclose(arq_temptecnicos);
+    
 
     if (!encontrado) {
-        printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
+
+        printf("\tTécnico com CPF %s não encontrado.\n", cpf_lido);
         remove("tecnicostemp.csv");
         pausar();
         return;
-    } else {
-        printf("Técnico com CPF %s encontrado e excluido.\n", cpf_lido);
+    }
+        printf("\tTécnico com CPF %s encontrado e excluido.\n", cpf_lido);
     
-        if (remove("tecnicos.csv") != 0) {
-            printf("Erro ao remover tecnicos.csv\n");
-        }
-        if (rename("tecnicostemp.csv", "tecnicos.csv") != 0) {
-            printf("Erro ao renomear tecnicostemp.csv\n");
-        }
-    } 
-    printf("Técnico excluido com sucesso!\n");
     pausar();
     
 }
@@ -275,7 +273,7 @@ void excluir_Tecnico(Tecnico* tec){
 
 
 void tecnicos(){
-    Tecnico tec;
+
     int executar_T;
     do {
         menu_Tecnicos();
@@ -285,19 +283,19 @@ void tecnicos(){
         
         switch (executar_T){
             case 1:
-                cadastro_Tecnico(&tec);
+                cadastro_Tecnico();
                 break;
 
             case 2:
-                pesquisar_Tecnico(&tec);
+                pesquisar_Tecnico();
                 break;
 
             case 3:
-                atualizar_Tecnico(&tec);
+                atualizar_Tecnico();
                 break;
 
             case 4:
-                excluir_Tecnico(&tec);
+                excluir_Tecnico();
                 break;
 
             case 0:
