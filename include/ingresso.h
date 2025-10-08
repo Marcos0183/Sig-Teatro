@@ -11,7 +11,7 @@ void atualizar_Ingresso();
 
 void pesquisar_Ingresso();
 
-typedef struct vender_Ingresso Dados;
+typedef struct vender_Ingresso Dados_I;
 
 struct vender_Ingresso{
     

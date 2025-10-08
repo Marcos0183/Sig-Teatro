@@ -42,8 +42,8 @@ void menu_Ingresso(){
 
 void vender_Ingresso(){
     FILE *arq_Ingresso;
-    Dados *dados;
-    dados = (Dados*) malloc(sizeof(Dados));
+    Dados_I *dados;
+    dados = (Dados_I*) malloc(sizeof(Dados_I));
     char titulo[16] = "VENDER INGRESSO";
     
     func_Ani_Left(titulo);
@@ -66,7 +66,7 @@ void vender_Ingresso(){
 
     dados->status = "V";
     arq_Ingresso = fopen("arq_ingresso.dat","ab");
-    fwrite(dados,sizeof(Dados),1,arq_Ingresso);
+    fwrite(dados,sizeof(Dados_I),1,arq_Ingresso);
     fclose(arq_Ingresso);
     free(dados);
 }
