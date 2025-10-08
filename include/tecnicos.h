@@ -22,4 +22,6 @@ void pesquisar_Tecnico();
 
 void excluir_Tecnico();
 
+void listar_tecnicos();
+
 #endif

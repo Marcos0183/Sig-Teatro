@@ -28,6 +28,8 @@ void menu_Tecnicos(){
         func_Ani(tempo_Tecnicos);
         printf("║ ► 4. Excluir Técnico                             ║\n");
         func_Ani(tempo_Tecnicos);
+        printf("║ ► 5. Listar Técnico                              ║\n");
+        func_Ani(tempo_Tecnicos);
         printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
         func_Ani(tempo_Tecnicos);
         printf("║                                                  ║\n");
@@ -37,6 +39,38 @@ void menu_Tecnicos(){
         printf("--> Digite a opção desejada: ");
 }
 
+
+
+void exibir_tecnico(char cpf_lido[15]) {
+    FILE *arq_tecnicos;
+    Tecnico* tec;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
+    if (tec == NULL) {
+        printf("Erro ao alocar memoria para o tecnico.\n");
+        return;
+    }
+    arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de tecnicos.\n");
+        limparBuffer();
+        return;   
+    }
+    
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
+        printf("CPF: %s\n", tec->cpf);
+        printf("Nome: %s\n", tec->nome);
+        printf("Função: %s\n", tec->funcao);
+        printf("Email: %s\n", tec->email);
+        printf("Telefone: %s\n", tec->telefone);
+        printf("-------------------------\n");
+        return;
+        }
+    }
+    
+
+    pausar();
+}
 
 
 void cadastro_Tecnico() {
@@ -227,6 +261,7 @@ void excluir_Tecnico(){
     FILE *arq_tecnicos;
     int encontrado = 0; 
     char cpf_lido[15];
+    char confirm;
     
 
     char titulo[19] = "EXCLUIR TÉCNICO";
@@ -247,10 +282,22 @@ void excluir_Tecnico(){
 
     while (fread(tec, sizeof(Tecnico) , 1, arq_tecnicos)==1 && (!encontrado)) {  
         if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
-            encontrado = 1;
-            tec->status = false;
-            fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
-            fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
+            exibir_tecnico(cpf_lido);
+            printf("Tem certeza que deseja excluir este técnico? (s/n): ");
+            scanf(" %c", &confirm);
+            limparBuffer();
+            if (confirm == 's' || confirm == 'S') {
+                encontrado = 1;
+                tec->status = false;
+                fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
+                fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
+            } else {
+                printf("Operação de exclusão cancelada.\n");
+                fclose(arq_tecnicos);
+                free(tec);
+                pausar();
+                return;
+            }
         }        
     }
 
@@ -268,6 +315,41 @@ void excluir_Tecnico(){
     
     pausar();
     
+}
+
+
+
+void listar_tecnicos() {
+    FILE *arq_tecnicos;
+    Tecnico* tec;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
+    if (tec == NULL) {
+        printf("Erro ao alocar memoria para o tecnico.\n");
+        return;
+    }
+    arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de tecnicos.\n");
+        limparBuffer();
+        return;   
+    }
+    char titulo[16] = "LISTAR TECNICO";
+    func_Ani_Left(titulo);
+    printf("\n \n");
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if (tec -> status == true) {
+        printf("CPF: %s\n", tec->cpf);
+        printf("Nome: %s\n", tec->nome);
+        printf("Função: %s\n", tec->funcao);
+        printf("Email: %s\n", tec->email);
+        printf("Telefone: %s\n", tec->telefone);
+        printf("-------------------------\n");
+        }
+    }
+    fclose(arq_tecnicos);
+    free(tec);
+    
+    pausar();
 }
 
 
@@ -296,6 +378,10 @@ void tecnicos(){
 
             case 4:
                 excluir_Tecnico();
+                break;
+
+            case 5:
+                listar_tecnicos();
                 break;
 
             case 0:
