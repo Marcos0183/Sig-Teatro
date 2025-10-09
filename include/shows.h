@@ -17,10 +17,8 @@ typedef struct cadastro_Shows Dados;
 
 struct cadastro_Shows{
     char nome[32]; 
-    char data[12];
-    char hora[6];
-    char duracao[6];
-    char personagens[27];
+    char DHD[1];
+    char personagens[1];
     char status;
 };
 
