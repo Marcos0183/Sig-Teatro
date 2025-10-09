@@ -41,37 +41,16 @@ void menu_Tecnicos(){
 
 
 
-void exibir_tecnico(char cpf_lido[15]) {
-    FILE *arq_tecnicos;
-    Tecnico* tec;
-    tec = (Tecnico*) malloc(sizeof(Tecnico));
-    if (tec == NULL) {
-        printf("Erro ao alocar memoria para o tecnico.\n");
-        return;
-    }
-    arq_tecnicos = fopen("tecnicos.dat", "rb");
-    if (arq_tecnicos == NULL) {
-        printf("Erro ao abrir o arquivo de tecnicos.\n");
-        limparBuffer();
-        return;   
-    }
-    
-    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
-        if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
+void exibir_tecnico(Tecnico* tec) {
         printf("CPF: %s\n", tec->cpf);
         printf("Nome: %s\n", tec->nome);
         printf("Função: %s\n", tec->funcao);
         printf("Email: %s\n", tec->email);
         printf("Telefone: %s\n", tec->telefone);
-        printf("-------------------------\n");
-        return;
-        }
-    }
+        printf("-------------------------\n"); 
+}  
+
     
-
-    pausar();
-}
-
 
 void cadastro_Tecnico() {
     FILE *arq_tecnicos;
@@ -282,7 +261,7 @@ void excluir_Tecnico(){
 
     while (fread(tec, sizeof(Tecnico) , 1, arq_tecnicos)==1 && (!encontrado)) {  
         if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
-            exibir_tecnico(cpf_lido);
+            exibir_tecnico(tec);
             printf("Tem certeza que deseja excluir este técnico? (s/n): ");
             scanf(" %c", &confirm);
             limparBuffer();
@@ -291,6 +270,7 @@ void excluir_Tecnico(){
                 tec->status = false;
                 fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
                 fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
+                printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
             } else {
                 printf("Operação de exclusão cancelada.\n");
                 fclose(arq_tecnicos);
@@ -305,14 +285,11 @@ void excluir_Tecnico(){
     
 
     if (!encontrado) {
-
-        printf("\tTécnico com CPF %s não encontrado.\n", cpf_lido);
-        remove("tecnicostemp.csv");
+        printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
         pausar();
         return;
     }
-        printf("\tTécnico com CPF %s encontrado e excluido.\n", cpf_lido);
-    
+
     pausar();
     
 }
