@@ -39,48 +39,25 @@ void menu_Shows(){
 
 
 void cadastrar_Show(){
-    char *comp_1 = "S";
-    char *comp_2 = "s";
-    int parar;
-    FILE *arq_Shows;
-    Dados *dados;
-    dados = (Dados *) malloc(sizeof(Dados));
-    char titulo[16] = "CADASTRAR SHOW";
-    func_Ani_Left(titulo);
+    // FILE *arq_Shows;
+    // Dados *dados;
+    // dados = (Dados *) malloc(sizeof(Dados));
+    // char titulo[16] = "CADASTRAR SHOW";
+    // func_Ani_Left(titulo);
 
     // printf("\n \n");
     // printf("-----------------------------------\n");
     // printf("|  INSIRA O NOME DO SHOW: ");
-    // ler_string(dados->nome,32);
-    // arq_Shows = fopen("arq_shows.dat","ab");     
+    // ler_string(dados->nome,32);     
 
 
     // printf("-----------------------------------\n");
-    // do{
-    //     printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-    //     printf("-----------------------------------\n");
-        
-    //     if(strcmp(comp_1, dados->data) == 0 || strcmp(comp_2,dados->data) == 0) parar = 0;
-    //     else{
-    //         printf("|  INSIRA A HORA DE INÍCIO DO SHOW: ");
-    //         printf("-----------------------------------\n");
-            
-    //         printf("|  INSIRA A DURAÇÃO DO SHOW: ");
-            
-    //         printf("-----------------------------------\n");
-            
-    //     }
-    // }while(parar);
-    
-
-    // parar = 1;
-    // do{
-    //     printf("|  INSIRA PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-    //     if(strcmp(comp_1, dados->data) == 0 || strcmp(comp_2,dados->data) == 0) parar = 0;
-    //     else{
-
-    //     }
-    // }
+    // printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
+    // printf("-----------------------------------\n");
+    // printf("|  INSIRA A HORA DE INÍCIO DO SHOW: ");
+    // printf("-----------------------------------\n");     
+    // printf("|  INSIRA A DURAÇÃO DO SHOW: ");      
+    // printf("-----------------------------------\n");  
 
 }
 
