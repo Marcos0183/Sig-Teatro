@@ -51,7 +51,7 @@ void vender_Ingresso(){
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA SEU ID DE CLIENTE - SEM ID DIGITE (C) PARA CADASTRAR-SE: ");
-    ler_string(dados->id, 6);
+    ler_string(dados->cpf, 20);
 
 
     printf("V----------------------------------\n");
@@ -104,16 +104,23 @@ void atualizar_Ingresso(){
 
 
 void pesquisar_Ingresso(){
-    int codigo;
+    FILE *arq_pesquisa;
+    Dados_I *ingresso;
+    ingresso = (Dados_I *) malloc(sizeof(Dados_I));
+    char id[6];
     char titulo[19] = "PESQUISAR INGRESSO";
     func_Ani_Left(titulo);
+
 
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CODIGO DO INGRESSO: ");
-    scanf(" %d",&codigo);
-    getchar();
+    scanf("%s",&id);
     printf("-----------------------------------\n");
+    limparTela();
+
+    arq_pesquisa = fopen("arq_ingresso.dat","rb");
+    fread(ingresso,sizeof(Dados_I),1,arq_pesquisa);
     pausar();
 }
 

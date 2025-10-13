@@ -39,25 +39,25 @@ void menu_Shows(){
 
 
 void cadastrar_Show(){
-    // FILE *arq_Shows;
-    // Dados *dados;
-    // dados = (Dados *) malloc(sizeof(Dados));
-    // char titulo[16] = "CADASTRAR SHOW";
-    // func_Ani_Left(titulo);
+    FILE *arq_Shows;
+    Dados *dados;
+    dados = (Dados *) malloc(sizeof(Dados));
+    char titulo[16] = "CADASTRAR SHOW";
+    func_Ani_Left(titulo);
 
-    // printf("\n \n");
-    // printf("-----------------------------------\n");
-    // printf("|  INSIRA O NOME DO SHOW: ");
-    // ler_string(dados->nome,32);     
+    printf("\n \n");
+    printf("-----------------------------------\n");
+    printf("|  INSIRA O NOME DO SHOW: ");
+    ler_string(dados->nome,32);     
 
 
-    // printf("-----------------------------------\n");
-    // printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-    // printf("-----------------------------------\n");
-    // printf("|  INSIRA A HORA DE INÍCIO DO SHOW: ");
-    // printf("-----------------------------------\n");     
-    // printf("|  INSIRA A DURAÇÃO DO SHOW: ");      
-    // printf("-----------------------------------\n");  
+    printf("-----------------------------------\n");
+    printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
+    printf("-----------------------------------\n");
+    printf("|  INSIRA A HORA DE INÍCIO DO SHOW: ");
+    printf("-----------------------------------\n");     
+    printf("|  INSIRA A DURAÇÃO DO SHOW: ");      
+    printf("-----------------------------------\n");  
 
 }
 

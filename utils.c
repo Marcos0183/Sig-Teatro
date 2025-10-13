@@ -36,3 +36,15 @@ char* ler_string(char* destino, int tamanho) {
 void limparTela() {
     system("clear || cls");
 }
+
+
+int id(){
+    #define LIMITE = 1000;
+    Id *id;
+    FILE *arq_id;
+    id = (Id *) malloc(sizeof(Id));
+    arq_id = fopen("id.dat","ab");
+    id ->ultimo_valor = 0;
+    fwrite(id,sizeof(Id),1,arq_id);
+    return id ->ultimo_valor;
+}
