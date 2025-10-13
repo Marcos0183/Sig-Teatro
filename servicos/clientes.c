@@ -41,12 +41,14 @@ void menu_cliente(){
 }   
 
 
+
 void exibir_cliente(Cliente* clt) {
     printf("cpf: %s\n", clt->cpf);
     printf("Nome: %s\n", clt->nome);
     printf("Email: %s\n", clt->email);
     printf("Telefone: %s\n", clt->telefone);
 }
+
 
 
 void cadastrar_cliente() { 
@@ -230,13 +232,22 @@ void excluir_cliente() {
     int encontrado = 0;
     FILE *arq_clientes;
     char cpf_lido[15];
-
+    char confirm;
     clt = (Cliente*) malloc(sizeof(Cliente));
     if (clt == NULL) {
         printf("Erro ao alocar memoria para o cliente.\n");
         return;
-    printf("-----------------------------------\n");
     }
+
+    char titulo[19] = "EXCLUIR CLIENTE";
+    func_Ani_Left(titulo);
+    printf("\n \n");
+
+    printf("-----------------------------------\n");
+    printf("|  INSIRA O CPF DO CLIENTE: ");  
+    ler_string(cpf_lido, 15);
+    printf("-----------------------------------\n");
+
     arq_clientes = fopen("clientes.dat", "r+b");
     if (arq_clientes == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
@@ -246,10 +257,23 @@ void excluir_cliente() {
 
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1 && (!encontrado)) {
         if ((strcmp(clt->cpf, cpf_lido) == 0) && (clt->status == true)) {
-            encontrado = 1;
-            clt->status = false;
-            fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
-            fwrite(clt, sizeof(Cliente), 1, arq_clientes);
+            exibir_cliente(clt);
+            printf("Tem certeza que deseja excluir este técnico? (s/n): ");
+            scanf(" %c", &confirm);
+            limparBuffer();
+            if (confirm == 's' || confirm == 'S') {
+                encontrado = 1;
+                clt->status = false;
+                fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
+                fwrite(clt, sizeof(Cliente), 1, arq_clientes);
+                printf("Técnico com CPF %s encontrado e excluido.\n", cpf_lido);
+            } else {
+                printf("Operação de exclusão cancelada.\n");
+                fclose(arq_clientes);
+                free(clt);
+                pausar();
+                return;
+            }
         }
     
     }
@@ -258,8 +282,6 @@ void excluir_cliente() {
 
     if (!encontrado) {
         printf("Cliente com CPF %s não encontrado.\n", cpf_lido);
-    } else {
-        printf("Cliente com CPF %s encontrado e excluído.\n", cpf_lido);
     }
 
     pausar();
