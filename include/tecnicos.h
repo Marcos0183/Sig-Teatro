@@ -24,4 +24,6 @@ void excluir_Tecnico();
 
 void listar_tecnicos();
 
+void exibir_tecnico(Tecnico* tec);
+
 #endif
