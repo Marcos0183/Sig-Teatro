@@ -41,6 +41,13 @@ void menu_cliente(){
 }   
 
 
+void exibir_cliente(Cliente* clt) {
+    printf("cpf: %s\n", clt->cpf);
+    printf("Nome: %s\n", clt->nome);
+    printf("Email: %s\n", clt->email);
+    printf("Telefone: %s\n", clt->telefone);
+}
+
 
 void cadastrar_cliente() { 
     
@@ -79,10 +86,14 @@ void cadastrar_cliente() {
         return;
     }
     fwrite(clt, sizeof(Cliente), 1, arq_clientes);
+
+    exibir_cliente(clt);
+    printf("Cliente cadastrado com sucesso!\n");
+
     fclose(arq_clientes);
     free(clt);
 
-        printf("Cliente cadastrado com sucesso!\n");
+    
     pausar();
 }
 
@@ -167,8 +178,6 @@ void atualizar_cliente(){
 
 
 
-
-
 void pesquisar_cliente(){
     char cpf_lido[20];
     Cliente* clt;
@@ -214,6 +223,8 @@ void pesquisar_cliente(){
 
 }
 
+
+
 void excluir_cliente() {
     Cliente* clt;
     int encontrado = 0;
@@ -256,13 +267,6 @@ void excluir_cliente() {
 }
 
     
-
-    
-    
-
-
-
-
 
 void listar_cliente() {
 
