@@ -9,7 +9,7 @@
 void realoca(ListaCha *cr, int n){
     cr ->v = (char *) realloc(cr ->v,n+1);
     if(cr ->v == NULL){
-        printf(stderr,"Erro ao Salvar Dados\n");
+        printf("Erro ao Salvar Dados\n");
         exit(1);
     }
 }
@@ -51,8 +51,9 @@ void liberarM(ListaCha *cr){
     free(cr);
 }
 
+
 ListaCha *listaChar(void *cr, char *s){
-    char virgula = ',';
+    char *virgula = ",";
     ListaCha *lista = (ListaCha *) cr;
     if(cr == NULL){
         lista = criavazia();

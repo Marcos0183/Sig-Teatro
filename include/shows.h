@@ -15,10 +15,10 @@ void atualizar_Show();
 
 void pesquisar_Show();
 
-typedef struct cadastro_Shows Dados;
+typedef struct cadastro_Shows Dados_S;
 
 struct cadastro_Shows{
-    char id[3];
+    int id;
     char nome[32]; 
     void *DHD;
     void *personagens;
