@@ -40,11 +40,13 @@ void menu_Shows(){
 
 void cadastrar_Show(){
     FILE *arq_Shows;
-    Dados *dados;
-    dados = (Dados *) malloc(sizeof(Dados));
+    Dados_S *dados;
+    dados = (Dados_S *) malloc(sizeof(Dados_S));
     char titulo[16] = "CADASTRAR SHOW";
     func_Ani_Left(titulo);
 
+
+    dados ->id = id();
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO SHOW: ");

@@ -15,4 +15,6 @@ void limparTela();
 
 char* ler_string(char* destino, int tamanho);
 
+int id();
+
 #endif

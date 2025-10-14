@@ -64,7 +64,7 @@ void vender_Ingresso(){
     ler_string(dados->cadeira,5);
     printf("V----------------------------------\n");
 
-    dados->status = "V";
+    dados->status = 'V';
     arq_Ingresso = fopen("arq_ingresso.dat","ab");
     fwrite(dados,sizeof(Dados_I),1,arq_Ingresso);
     fclose(arq_Ingresso);
@@ -104,9 +104,6 @@ void atualizar_Ingresso(){
 
 
 void pesquisar_Ingresso(){
-    FILE *arq_pesquisa;
-    Dados_I *ingresso;
-    ingresso = (Dados_I *) malloc(sizeof(Dados_I));
     char id[6];
     char titulo[19] = "PESQUISAR INGRESSO";
     func_Ani_Left(titulo);
@@ -115,12 +112,9 @@ void pesquisar_Ingresso(){
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CODIGO DO INGRESSO: ");
-    scanf("%s",&id);
+    ler_string(id,6);
     printf("-----------------------------------\n");
     limparTela();
-
-    arq_pesquisa = fopen("arq_ingresso.dat","rb");
-    fread(ingresso,sizeof(Dados_I),1,arq_pesquisa);
     pausar();
 }
 
