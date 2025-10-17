@@ -35,3 +35,13 @@ void ler_telefone(char *telefone) {
     ler_string(telefone, 16);
     } while (!valida_telefone(telefone));
 }
+
+
+
+void ler_email(char *email) {
+    do {
+    printf("-----------------------------------\n");
+    printf("|  INSIRA O EMAIL: "); 
+    ler_string(email, 40);
+    } while (!valida_email(email));
+}
