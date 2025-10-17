@@ -5,6 +5,7 @@
 #include "clientes.h"
 #include "anima.h"
 #include "utils.h"
+#include "leitura.h"
 #define true 1
 #define false 0
 
@@ -65,9 +66,8 @@ void cadastrar_cliente() {
     printf("|  INSIRA O CPF DO CLIENTE: ");  
     ler_string(clt->cpf, 20);
 
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O NOME DO CLIENTE: ");
-    ler_string(clt->nome, 50);
+    
+    ler_nome(clt->nome);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA O EMAIL DO CLIENTE: ");
