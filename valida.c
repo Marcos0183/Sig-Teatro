@@ -23,3 +23,10 @@ int valida_nome(char *nome) {
     }
     return true;
 }
+
+
+
+int valida_cpf(char *cpf) {
+    // Implementar a validação de CPF aqui
+    return true; // Placeholder
+}
