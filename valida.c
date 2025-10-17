@@ -30,3 +30,10 @@ int valida_cpf(char *cpf) {
     // Implementar a validação de CPF aqui
     return true; // Placeholder
 }
+
+
+
+int valida_telefone(char *telefone) {
+    // Implementar a validação de telefone aqui
+    return true; // Placeholder
+}
