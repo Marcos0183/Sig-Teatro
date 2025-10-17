@@ -25,3 +25,13 @@ void ler_cpf(char *cpf) {
     ler_string(cpf, 15);
     } while (!valida_cpf(cpf));
 }
+
+
+
+void ler_telefone(char *telefone) {
+    do {
+    printf("-----------------------------------\n");
+    printf("|  INSIRA O TELEFONE: "); 
+    ler_string(telefone, 16);
+    } while (!valida_telefone(telefone));
+}
