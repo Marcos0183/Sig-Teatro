@@ -37,3 +37,10 @@ int valida_telefone(char *telefone) {
     // Implementar a validação de telefone aqui
     return true; // Placeholder
 }
+
+
+
+int valida_email(char *email) {
+    // Implementar a validação de email aqui
+    return true; // Placeholder
+}
