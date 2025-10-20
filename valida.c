@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 #include "clientes.h"
 #include "leitura.h"
 #define true 1
@@ -34,9 +35,30 @@ int valida_cpf(char *cpf) {
 
 
 int valida_telefone(char *telefone) {
-    // Implementar a validação de telefone aqui
-    return true; // Placeholder
-}
+
+    int digitos = 0;
+
+    for (int i = 0; telefone[i] != '\0'; i++) {
+        char c = telefone[i];
+
+        // Aceita apenas números, espaço, parêntese e hífen
+        if (!isdigit(c) && c != ' ' && c != '(' && c != ')' && c != '-') {
+            return false;
+        }
+        if (isdigit(c)) {
+            digitos++;
+        }
+    }
+
+    // Telefones brasileiros têm 10 ou 11 dígitos (com DDD)
+    if (digitos < 10 || digitos > 11) {
+        return false;
+    }
+
+    return true;
+    }
+
+
 
 
 

@@ -73,11 +73,9 @@ void cadastrar_cliente() {
     printf("|  INSIRA O EMAIL DO CLIENTE: ");
     ler_string(clt->email, 40);
 
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O TELEFONE: ");
-    ler_string(clt->telefone, 16);
+    ler_telefone(clt->telefone);
 
-    printf("-----------------------------------\n");
+
 
     clt->status = true;
 
