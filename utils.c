@@ -39,15 +39,25 @@ void limparTela() {
 
 
 int id(){
-    Id *id;
-    id = (Id *) malloc(sizeof(Id));
+    int idRetorna;
+    int *id;
+    id = &idRetorna;
     FILE *arq_id;
-    arq_id = fopen("id.dat","ab");
+    arq_id = fopen("id.dat","rb");
+
     if(arq_id == NULL){
-        printf("Erro ao abrir arquivo para salvar quais IDs foram usados");
-        exit(1);
+       arq_id = fopen("id.dat","w+");
+       idRetorna = 0;
+       fwrite(id,sizeof(int),1,arq_id);
+       rewind(arq_id);
     }
-    id ->ultimo_valor = 0;
-    fwrite(id,sizeof(Id),1,arq_id);
-    return id ->ultimo_valor;
+    fread(id,sizeof(int),1,arq_id);
+    fclose(arq_id);
+
+    arq_id = fopen("id.dat","wb");
+    idRetorna++;
+    fwrite(id,sizeof(int),1,arq_id);
+    fclose(arq_id);
+    free(id);
+    return idRetorna;
 }

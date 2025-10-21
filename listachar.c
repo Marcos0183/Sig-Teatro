@@ -6,60 +6,59 @@
 // MODELO RETIRADO DO LIVRO (Introdução a Estruturas de Dados com técnicas de programação em C SEGUNDA EDIÇÃO)
 //com modificações do CHATGPT 4.0
 
-void realoca(ListaCha *cr, int n){
-    cr ->v = (char *) realloc(cr ->v,n+1);
-    if(cr ->v == NULL){
+void realoca(char **cr, int n){
+    *cr = (char *) realloc(*cr,n+1);
+    if(cr == NULL){
         printf("Erro ao Salvar Dados\n");
         exit(1);
     }
 }
 
 
-void atribui(ListaCha *cr, const char *s){
+void atribui(char **cr, const char *s){
     realoca(cr,strlen(s));
-    strcpy(cr ->v,s);
+    strcpy(*cr,s);
 }
 
 
-ListaCha *criacopia(const char *s){
-    ListaCha *cr = (ListaCha *) malloc(sizeof(ListaCha));
-    cr ->v = NULL;
-    atribui(cr,s);
+char *criacopia(const char *s){
+    char *cr = (char *) malloc(sizeof(char));
+    cr = NULL;
+    atribui(&cr,s);
     return cr;
 }
 
-
-ListaCha *criavazia(void){
+char*criavazia(void){
     return criacopia("");
 }
 
 
-void concatena(ListaCha *cr, const char *s){
-    int tam = strlen(cr ->v) + strlen(s);
+void concatena(char **cr, const char *s){
+    int tam = strlen(*cr) + strlen(s);
     realoca(cr,tam);
-    strcat(cr->v,s);
+    strcat(*cr,s);
 }
 
 
-const char *acessar(ListaCha *cr){
-    return cr ->v;
+const char *acessar(char *cr){
+    return cr;
 }
 
 
-void liberarM(ListaCha *cr){
-    free(cr ->v);
+void liberarM(char *cr){
     free(cr);
 }
 
-
-ListaCha *listaChar(void *cr, char *s){
+//Sempre que usar essa função lembre:
+//1. De iniciar a variavel do tipo char ponteiro com NULL a primeira vez que for usala-la
+//Ex: cr = NULL;
+char *listaChar(char *cr,const char *s){ 
     char *virgula = ",";
-    ListaCha *lista = (ListaCha *) cr;
     if(cr == NULL){
-        lista = criavazia();
+        cr = criavazia();
     } 
-    concatena(lista,s);
-    concatena(lista,virgula);
-    return lista;
+    concatena(&cr,s);
+    concatena(&cr,virgula); 
+    return cr;
 }
 
