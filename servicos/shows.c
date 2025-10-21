@@ -139,14 +139,15 @@ void excluir_Show(){
             fseek(arq_shows,-1*sizeof(Dados_S),SEEK_CUR);
             fwrite(dados,sizeof(Dados_S),1,arq_shows);
             encontrado = False;
+            printf("SHOW EXCLUÍDO!\n");
         }
         else fseek(arq_shows,dados ->tam_DHD + dados ->tam_personagem,SEEK_CUR);
     }
 
-    if(encontrado) printf("SHOW NÃO ENCONTRADO!");
+    if(encontrado) printf("SHOW NÃO ENCONTRADO!\n");
     fclose(arq_shows);
     free(dados);
-    
+    system("pause");  
 }
 
 void atualizar_Show(){
@@ -183,7 +184,7 @@ void pesquisar_Show(){
     printf("-----------------------------------\n");
     
     
-    encontrado = False;
+    encontrado = True;
     arq_Shows = fopen("arq_shows.dat","rb");
     while(fread(dados,sizeof(Dados_S),1,arq_Shows) == 1){
         if(id_lido == dados ->id && dados ->status == True ){
@@ -198,17 +199,16 @@ void pesquisar_Show(){
             fclose(arq_Shows);
             free(DHD);
             free(persona);
-            encontrado = True;
+            encontrado = False;
         }
         else{
             fseek(arq_Shows,dados ->tam_DHD + dados ->tam_personagem,SEEK_CUR);
         }
     }
-    if(encontrado)printf("SHOW NÃO ENCONTRADO!");
+    if(encontrado)printf("SHOW NÃO ENCONTRADO!\n");
     fclose(arq_Shows);
     free(dados);
-    system("pause");
-   
+    pausar();
 }
 
 
