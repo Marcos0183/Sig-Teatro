@@ -2,7 +2,7 @@
 #define SHOWS_H
 #define False 0
 #define True 1
-
+#include <stdio.h>
 
 void shows();
 
@@ -18,6 +18,7 @@ void pesquisar_Show();
 
 typedef struct cadastro_Shows Dados_S;
 typedef struct cadastro_Temp Dados_Temp;
+typedef struct cabecalho Cabecalho;
 
 
 struct cadastro_Shows{
@@ -33,6 +34,15 @@ struct cadastro_Temp{
     char hora[6];
     char duracao[5];
     char personagem[32];
+};
+
+struct cabecalho{
+    int id_lido;
+    int encontrado;
+    char *DHD;
+    char *persona;
+    FILE *arq_shows;
+    Dados_S *dados;
 };
 
 #endif

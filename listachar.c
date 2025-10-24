@@ -28,7 +28,7 @@ char *criacopia(const char *s){
     return cr;
 }
 
-char*criavazia(void){
+ char *criavazia(void){
     return criacopia("");
 }
 
