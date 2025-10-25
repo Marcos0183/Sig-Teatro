@@ -79,7 +79,7 @@ int cpf_existente(char *cpf) {
         if ((strcmp(clt->cpf, cpf) == 0) && (clt->status == true)) {
             printf("======================================================\n");
             printf("CPF já cadastrado. Por favor, insira um CPF diferente.\n");
-            printf("opração cancelada.\n");
+            printf("operação cancelada.\n");
             printf("======================================================\n");
             fclose(arq_clientes);
             free(clt);
