@@ -42,12 +42,17 @@ void menu_Tecnicos(){
 
 
 void exibir_tecnico(Tecnico* tec) {
-        printf("CPF: %s\n", tec->cpf);
-        printf("Nome: %s\n", tec->nome);
-        printf("Função: %s\n", tec->funcao);
-        printf("Email: %s\n", tec->email);
-        printf("Telefone: %s\n", tec->telefone);
-        printf("-------------------------\n"); 
+    
+    printf("\n+-----------------------------------+\n");
+    printf("|         DADOS DO TÉCNICO          |\n");
+    printf("+-----------------------------------+\n");
+    printf("| CPF      : %-50s |\n", tec->cpf);
+    printf("| Nome     : %-50s |\n", tec->nome);
+    printf("| Função   : %-50s |\n", tec->funcao);
+    printf("| E-mail   : %-50s |\n", tec->email);
+    printf("| Telefone : %-50s |\n", tec->telefone);
+    printf("+-----------------------------------+\n");
+    
 }  
 
     
@@ -230,6 +235,8 @@ void pesquisar_Tecnico(){
 
 
 }
+
+
 
 void excluir_Tecnico(){
     
