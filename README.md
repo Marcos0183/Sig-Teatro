@@ -1,8 +1,8 @@
-### 🎭 SIG-Theater: Sistema de Gestão Teatral
+## 🎭 SIG-Theater: Sistema de Gestão Teatral
 
 O SIG-Theater (Sistema de Gestão Teatral) é uma solução de software desenvolvida para otimizar e organizar a administração de teatros e casas de espetáculos. Ele centraliza as operações de bilheteria, programação, gestão de pessoal e relacionamento com o público.
 
-** Módulo,Descrição **
+## Módulo,Descrição 
 
 Módulo de Ingressos, "Gerenciamento de assentos, tipos de bilhetes, preços, vendas e reservas."
 
@@ -60,6 +60,7 @@ O que elas podem e o que elas não podem fazer com o seu código, como alterar, 
     </td>
   </tr>
 </table>
+
 
 
 
