@@ -44,7 +44,7 @@ void menu_cliente(){
 
 
 void exibir_cliente(Cliente* clt) {
-    limparBuffer();
+    
     printf("\n+---------------------------------------------------------------+\n");
     printf("|                     DADOS DO CLIENTE                          |\n");
     printf("+---------------------------------------------------------------+\n");   
