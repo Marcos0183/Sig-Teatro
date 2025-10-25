@@ -284,12 +284,7 @@ void listar_tecnicos() {
     printf("\n \n");
     while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
         if (tec -> status == true) {
-        printf("CPF: %s\n", tec->cpf);
-        printf("Nome: %s\n", tec->nome);
-        printf("Função: %s\n", tec->funcao);
-        printf("Email: %s\n", tec->email);
-        printf("Telefone: %s\n", tec->telefone);
-        printf("-------------------------\n");
+            exibir_tecnico(tec);
         }
     }
     fclose(arq_tecnicos);
