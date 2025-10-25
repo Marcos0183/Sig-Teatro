@@ -11,8 +11,24 @@ Para cada módulo temos os seguintes padrões de funcionalidade para suas res:
 - Salvar dados no sistema
 
 
-## Uso
-Exemplo de uso
+### Compilação e Execução
+
+```bash
+# Clone o repositório
+git clone [url-do-repositorio]
+
+# Navegue até o diretório
+cd sig-massage
+
+# Compile o programa
+make
+
+# Execute o sistema
+./m
+
+# Limpe os arquivos gerados na compilação (opcional):
+make clean
+```
 
 ## Licença
 O que elas podem e o que elas não podem fazer com o seu código, como alterar, usar e distribuir.
@@ -41,6 +57,7 @@ O que elas podem e o que elas não podem fazer com o seu código, como alterar, 
     </td>
   </tr>
 </table>
+
 
 
 
