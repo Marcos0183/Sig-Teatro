@@ -81,9 +81,25 @@ void ler_DHD(Cabecalho *cabecalho){
     free(inf);
 }
 
-// void ler_persona(Cabecalho *cabecalho){
+void ler_persona(Cabecalho *cabecalho){
+    Dados_Temp *inf;
+    inf = (Dados_Temp *) malloc(sizeof(Dados_Temp));
+    int parar;
+    parar = True;
+    while(parar){
+        printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
+        ler_string(inf ->personagem,32);
+        printf("-----------------------------------\n");
+        if(strcmp(inf ->personagem,"S") == 0 || strcmp(inf ->personagem,"s") == 0) parar = False;
+        else{
+            cabecalho ->persona = listaChar(cabecalho ->persona,inf ->personagem);
+        }
+    }
+    cabecalho ->dados ->tam_personagem = strlen(cabecalho ->persona) + 1;
+    free(inf);
 
-// }
+}
+
 void ler_nome(char *nome) {
     do {
     printf("-----------------------------------\n");

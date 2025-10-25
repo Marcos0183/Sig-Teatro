@@ -9,6 +9,8 @@ void ler_nomeShow(char *nome);
 
 void ler_DHD(Cabecalho *);
 
+void ler_persona(Cabecalho *);
+
 void ler_nome(char *nome);
 
 void ler_cpf(char *cpf);
