@@ -60,6 +60,41 @@ void exibir_tecnico(Tecnico* tec) {
 
     
 
+int cpf_existente(char *cpf) {
+    Tecnico* tec;
+    FILE *arq_clientes;
+    tec = (Tecnico*) malloc(sizeof(Tecnico));
+    if (tec == NULL) {
+        printf("Erro ao alocar memoria para o cliente.\n");
+        return false;
+    }
+
+    arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return false;
+    }
+
+    while (fread(tec, sizeof(Tecnico), 1, arq_clientes) == 1) {
+        if ((strcmp(tec->cpf, cpf) == 0) && (tec->status == true)) {
+            printf("======================================================\n");
+            printf("CPF já cadastrado. Por favor, insira um CPF diferente.\n");
+            printf("operação cancelada.\n");
+            printf("======================================================\n");
+            fclose(arq_clientes);
+            free(tec);
+            return false;
+        }
+    } 
+
+    fclose(arq_clientes);
+    free(tec);
+    return true;
+}
+
+
+
 void cadastro_Tecnico() {
 
     FILE *arq_tecnicos;
@@ -75,6 +110,11 @@ void cadastro_Tecnico() {
     printf("\n \n");
     
     ler_cpf(tec->cpf);
+    if (!cpf_existente(tec->cpf)) {         // CPF já existe → cancelar operação
+        free(tec);
+        pausar();
+        return;
+    }
 
     ler_nome(tec->nome);
 

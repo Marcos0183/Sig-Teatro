@@ -40,9 +40,11 @@ void menu_Principal() {
     func_Ani(tempo_Main);
     printf("║ ► 7. Equipe SIG-THEATER                          ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 0. Encerrar o Programa                         ║\n");
-    func_Ani(tempo_Main);
     printf("║                                                  ║\n");
+    func_Ani(tempo_Main);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_Main);
+    printf("║ ► 0. Encerrar o Programa                         ║\n");
     func_Ani(tempo_Main);
     printf("╚══════════════════════════════════════════════════╝\n");
     func_Ani(tempo_Main);
@@ -174,10 +176,7 @@ void proj_Descrit(){
 
 int main(void) {
     int executar;
-
-    
-        
-    
+ 
     do {
         limparTela();
         if (!banner_mostrado) {
