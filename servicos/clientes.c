@@ -44,13 +44,16 @@ void menu_cliente(){
 
 
 void exibir_cliente(Cliente* clt) {
-    printf("cpf: %s\n", clt->cpf);
-    printf("Nome: %s\n", clt->nome);
-    printf("Email: %s\n", clt->email);
-    printf("Telefone: %s\n", clt->telefone);
+
+    printf("\n+-----------------------------------+\n");
+    printf("|         DADOS DO CLIENTE          |\n");
+    printf("+-----------------------------------+\n");
+    printf("| CPF      : %-50s |\n", clt->cpf);
+    printf("| Nome     : %-50s |\n", clt->nome);
+    printf("| E-mail   : %-50s |\n", clt->email);
+    printf("| Telefone : %-50s |\n", clt->telefone);
+    printf("+-----------------------------------+\n");
 }
-
-
 
 void cadastrar_cliente() { 
     
@@ -78,6 +81,7 @@ void cadastrar_cliente() {
         fclose(arq_clientes);
         return;
     }
+
     fwrite(clt, sizeof(Cliente), 1, arq_clientes);
 
     exibir_cliente(clt);
@@ -85,8 +89,7 @@ void cadastrar_cliente() {
 
     fclose(arq_clientes);
     free(clt);
-
-    
+  
     pausar();
 }
 
