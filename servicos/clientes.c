@@ -62,20 +62,13 @@ void cadastrar_cliente() {
     func_Ani_Left(titulo);
     printf("\n \n");
     
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO CLIENTE: ");  
-    ler_string(clt->cpf, 20);
+    ler_cpf(clt->cpf);
 
-    
     ler_nome(clt->nome);
 
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O EMAIL DO CLIENTE: ");
-    ler_string(clt->email, 40);
+    ler_email(clt->email);
 
     ler_telefone(clt->telefone);
-
-
 
     clt->status = true;
 
