@@ -173,9 +173,8 @@ void pesquisar_Tecnico(){
     char titulo[19] = "PESQUISAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
-    ler_string(cpf_lido, 15);
+    
+    ler_cpf(cpf_lido);
     printf("-----------------------------------\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "rb");
@@ -186,14 +185,7 @@ void pesquisar_Tecnico(){
     }
     while ((fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) && (!encontrado)) {
         if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
-            printf("Técnico encontrado:\n");
-            printf("CPF: %s\n", tec->cpf);
-            printf("Nome: %s\n", tec->nome);
-            printf("Função: %s\n", tec->funcao);
-            printf("Email: %s\n", tec->email);
-            printf("Telefone: %s\n", tec->telefone);
-            printf("--------------------------------\n");
-            pausar();
+            exibir_tecnico(tec);
             encontrado = 1;
         }
     }
