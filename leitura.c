@@ -145,3 +145,14 @@ void ler_email(char *email) {
     ler_string(email, 40);
     } while (!valida_email(email));
 }
+
+
+
+void ler_funcao(char *funcao) {
+    do
+    {
+    printf("-----------------------------------\n");
+    printf("|  INSIRA A FUNÇÃO: ");
+    ler_string(funcao, 16);
+    } while (!valida_nome(funcao));
+}
