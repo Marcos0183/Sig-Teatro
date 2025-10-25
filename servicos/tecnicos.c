@@ -268,7 +268,7 @@ void excluir_Tecnico(){
                 tec->status = false;
                 fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
                 fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
-                printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
+                printf("Técnico com CPF %s encontrado e excluido.\n", cpf_lido);
             } else {
                 printf("Operação de exclusão cancelada.\n");
                 fclose(arq_tecnicos);
