@@ -44,7 +44,7 @@ void menu_cliente(){
 
 
 void exibir_cliente(Cliente* clt) {
-
+    limparBuffer();
     printf("\n+---------------------------------------------------------------+\n");
     printf("|                     DADOS DO CLIENTE                          |\n");
     printf("+---------------------------------------------------------------+\n");   
@@ -68,13 +68,9 @@ void cadastrar_cliente() {
     printf("\n \n");
     
     ler_cpf(clt->cpf);
-
     ler_nome(clt->nome);
-
     ler_email(clt->email);
-
     ler_telefone(clt->telefone);
-
     clt->status = true;
 
     arq_clientes = fopen("clientes.dat", "ab");
@@ -115,9 +111,7 @@ void atualizar_cliente(){
     func_Ani_Left(titulo);
 
     printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO CLIENTE: ");
-    ler_string(cpf_lido1, 15);
+    ler_cpf(cpf_lido1);
     printf("-----------------------------------\n");
 
     arq_clientes = fopen("clientes.dat", "r+b");
@@ -133,24 +127,11 @@ void atualizar_cliente(){
 
             printf("Cliente encontrado. Insira os novos dados:\n");
 
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O CPF DO CLIENTE: ");
-            ler_string(clt->cpf, 15);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O NOME DO CLIENTE: ");
-            ler_string(clt->nome, 50);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O EMAIL DO CLIENTE: ");
-            ler_string(clt->email, 40);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O TELEFONE: ");
-            ler_string(clt->telefone, 16);
-            printf("-----------------------------------\n");
-
+            ler_nome(clt->nome);
+            ler_email(clt->email);
+            ler_telefone(clt->telefone);
             clt->status = true;
+
             fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
             fwrite(clt, sizeof(Cliente), 1, arq_clientes);
 
@@ -159,14 +140,13 @@ void atualizar_cliente(){
 
    
     
-
+    exibir_cliente(clt);
     fclose(arq_clientes);
     free(clt);
 
 
     if (!encontrado) {
         printf("Cliente com CPF %s não encontrado.\n", cpf_lido1);
-        remove("clientestemp.csv");
         pausar();
         return;
     }  
