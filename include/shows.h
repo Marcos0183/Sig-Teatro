@@ -18,7 +18,7 @@ void pesquisar_Show();
 
 typedef struct cadastro_Shows Dados_S;
 typedef struct cadastro_Temp Dados_Temp;
-typedef struct cabecalho Cabecalho;
+typedef struct cabecalho_0 Cabecalho;
 
 
 struct cadastro_Shows{
@@ -36,7 +36,7 @@ struct cadastro_Temp{
     char personagem[32];
 };
 
-struct cabecalho{
+struct cabecalho_0{
     int id_lido;
     int encontrado;
     char *DHD;
