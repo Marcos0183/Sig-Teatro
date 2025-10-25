@@ -5,6 +5,7 @@
 #include "tecnicos.h"
 #include "anima.h"
 #include "utils.h"
+#include "leitura.h"
 #define true 1
 #define false 0
 
@@ -52,7 +53,7 @@ void exibir_tecnico(Tecnico* tec) {
     printf("| E-mail   : %-50s |\n", tec->email);
     printf("| Telefone : %-50s |\n", tec->telefone);
     printf("+-----------------------------------+\n");
-    
+
 }  
 
     
@@ -71,26 +72,17 @@ void cadastro_Tecnico() {
     char titulo[19] = "CADASTRAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TECNICO: ");  
-    ler_string(tec->cpf, 15);
-
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O NOME DO TECNICO: ");
-    ler_string(tec->nome, 50);
+    ler_cpf(tec->cpf);
+    
+    ler_nome(tec->nome);
 
     printf("-----------------------------------\n");
     printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
     ler_string(tec->funcao, 16);
 
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O EMAIL DO TECNICO: ");
-    ler_string(tec->email, 40);
-    printf("-----------------------------------\n");//
+    ler_email(tec->email);
     
-    printf("|  INSIRA O TELEFONE: ");
-    ler_string(tec->telefone, 16);
-    printf("-----------------------------------\n");
+    ler_cpf(tec->cpf);
 
     tec->status = true; 
 
