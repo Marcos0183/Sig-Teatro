@@ -44,15 +44,15 @@ void menu_Tecnicos(){
 
 void exibir_tecnico(Tecnico* tec) {
     
-    printf("\n+-----------------------------------+\n");
-    printf("|         DADOS DO TÉCNICO          |\n");
-    printf("+-----------------------------------+\n");
+    printf("\n+---------------------------------------------------------------+\n");
+    printf("|                     DADOS DO TÉCNICO                          |\n");
+    printf("+---------------------------------------------------------------+\n");   
     printf("| CPF      : %-50s |\n", tec->cpf);
     printf("| Nome     : %-50s |\n", tec->nome);
     printf("| Função   : %-50s |\n", tec->funcao);
     printf("| E-mail   : %-50s |\n", tec->email);
     printf("| Telefone : %-50s |\n", tec->telefone);
-    printf("+-----------------------------------+\n");
+    printf("+---------------------------------------------------------------+\n");
 
 }  
 
@@ -80,7 +80,7 @@ void cadastro_Tecnico() {
 
     ler_email(tec->email);
     
-    ler_cpf(tec->cpf);
+    ler_telefone(tec->telefone);
 
     tec->status = true; 
 
@@ -90,10 +90,11 @@ void cadastro_Tecnico() {
         limparBuffer();
         return;   
     }
+    exibir_tecnico(tec);
+    printf("Técnico cadastrado com sucesso!\n");
     fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
     fclose(arq_tecnicos);
     free(tec);
-    printf("Técnico cadastrado com sucesso!\n");
     pausar();
 }
 
