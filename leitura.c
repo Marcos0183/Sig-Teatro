@@ -9,7 +9,7 @@
 #include "listachar.h"
 #include "shows.h"
 
-int id_show(){
+int id_show(void){
     int idRetorna;
     int *id;
     id = &idRetorna;
