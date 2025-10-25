@@ -1,6 +1,8 @@
 #ifndef LEITURA_H
 #define LEITURA_H
 #include "shows.h"
+#include "ingresso.h"
+
 
 int id_show(void);
 
@@ -16,11 +18,12 @@ void ler_nome(char *nome);
 
 void ler_cpf(char *cpf);
 
+int ler_cpf_show(Dados_I *);
+
 void ler_telefone(char *telefone);
 
 void ler_email(char *email);
 
 void ler_funcao(char *funcao);
-
 
 #endif

@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include "clientes.h"
 #include "leitura.h"
+#include "utils.h"
+#include "shows.h"
 #define true 1
 #define false 0
 
@@ -200,4 +202,32 @@ int valida_funcao(char *funcao) {
     }
 
     return true;
+}
+
+
+
+int valida_cliente(char *cliente){
+    Cliente *clt;
+    FILE *arq_clientes;
+    clt = (Cliente*) malloc(sizeof(Cliente));
+
+    arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        limparBuffer();
+        fclose(arq_clientes);
+        exit(1);
+    }
+
+    while(fread(clt,sizeof(Cliente),1,arq_clientes) == 1){
+        if(strcmp(clt ->cpf,cliente) == 0){
+            fclose(arq_clientes);
+            free(clt);
+            return True;
+        }
+    }
+
+    fclose(arq_clientes);
+    free(clt);
+    return False;
+
 }

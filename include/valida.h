@@ -9,4 +9,6 @@ int valida_telefone(char *telefone);
 
 int valida_email(char *email);
 
+int valida_cliente(char *);
+
 #endif
