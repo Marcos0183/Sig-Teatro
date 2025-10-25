@@ -22,7 +22,7 @@ void menu_cliente(){
         func_Ani(tempo_cliente);
         printf("║                                                  ║\n");
         func_Ani(tempo_cliente);
-        printf("║ ► 1. cadastrar Cliente                           ║\n");
+        printf("║ ► 1 cadastrar Cliente                            ║\n");
         func_Ani(tempo_cliente);
         printf("║ ► 2. Pesquisar Cliente                           ║\n");
         func_Ani(tempo_cliente);
@@ -32,9 +32,11 @@ void menu_cliente(){
         func_Ani(tempo_cliente);
         printf("║ ► 5. listar cliente                              ║\n");
         func_Ani(tempo_cliente);
-        printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
-        func_Ani(tempo_cliente);
         printf("║                                                  ║\n");
+        func_Ani(tempo_cliente);
+        printf("╠══════════════════════════════════════════════════╣\n");
+        func_Ani(tempo_cliente);
+        printf("║ ► 0. Voltar ao Menu principal                    ║\n");
         func_Ani(tempo_cliente);
         printf("╚══════════════════════════════════════════════════╝\n");
         func_Ani(tempo_cliente);
