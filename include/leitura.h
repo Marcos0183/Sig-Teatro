@@ -1,7 +1,8 @@
 #ifndef LEITURA_H
 #define LEITURA_H
 #include "shows.h"
-int id_show();
+
+int id_show(void);
 
 void ler_id(int *id_lido); 
 

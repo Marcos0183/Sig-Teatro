@@ -1,18 +1,37 @@
-# SIG-Theater: Um Sistema de Gestão para um Teatro
+## 🎭 SIG-Theater: Sistema de Gestão Teatral
 
-O Sistema de Gestão Teatral ou SGT, trata-se de um software que tem como funcionalidades organizar e armazenar dados em 4 módulos:
-- Módulo de Ingressos;
-- Módulo de Shows/Peças;
-- Módulo de Clientes;
-- Módulo de Técnicos;
-- Módulo de Relatórios.
+O SIG-Theater (Sistema de Gestão Teatral) é uma solução de software desenvolvida para otimizar e organizar a administração de teatros e casas de espetáculos. Ele centraliza as operações de bilheteria, programação, gestão de pessoal e relacionamento com o público.
 
-Para cada módulo temos os seguintes padrões de funcionalidade para suas res:
-- Salvar dados no sistema
+## Módulo e Descrição 
 
+- **Módulo de Ingressos**: Gerenciamento de assentos, tipos de bilhetes, preços, vendas e reservas.
 
-## Uso
-Exemplo de uso
+- **Módulo de Shows/Peças**: Cadastro e manutenção da programação, datas, horários e detalhes das produções em cartaz.
+
+- **Módulo de Clientes**: Manutenção do cadastro do público e informações para fidelização."
+
+- **Módulo de Técnicos**: Gestão da equipe técnica, de produção e de bastidores (funções, contatos e alocação).
+
+- **Módulo de Relatórios**: Geração de visões gerenciais, análises de vendas, ocupação e dados financeiros operacionais.
+
+## Compilação e Execução
+
+```bash
+# Clone o repositório
+git clone [url-do-repositorio]
+
+# Navegue até o diretório
+cd sig-massage
+
+# Compile o programa
+make
+
+# Execute o sistema
+./m
+
+# Limpe os arquivos gerados na compilação (opcional):
+make clean
+```
 
 ## Licença
 O que elas podem e o que elas não podem fazer com o seu código, como alterar, usar e distribuir.
@@ -41,6 +60,16 @@ O que elas podem e o que elas não podem fazer com o seu código, como alterar, 
     </td>
   </tr>
 </table>
+
+
+
+
+
+
+
+
+
+
 
 
 
