@@ -29,9 +29,11 @@ void menu_Ingresso(){
     func_Ani(tempo_Ingresso);
     printf("║ ► 4. Excluir Ingresso                            ║\n");
     func_Ani(tempo_Ingresso);
-    printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
-    func_Ani(tempo_Ingresso);
     printf("║                                                  ║\n");
+    func_Ani(tempo_Ingresso);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_Ingresso);
+    printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
     func_Ani(tempo_Ingresso);
     printf("╚══════════════════════════════════════════════════╝\n");
     func_Ani(tempo_Ingresso);
