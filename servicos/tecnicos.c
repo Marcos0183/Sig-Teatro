@@ -217,9 +217,8 @@ void excluir_Tecnico(){
     func_Ani_Left(titulo);
     printf("\n \n");
 
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TÉCNICO: ");  
-    ler_string(cpf_lido, 15);
+    
+    ler_cpf(cpf_lido);
     printf("-----------------------------------\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "r+b");
