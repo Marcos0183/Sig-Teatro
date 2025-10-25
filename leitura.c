@@ -44,12 +44,16 @@ void ler_id(int *id_lido){
     printf("-----------------------------------\n");
 }
 
+
+
 void ler_nomeShow(char *nome){
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O NOME DO SHOW: ");
     ler_string(nome,32);
 }
+
+
 
 void ler_DHD(Cabecalho *cabecalho){
     Dados_Temp *inf;
@@ -81,6 +85,8 @@ void ler_DHD(Cabecalho *cabecalho){
     free(inf);
 }
 
+
+
 void ler_persona(Cabecalho *cabecalho){
     Dados_Temp *inf;
     inf = (Dados_Temp *) malloc(sizeof(Dados_Temp));
@@ -100,6 +106,8 @@ void ler_persona(Cabecalho *cabecalho){
 
 }
 
+
+
 void ler_nome(char *nome) {
     do {
     printf("-----------------------------------\n");
@@ -107,6 +115,8 @@ void ler_nome(char *nome) {
     ler_string(nome, 50);
     } while (!valida_nome(nome));
 }
+
+
 
 void ler_cpf(char *cpf) {
     do {
@@ -116,6 +126,8 @@ void ler_cpf(char *cpf) {
     } while (!valida_cpf(cpf));
 }
 
+
+
 void ler_telefone(char *telefone) {
     do {
     printf("-----------------------------------\n");
@@ -123,6 +135,8 @@ void ler_telefone(char *telefone) {
     ler_string(telefone, 16);
     } while (!valida_telefone(telefone));
 }
+
+
 
 void ler_email(char *email) {
     do {
