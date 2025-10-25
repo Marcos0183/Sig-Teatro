@@ -183,7 +183,7 @@ void pesquisar_cliente(){
         return;
     
     }
-    
+
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
         if ((strcmp(clt->cpf, cpf_lido) == 0) && (clt->status == true)) {
             exibir_cliente(clt);
@@ -214,9 +214,7 @@ void excluir_cliente() {
     func_Ani_Left(titulo);
     printf("\n \n");
 
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO CLIENTE: ");  
-    ler_string(cpf_lido, 15);
+    ler_cpf(cpf_lido);
     printf("-----------------------------------\n");
 
     arq_clientes = fopen("clientes.dat", "r+b");
@@ -277,11 +275,7 @@ void listar_cliente() {
     printf("\n \n");
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
         if (clt -> status == true) {
-        printf("CPF: %s\n", clt->cpf);
-        printf("Nome: %s\n", clt->nome);
-        printf("Email: %s\n", clt->email);
-        printf("Telefone: %s\n", clt->telefone);
-        printf("-------------------------\n");
+            exibir_cliente(clt);
         }
     }
     fclose(arq_clientes);
