@@ -31,9 +31,11 @@ void menu_Tecnicos(){
         func_Ani(tempo_Tecnicos);
         printf("║ ► 5. Listar Técnico                              ║\n");
         func_Ani(tempo_Tecnicos);
-        printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
-        func_Ani(tempo_Tecnicos);
         printf("║                                                  ║\n");
+        func_Ani(tempo_Tecnicos);
+        printf("╠══════════════════════════════════════════════════╣\n");
+        func_Ani(tempo_Tecnicos);
+        printf("║ ► 0. Voltar ao Menu principal                    ║\n");
         func_Ani(tempo_Tecnicos);
         printf("╚══════════════════════════════════════════════════╝\n");
         func_Ani(tempo_Tecnicos);
@@ -152,7 +154,7 @@ void atualizar_Tecnico() {
         printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
         return;
     }
-    
+
     printf("Técnico atualizado com sucesso!\n");
     pausar();
 
