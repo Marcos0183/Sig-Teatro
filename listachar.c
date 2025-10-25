@@ -4,7 +4,7 @@
 #include "listachar.h"
 // ##################FUNÇÃO PARA UM VETOR DINÂMICO DE CARACTERES######################
 // MODELO RETIRADO DO LIVRO (Introdução a Estruturas de Dados com técnicas de programação em C SEGUNDA EDIÇÃO)
-//com modificações do CHATGPT 4.0
+//com modificações do CHATGPT 4.0 nas linhas marcadas "Aqui"
 
 void realoca(char **cr, int n){
     *cr = (char *) realloc(*cr,n+1);
@@ -39,24 +39,14 @@ void concatena(char **cr, const char *s){
     strcat(*cr,s);
 }
 
-
-const char *acessar(char *cr){
-    return cr;
-}
-
-
-void liberarM(char *cr){
-    free(cr);
-}
-
 //Sempre que usar essa função lembre:
 //1. De iniciar a variavel do tipo char ponteiro com NULL a primeira vez que for usala-la
 //Ex: cr = NULL;
 char *listaChar(char *cr,const char *s){ 
     char *virgula = ",";
-    if(cr == NULL){
-        cr = criavazia();
-    } 
+    if(cr == NULL){      //Aqui
+        cr = criavazia();//Aqui
+    } //Aqui
     concatena(&cr,s);
     concatena(&cr,virgula); 
     return cr;

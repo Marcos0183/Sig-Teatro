@@ -6,6 +6,35 @@
 #include "anima.h"
 #include "shows.h"
 
+void exibir_inf_cadastro(Cabecalho *cabecalho){
+    printf("Id: %d\n",cabecalho ->dados ->id);
+    printf("Nome: %s\n",cabecalho ->dados ->nome);
+    printf("Datas: %s\n",cabecalho ->DHD);
+    printf("Personagens: %s\n",cabecalho ->persona);
+}
+
+int escolha_cad_show(Cabecalho *cabecalho){ 
+    char escolha[2];
+    int saida;
+    int parar;
+    parar = True;
+    while(parar){ 
+        exibir_inf_cadastro(cabecalho);
+        printf("CADASTRAR SHOW - SIM(S)/NAO(N): ");
+        scanf("%s",escolha);
+        getchar();
+        if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
+            saida = True;
+            parar = False;
+        }
+        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"N") == 0){
+            saida = False;
+            parar = False;
+        }
+        else printf("ESCOLHA APENAS S PARA SIM E N PARA NÃO\n");
+    }
+    return saida;
+}
 
 void pesquisaShow(Cabecalho *cabecalho){
     cabecalho ->encontrado = True;
@@ -16,10 +45,7 @@ void pesquisaShow(Cabecalho *cabecalho){
             cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
             fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
             fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
-            printf("Id: %d\n",cabecalho ->dados ->id);
-            printf("Nome: %s\n",cabecalho ->dados ->nome);
-            printf("Datas: %s\n",cabecalho ->DHD);
-            printf("Personagens: %s\n",cabecalho ->persona);
+            exibir_inf_cadastro(cabecalho);
             fclose(cabecalho ->arq_shows);
             free(cabecalho ->DHD);
             free(cabecalho ->persona);

@@ -39,8 +39,6 @@ void menu_Shows(){
         printf("--> Digite a opção desejada: ");
 }
 
-
-
 void cadastrar_Show(){
     Cabecalho *cabecalho;
     cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
@@ -53,37 +51,24 @@ void cadastrar_Show(){
     cabecalho ->dados ->id = id_show();
     ler_nomeShow(cabecalho ->dados ->nome); 
     ler_DHD(cabecalho);
-    
-  
-   
-    
-    
+    ler_persona(cabecalho);
 
-    // parar = True;
-    // while(parar){
-    //     printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-    //     ler_string(inf ->personagem,32);
-    //     printf("-----------------------------------\n");
-    //     if(strcmp(inf ->personagem,"S") == 0 || strcmp(inf ->personagem,"s") == 0) parar = False;
-    //     else{
-    //         persona = listaChar(persona,inf ->personagem);
-    //     }
-    // }
-
-    // dados ->tam_DHD = strlen(DHD) + 1;
-    // dados ->tam_personagem = strlen(persona) + 1;
-    // arq_Shows = fopen("arq_shows.dat","ab");
-    // dados ->status = True;
-    // fwrite(dados,sizeof(Dados_S),1,arq_Shows);
-    // fwrite(DHD,dados ->tam_DHD,1,arq_Shows);
-    // fwrite(persona,dados ->tam_personagem,1,arq_Shows);
-    // fclose(arq_Shows);
-    // free(dados);
-    // free(inf);
-    // free(DHD);
-    // free(persona);
+    if(escolha_cad_show(cabecalho)){
+        cabecalho ->arq_shows = fopen("arq_shows.dat","ab");
+        cabecalho ->dados ->status = True;
+        fwrite(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows);
+        fwrite(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
+        fwrite(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
+        fclose(cabecalho ->arq_shows);
+        free(cabecalho ->dados);
+        free(cabecalho ->DHD);
+        free(cabecalho ->persona);
+        printf("SHOW CADASTRADO");
+    }
+    else{
+        printf("SHOW NÃO CADASTRADOS");
+    }     
 }
-
 
 void excluir_Show(){
     int id_lido;

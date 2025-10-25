@@ -231,8 +231,6 @@ void pesquisar_Tecnico(){
 
 }
 
-
-
 void excluir_Tecnico(){
     
     Tecnico* tec;
