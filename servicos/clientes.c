@@ -82,6 +82,7 @@ void cadastrar_cliente() {
 
     fwrite(clt, sizeof(Cliente), 1, arq_clientes);
 
+    limparTela();
     exibir_cliente(clt);
     printf("Cliente cadastrado com sucesso!\n");
 
@@ -139,7 +140,7 @@ void atualizar_cliente(){
     }
 
    
-    
+   limparTela(); 
     exibir_cliente(clt);
     fclose(arq_clientes);
     free(clt);
@@ -186,6 +187,7 @@ void pesquisar_cliente(){
 
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
         if ((strcmp(clt->cpf, cpf_lido) == 0) && (clt->status == true)) {
+            limparTela();
             exibir_cliente(clt);
             fclose(arq_clientes);
             free(clt);
@@ -226,6 +228,7 @@ void excluir_cliente() {
 
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1 && (!encontrado)) {
         if ((strcmp(clt->cpf, cpf_lido) == 0) && (clt->status == true)) {
+            limparTela();
             exibir_cliente(clt);
             printf("Tem certeza que deseja excluir este técnico? (s/n): ");
             scanf(" %c", &confirm);
