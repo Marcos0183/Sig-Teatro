@@ -59,6 +59,41 @@ void exibir_cliente(Cliente* clt) {
 
 
 
+int cpf_existente(char *cpf) {
+    Cliente* clt;
+    FILE *arq_clientes;
+    clt = (Cliente*) malloc(sizeof(Cliente));
+    if (clt == NULL) {
+        printf("Erro ao alocar memoria para o cliente.\n");
+        return false;
+    }
+
+    arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return false;
+    }
+
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if ((strcmp(clt->cpf, cpf) == 0) && (clt->status == true)) {
+            printf("======================================================\n");
+            printf("CPF já cadastrado. Por favor, insira um CPF diferente.\n");
+            printf("opração cancelada.\n");
+            printf("======================================================\n");
+            fclose(arq_clientes);
+            free(clt);
+            return false;
+        }
+    } 
+
+    fclose(arq_clientes);
+    free(clt);
+    return true;
+}
+  
+
+
 void cadastrar_cliente() { 
     
     Cliente *clt;
@@ -68,8 +103,16 @@ void cadastrar_cliente() {
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
     printf("\n \n");
-    
+
     ler_cpf(clt->cpf);
+    // Lê o CPF e verifica duplicidade antes de continuar
+    if (!cpf_existente(clt->cpf)) {
+        // CPF já existe → cancelar operação
+        free(clt);
+        pausar();
+        return;
+    }
+
     ler_nome(clt->nome);
     ler_email(clt->email);
     ler_telefone(clt->telefone);
