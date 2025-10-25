@@ -19,5 +19,7 @@ void ler_telefone(char *telefone);
 
 void ler_email(char *email);
 
+void ler_funcao(char *funcao);
+
 
 #endif
