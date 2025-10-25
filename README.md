@@ -1,14 +1,12 @@
-# SIG-Theater: Um Sistema de Gestão para um Teatro
+Módulos Principais e Funcionalidades
 
-O Sistema de Gestão Teatral ou SGT, trata-se de um software que tem como funcionalidades organizar e armazenar dados em 4 módulos:
-- Módulo de Ingressos;
-- Módulo de Shows/Peças;
-- Módulo de Clientes;
-- Módulo de Técnicos;
-- Módulo de Relatórios.
-
-Para cada módulo temos os seguintes padrões de funcionalidade para suas res:
-- Salvar dados no sistema
+O SIG-Theater é estruturado em cinco módulos principais, cada um dedicado a um pilar fundamental da gestão teatral. Cada módulo implementa um conjunto padrão de operações para manipulação de dados, garantindo a organização e a integridade do sistema:
+Módulo	Descrição	Operações Padrão
+Ingressos	Gestão de tipos de bilhetes, preços, assentos, vendas e reservas.	Criar (Venda), Listar, Atualizar (Status/Reserva), Excluir (Estorno).
+Shows/Peças	Cadastro e manutenção de informações detalhadas sobre as produções em cartaz (datas, horários, sinopse, elenco).	Cadastrar, Listar/Buscar, Atualizar, Excluir (Produção).
+Clientes	Registro e gestão do público (informações de contato, histórico de compras, programas de fidelidade).	Cadastrar, Listar/Buscar, Atualizar, Excluir (Registro).
+Técnicos	Gestão da equipe técnica e de produção envolvida nas peças (função, contato, disponibilidade).	Cadastrar, Listar/Buscar, Atualizar, Excluir (Registro).
+Relatórios	Geração de insights e resumos operacionais (vendas por período, peças mais populares, dados financeiros).	Gerar (Relatório), Visualizar, Exportar (PDF/CSV).
 
 
 ### Compilação e Execução
@@ -57,6 +55,7 @@ O que elas podem e o que elas não podem fazer com o seu código, como alterar, 
     </td>
   </tr>
 </table>
+
 
 
 
