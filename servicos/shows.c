@@ -30,9 +30,11 @@ void menu_Shows(){
         func_Ani(tempo_Shows);
         printf("║ ► 4. Excluir Show                                ║\n");
         func_Ani(tempo_Shows);
-        printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
-        func_Ani(tempo_Shows);
         printf("║                                                  ║\n");
+        func_Ani(tempo_Shows);
+        printf("╠══════════════════════════════════════════════════╣\n");
+        func_Ani(tempo_Shows);
+        printf("║ ► 0. Voltar ao Menu Anterior...                  ║\n");
         func_Ani(tempo_Shows);
         printf("╚══════════════════════════════════════════════════╝\n");
         func_Ani(tempo_Shows);
