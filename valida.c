@@ -88,8 +88,6 @@ int valida_cpf(char *cpf_raw) {
 
 
 
-
-
 int valida_telefone(char *telefone) {
 
     int digitos = 0;
@@ -113,8 +111,6 @@ int valida_telefone(char *telefone) {
 
     return true;
     }
-
-
 
 
 
@@ -170,6 +166,38 @@ int valida_email(char *email) {
     // Verifica se o ponto não é o último caractere
     if (pos_ponto == tamanho - 1)
         return false;
+
+    return true;
+}
+
+
+
+int valida_funcao(char *funcao) {
+    int i;
+    bool tem_letra = false;
+
+    // Remove espaços do início
+    while (*funcao == ' ') {
+        funcao++;
+    }
+
+    if (strlen(funcao) == 0) {
+        printf("Especialidade inválida! Campo vazio.\n");
+        return false;
+    }
+
+    // Verifica se há pelo menos uma letra
+    for (i = 0; funcao[i] != '\0'; i++) {
+        if ((funcao[i] >= 'A' && funcao[i] <= 'Z') ||
+            (funcao[i] >= 'a' && funcao[i] <= 'z')) {
+            tem_letra = true;
+        }
+    }
+
+    if (!tem_letra) {
+        printf("Especialidade inválida! Deve conter letras.\n");
+        return false;
+    }
 
     return true;
 }
