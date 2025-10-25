@@ -44,15 +44,15 @@ void menu_Tecnicos(){
 
 void exibir_tecnico(Tecnico* tec) {
     
-    printf("\n+-----------------------------------+\n");
-    printf("|         DADOS DO TÉCNICO          |\n");
-    printf("+-----------------------------------+\n");
+    printf("\n+---------------------------------------------------------------+\n");
+    printf("|                     DADOS DO TÉCNICO                          |\n");
+    printf("+---------------------------------------------------------------+\n");   
     printf("| CPF      : %-50s |\n", tec->cpf);
     printf("| Nome     : %-50s |\n", tec->nome);
     printf("| Função   : %-50s |\n", tec->funcao);
     printf("| E-mail   : %-50s |\n", tec->email);
     printf("| Telefone : %-50s |\n", tec->telefone);
-    printf("+-----------------------------------+\n");
+    printf("+---------------------------------------------------------------+\n");
 
 }  
 
@@ -80,7 +80,7 @@ void cadastro_Tecnico() {
 
     ler_email(tec->email);
     
-    ler_cpf(tec->cpf);
+    ler_telefone(tec->telefone);
 
     tec->status = true; 
 
@@ -90,10 +90,11 @@ void cadastro_Tecnico() {
         limparBuffer();
         return;   
     }
+    exibir_tecnico(tec);
+    printf("Técnico cadastrado com sucesso!\n");
     fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
     fclose(arq_tecnicos);
     free(tec);
-    printf("Técnico cadastrado com sucesso!\n");
     pausar();
 }
 
@@ -112,9 +113,9 @@ void atualizar_Tecnico() {
     char titulo[19] = "ATUALIZAR TÉCNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
-    ler_string(cpf_lido, 15);
+    
+    ler_cpf(cpf_lido);
+
     printf("-----------------------------------\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "r+b");
@@ -127,51 +128,34 @@ void atualizar_Tecnico() {
     while (fread(tec, sizeof(Tecnico) , 1, arq_tecnicos)==1 && (!encontrado)) {  
         if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
             encontrado = 1;
-            printf("Técnico encontrado. Insira os novos dados:\n");
+            
+            printf("Insira os novos dados do técnico:\n");
 
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O CPF DO TECNICO: ");
-            ler_string(tec->cpf, 15);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O NOME DO TECNICO: ");
-            ler_string(tec->nome, 50);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
-            ler_string(tec->funcao, 16);
-
-            printf("-----------------------------------\n");
-
-            printf("|  INSIRA O EMAIL DO TECNICO: ");
-            ler_string(tec->email, 40);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O TELEFONE: ");
-            ler_string(tec->telefone, 16);
-            printf("-----------------------------------\n");
-
+            ler_cpf(tec->cpf);
+            ler_nome(tec->nome);
+            ler_funcao(tec->funcao);
+            ler_email(tec->email);
+            ler_telefone(tec->telefone);
             tec->status = true;
+
             fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
             fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
         }
     }
 
+    exibir_tecnico(tec);
 
     fclose(arq_tecnicos);
+    free(tec);
 
     if (!encontrado) {
         printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
-        remove("tecnicostemp.csv");
-        pausar();
         return;
     }
-
+    
     printf("Técnico atualizado com sucesso!\n");
     pausar();
 
-    // procurar se há esse cpf
-    // se sim, para alterar os dados tem que saber quais dados quer alterar
 }
 
 
@@ -190,9 +174,8 @@ void pesquisar_Tecnico(){
     char titulo[19] = "PESQUISAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
-    ler_string(cpf_lido, 15);
+    
+    ler_cpf(cpf_lido);
     printf("-----------------------------------\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "rb");
@@ -203,14 +186,7 @@ void pesquisar_Tecnico(){
     }
     while ((fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) && (!encontrado)) {
         if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
-            printf("Técnico encontrado:\n");
-            printf("CPF: %s\n", tec->cpf);
-            printf("Nome: %s\n", tec->nome);
-            printf("Função: %s\n", tec->funcao);
-            printf("Email: %s\n", tec->email);
-            printf("Telefone: %s\n", tec->telefone);
-            printf("--------------------------------\n");
-            pausar();
+            exibir_tecnico(tec);
             encontrado = 1;
         }
     }
@@ -242,9 +218,8 @@ void excluir_Tecnico(){
     func_Ani_Left(titulo);
     printf("\n \n");
 
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TÉCNICO: ");  
-    ler_string(cpf_lido, 15);
+    
+    ler_cpf(cpf_lido);
     printf("-----------------------------------\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "r+b");
@@ -310,12 +285,7 @@ void listar_tecnicos() {
     printf("\n \n");
     while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
         if (tec -> status == true) {
-        printf("CPF: %s\n", tec->cpf);
-        printf("Nome: %s\n", tec->nome);
-        printf("Função: %s\n", tec->funcao);
-        printf("Email: %s\n", tec->email);
-        printf("Telefone: %s\n", tec->telefone);
-        printf("-------------------------\n");
+            exibir_tecnico(tec);
         }
     }
     fclose(arq_tecnicos);
