@@ -45,15 +45,17 @@ void menu_cliente(){
 
 void exibir_cliente(Cliente* clt) {
 
-    printf("\n+-----------------------------------+\n");
-    printf("|         DADOS DO CLIENTE          |\n");
-    printf("+-----------------------------------+\n");
+    printf("\n+---------------------------------------------------------------+\n");
+    printf("|                     DADOS DO CLIENTE                          |\n");
+    printf("+---------------------------------------------------------------+\n");   
     printf("| CPF      : %-50s |\n", clt->cpf);
     printf("| Nome     : %-50s |\n", clt->nome);
     printf("| E-mail   : %-50s |\n", clt->email);
     printf("| Telefone : %-50s |\n", clt->telefone);
-    printf("+-----------------------------------+\n");
+    printf("+---------------------------------------------------------------+\n");
 }
+
+
 
 void cadastrar_cliente() { 
     
