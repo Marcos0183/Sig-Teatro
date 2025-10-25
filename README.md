@@ -14,7 +14,7 @@ O SIG-Theater (Sistema de Gestão Teatral) é uma solução de software desenvol
 
 - **Módulo de Relatórios**: Geração de visões gerenciais, análises de vendas, ocupação e dados financeiros operacionais.
 
-### Compilação e Execução
+## Compilação e Execução
 
 ```bash
 # Clone o repositório
@@ -60,6 +60,7 @@ O que elas podem e o que elas não podem fazer com o seu código, como alterar, 
     </td>
   </tr>
 </table>
+
 
 
 
