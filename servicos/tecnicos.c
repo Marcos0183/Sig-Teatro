@@ -113,9 +113,9 @@ void atualizar_Tecnico() {
     char titulo[19] = "ATUALIZAR TÉCNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CPF DO TÉCNICO: ");  //** Deixarei assim por enquanto, sem validação
-    ler_string(cpf_lido, 15);
+    
+    ler_cpf(cpf_lido);
+
     printf("-----------------------------------\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "r+b");
@@ -128,31 +128,16 @@ void atualizar_Tecnico() {
     while (fread(tec, sizeof(Tecnico) , 1, arq_tecnicos)==1 && (!encontrado)) {  
         if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
             encontrado = 1;
-            printf("Técnico encontrado. Insira os novos dados:\n");
+            
+            printf("Insira os novos dados do técnico:\n");
 
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O CPF DO TECNICO: ");
-            ler_string(tec->cpf, 15);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O NOME DO TECNICO: ");
-            ler_string(tec->nome, 50);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
-            ler_string(tec->funcao, 16);
-
-            printf("-----------------------------------\n");
-
-            printf("|  INSIRA O EMAIL DO TECNICO: ");
-            ler_string(tec->email, 40);
-
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O TELEFONE: ");
-            ler_string(tec->telefone, 16);
-            printf("-----------------------------------\n");
-
+            ler_cpf(tec->cpf);
+            ler_nome(tec->nome);
+            ler_funcao(tec->funcao);
+            ler_email(tec->email);
+            ler_telefone(tec->telefone);
             tec->status = true;
+
             fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
             fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
         }
@@ -160,19 +145,16 @@ void atualizar_Tecnico() {
 
 
     fclose(arq_tecnicos);
+    free(tec);
 
     if (!encontrado) {
         printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
-        remove("tecnicostemp.csv");
-        pausar();
         return;
     }
-
+    exibir_tecnico(tec);
     printf("Técnico atualizado com sucesso!\n");
     pausar();
 
-    // procurar se há esse cpf
-    // se sim, para alterar os dados tem que saber quais dados quer alterar
 }
 
 
