@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include "anima.h"
 #include "ingresso.h"
-#include "sessoes.h"
 #include "tecnicos.h"
 #include "shows.h"
 #include "clientes.h"
@@ -33,15 +32,13 @@ void menu_Principal() {
     func_Ani(tempo_Main);
     printf("║ ► 3. Módulo Espetáculos (Shows/Peças)            ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 4. Módulo Sessões                              ║\n");
+    printf("║ ► 4. Módulo Técnicos                             ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 5. Módulo Técnicos                             ║\n");
+    printf("║ ► 5. Módulo Relatórios                           ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 6. Módulo Relatórios                           ║\n");
+    printf("║ ► 6. sobre o SIG-THEATER                         ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 7. sobre o SIG-THEATER                         ║\n");
-    func_Ani(tempo_Main);
-    printf("║ ► 8. Equipe SIG-THEATER                          ║\n");
+    printf("║ ► 7. Equipe SIG-THEATER                          ║\n");
     func_Ani(tempo_Main);
     printf("║ ► 0. Encerrar o Programa                         ║\n");
     func_Ani(tempo_Main);
@@ -209,24 +206,20 @@ int main(void) {
                 break;
 
             case 4:
-                sessoes();
-                break;
-
-            case 5:
                 tecnicos();
                 break;
 
-            case 6:
+            case 5:
                 limparTela();
                 printf("Módulo Relatórios em construção...\n");
                 pausar();
                 break;
 
-            case 7:
+            case 6:
                 proj_Descrit();
                 break;
 
-            case 8:
+            case 7:
                 equipe();
                 break;
 
