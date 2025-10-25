@@ -143,6 +143,7 @@ void atualizar_Tecnico() {
         }
     }
 
+    exibir_tecnico(tec);
 
     fclose(arq_tecnicos);
     free(tec);
@@ -151,7 +152,7 @@ void atualizar_Tecnico() {
         printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
         return;
     }
-    exibir_tecnico(tec);
+    
     printf("Técnico atualizado com sucesso!\n");
     pausar();
 
