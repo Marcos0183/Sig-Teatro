@@ -179,7 +179,7 @@ int main(void) {
         
     
     do {
-
+        limparTela();
         if (!banner_mostrado) {
             mostrar_banner();
             usleep(2000000);
