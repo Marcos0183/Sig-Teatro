@@ -59,6 +59,7 @@ void exibir_tecnico(Tecnico* tec) {
     
 
 void cadastro_Tecnico() {
+
     FILE *arq_tecnicos;
     Tecnico* tec;
     tec = (Tecnico*) malloc(sizeof(Tecnico));
@@ -67,18 +68,15 @@ void cadastro_Tecnico() {
         return;
     }
 
-    
-    
     char titulo[19] = "CADASTRAR TECNICO";
     func_Ani_Left(titulo);
     printf("\n \n");
-    ler_cpf(tec->cpf);
     
+    ler_cpf(tec->cpf);
+
     ler_nome(tec->nome);
 
-    printf("-----------------------------------\n");
-    printf("|  INSIRA A FUNÇÃO DO TECNICO: ");
-    ler_string(tec->funcao, 16);
+    ler_funcao(tec->funcao);
 
     ler_email(tec->email);
     
