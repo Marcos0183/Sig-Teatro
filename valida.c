@@ -63,6 +63,57 @@ int valida_telefone(char *telefone) {
 
 
 int valida_email(char *email) {
-    // Implementar a validação de email aqui
-    return true; // Placeholder
+    int tamanho = strlen(email);
+    int i;
+    int pos_arroba = -1;
+    int pos_ponto = -1;
+
+    // Verifica tamanho mínimo e máximo
+    if (tamanho < 5 || tamanho > 254)
+        return false;
+
+    // Não pode começar ou terminar com ponto ou arroba
+    if (email[0] == '.' || email[0] == '@' ||
+        email[tamanho - 1] == '.' || email[tamanho - 1] == '@')
+        return false;
+
+    // Percorre cada caractere
+    for (i = 0; i < tamanho; i++) {
+        char c = email[i];
+
+        // Não pode ter espaço ou caracteres especiais inválidos
+        if (isspace(c)) {
+            return false;
+        }
+
+        if (!isalnum(c) && c != '.' && c != '_' && c != '-' && c != '@') {
+            return false;
+        }
+
+        if (c == '@') {
+            // Já tem um @?
+            if (pos_arroba != -1)
+                return false;
+            pos_arroba = i;
+        }
+
+        if (c == '.' && pos_arroba != -1){
+            pos_ponto = i;
+        }
+        
+    }
+
+    // Verifica se há um @ e um . depois do @
+    if (pos_arroba == -1 || pos_ponto == -1)
+        return false;
+
+    // Verifica se o ponto está depois do arroba e não colado
+    if (pos_ponto < pos_arroba + 2)
+        return false;
+
+    // Verifica se o ponto não é o último caractere
+    if (pos_ponto == tamanho - 1)
+        return false;
+
+    return true;
 }
