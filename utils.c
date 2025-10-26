@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "utils.h"
+#define true 1
+#define false 0
 #define LIMITE = 100;
 
 void limparBuffer() {
@@ -36,4 +38,3 @@ char* ler_string(char* destino, int tamanho) {
 void limparTela() {
     system("clear || cls");
 }
-
