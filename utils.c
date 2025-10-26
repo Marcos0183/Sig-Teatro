@@ -37,3 +37,12 @@ void limparTela() {
     system("clear || cls");
 }
 
+
+
+FILE* abrir_arquivo_leitura(const char *nome_arquivo) {
+    FILE *arq = fopen(nome_arquivo, "rb"); // abre apenas para leitura binária
+    if (arq == NULL) {
+        printf("Erro ao abrir o arquivo '%s'.\n", nome_arquivo);
+    }
+    return arq;
+}
