@@ -60,7 +60,7 @@ void exibir_tecnico(Tecnico* tec) {
 
     
 
-int cpf_existente(char *cpf) {
+int cpf_existente_tec(char *cpf) {
     Tecnico* tec;
     FILE *arq_clientes;
     tec = (Tecnico*) malloc(sizeof(Tecnico));
@@ -76,8 +76,8 @@ int cpf_existente(char *cpf) {
         return false;
     }
 
-    while (fread(tec, sizeof(Tecnico), 1, arq_clientes) == 1) {
-        if ((strcmp(tec->cpf, cpf) == 0) && (tec->status == true)) {
+    while (fread(tec, sizeof(Tecnico), 1, arq_clientes) == 1) {                 // Percorre todos os técnicos cadastrados
+        if ((strcmp(tec->cpf, cpf) == 0) && (tec->status == true)) {            // Verifica se o CPF já existe
             printf("======================================================\n");
             printf("CPF já cadastrado. Por favor, insira um CPF diferente.\n");
             printf("operação cancelada.\n");
@@ -110,7 +110,7 @@ void cadastro_Tecnico() {
     printf("\n \n");
     
     ler_cpf(tec->cpf);
-    if (!cpf_existente(tec->cpf)) {         // CPF já existe → cancelar operação
+    if (!cpf_existente_tec(tec->cpf)) {         // CPF já existe → cancelar operação
         free(tec);
         pausar();
         return;
