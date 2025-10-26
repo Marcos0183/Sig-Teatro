@@ -309,15 +309,13 @@ void excluir_cliente() {
 
 void listar_cliente() {
 
-    FILE *arq_clientes;
-    Cliente *clt;
-    clt = (Cliente*) malloc(sizeof(Cliente));
-    arq_clientes = fopen("clientes.dat", "rb");
-    if (arq_clientes == NULL) { 
-        printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
-        return;   
+    Cliente *clt = (Cliente*) malloc(sizeof(Cliente));
+    FILE *arq_clientes = abrir_arquivo_leitura("clientes.dat");
+    if (arq_clientes == NULL) {
+        free(clt);
+        return;
     }
+    
     char titulo[16] = "LISTAR CLIENTE";
     func_Ani_Left(titulo);
     printf("\n \n");
@@ -328,7 +326,6 @@ void listar_cliente() {
     }
     fclose(arq_clientes);
     free(clt);
-    
     pausar();
 }
 
