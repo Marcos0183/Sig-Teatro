@@ -37,3 +37,11 @@ void limparTela() {
     system("clear || cls");
 }
 
+
+void abrir_arquivo(FILE *arq){
+    if(arq == NULL){
+        printf("ERRO AO ABRIR ARQUIVO DE DADOS");
+        system("pause");        
+        exit(1);
+    }
+}

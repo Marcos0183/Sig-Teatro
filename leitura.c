@@ -28,7 +28,10 @@ int id_show(void){
     fclose(arq_id);
 
     arq_id = fopen("id.dat","wb");
-    idRetorna++;
+    if(idRetorna >= 101){
+        idRetorna = 0;
+    }
+    else idRetorna++;
     fwrite(id,sizeof(int),1,arq_id);
     fclose(arq_id);
     free(id);
@@ -44,6 +47,23 @@ void ler_id(int *id_lido){
     scanf("%d",id_lido);
     getchar();
     printf("-----------------------------------\n");
+}
+
+
+
+int ler_codigo(Dados_I *dados){
+    printf("V----------------------------------\n");
+    printf("|  INSIRA O CÓDIGO DO SHOW: ");
+    scanf("%d",&dados ->id_show);
+    getchar();
+
+    if(valida_show(dados ->id_show)){
+        return True;
+    }
+    else{
+        printf("SHOW NÃO ENCONTRADO");
+        return False;
+    }
 }
 
 
@@ -131,6 +151,7 @@ void ler_cpf(char *cpf) {
 
 
 int ler_cpf_show(Dados_I *dados){
+    int saida;
     int parar;
     parar = True;
     do{ 
@@ -141,19 +162,25 @@ int ler_cpf_show(Dados_I *dados){
 
         if(strcmp(dados ->cpf,"C") == 0 || strcmp(dados ->cpf, "c") == 0){
             cadastrar_cliente();
-            return False;
+            saida = False;
+            parar = False;
         }
         else if(valida_cpf(dados ->cpf)){
             if(valida_cliente(dados ->cpf)){ 
-                return True;
+                saida = True;
+                parar = False;
             }
             else{
                 printf("CLIENTE NÃO ENCONTRADO");
-                return False;
+                saida = False;
+                parar = False;
             }
         }  
     }while(parar);
+
+    return saida;
 }
+
 
 
 void ler_telefone(char *telefone) {

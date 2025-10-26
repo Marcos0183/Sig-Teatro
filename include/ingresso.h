@@ -16,10 +16,10 @@ typedef struct vender_Ingresso Dados_I;
 struct vender_Ingresso{
     
     char cpf[20];
-    char codigo_Show[5];
+    int id_show;
     char cadeira[5];
     char status;
-
+    
 };
 
 #endif
