@@ -38,33 +38,3 @@ char* ler_string(char* destino, int tamanho) {
 void limparTela() {
     system("clear || cls");
 }
-
-
-
-FILE* abrir_arquivo_leitura(const char *nome_arquivo) {
-    FILE *arq = fopen(nome_arquivo, "rb"); // abre apenas para leitura binária
-    if (arq == NULL) {
-        printf("Erro ao abrir o arquivo '%s'.\n", nome_arquivo);
-    }
-    return arq;
-}
-
-
-
-FILE* abrir_arquivo_escrita(const char *nome_arquivo) {
-    FILE *arq = fopen(nome_arquivo, "ab"); // abre para escrita binária (append)
-    if (arq == NULL) {
-        printf("Erro ao abrir o arquivo '%s'.\n", nome_arquivo);
-    }
-    return arq;
-}
-
-
-
-FILE* abrir_arquivo_leitura_escrita(const char *nome_arquivo) {
-    FILE *arq = fopen(nome_arquivo, "r+b"); // abre para leitura e escrita binária
-    if (arq == NULL) {
-        printf("Erro ao abrir o arquivo '%s'.\n", nome_arquivo);
-    }
-    return arq;
-}
