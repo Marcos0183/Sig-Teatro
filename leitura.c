@@ -8,6 +8,8 @@
 #include "valida.h"
 #include "listachar.h"
 #include "shows.h"
+#include "ingresso.h"
+#include "clientes.h"
 
 int id_show(void){
     int idRetorna;
@@ -126,6 +128,32 @@ void ler_cpf(char *cpf) {
     } while (!valida_cpf(cpf));
 }
 
+
+
+int ler_cpf_show(Dados_I *dados){
+    int parar;
+    parar = True;
+    do{ 
+        printf("\n \n");
+        printf("-----------------------------------\n");
+        printf("|  INSIRA SEU CPF DE CADASTRO - SEM CPF DIGITE (C) PARA CADASTRAR-SE: ");
+        ler_string(dados ->cpf, 20);
+
+        if(strcmp(dados ->cpf,"C") == 0 || strcmp(dados ->cpf, "c") == 0){
+            cadastrar_cliente();
+            return False;
+        }
+        else if(valida_cpf(dados ->cpf)){
+            if(valida_cliente(dados ->cpf)){ 
+                return True;
+            }
+            else{
+                printf("CLIENTE NÃO ENCONTRADO");
+                return False;
+            }
+        }  
+    }while(parar);
+}
 
 
 void ler_telefone(char *telefone) {

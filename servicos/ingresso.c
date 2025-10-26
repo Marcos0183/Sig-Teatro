@@ -5,6 +5,7 @@
 #include "anima.h"
 #include "ingresso.h"
 #include "utils.h"
+#include "leitura.h"
 
 int tempo_Ingresso = 100;
 
@@ -49,28 +50,24 @@ void vender_Ingresso(){
     char titulo[16] = "VENDER INGRESSO";
     
     func_Ani_Left(titulo);
-    
-    printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA SEU ID DE CLIENTE - SEM ID DIGITE (C) PARA CADASTRAR-SE: ");
-    ler_string(dados->cpf, 20);
+    if(ler_cpf_show(dados)){
+        ler_cpf_show(dados);
+        printf("V----------------------------------\n");
+        printf("|  INSIRA O CÓDIGO DO SHOW: ");
+        ler_string(dados->codigo_Show, 5);
 
 
-    printf("V----------------------------------\n");
-    printf("|  INSIRA O CÓDIGO DO SHOW: ");
-    ler_string(dados->codigo_Show, 5);
+        printf("V----------------------------------\n");
+        printf("|  ESCOLHA SUA CADEIRA: ");
+        ler_string(dados->cadeira,5);
+        printf("V----------------------------------\n");
 
-
-    printf("V----------------------------------\n");
-    printf("|  ESCOLHA SUA CADEIRA: ");
-    ler_string(dados->cadeira,5);
-    printf("V----------------------------------\n");
-
-    dados->status = 'V';
-    arq_Ingresso = fopen("arq_ingresso.dat","ab");
-    fwrite(dados,sizeof(Dados_I),1,arq_Ingresso);
-    fclose(arq_Ingresso);
-    free(dados);
+        dados->status = 'V';
+        arq_Ingresso = fopen("arq_ingresso.dat","ab");
+        fwrite(dados,sizeof(Dados_I),1,arq_Ingresso);
+        fclose(arq_Ingresso);
+        free(dados);
+    }
 }
 
 
