@@ -12,4 +12,8 @@ char* ler_string(char* destino, int tamanho);
 
 FILE* abrir_arquivo_leitura(const char *nome_arquivo);
 
+FILE* abrir_arquivo_escrita(const char *nome_arquivo);
+
+FILE* abrir_arquivo_leitura_escrita(const char *nome_arquivo);
+
 #endif
