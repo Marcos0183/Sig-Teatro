@@ -78,9 +78,9 @@ void cadastrar_Show(){
         fwrite(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
         fwrite(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
         fclose(cabecalho ->arq_shows);
-        free(cabecalho ->dados);
         free(cabecalho ->DHD);
         free(cabecalho ->persona);
+        free(cabecalho ->dados);
         free(cabecalho);
         printf("SHOW CADASTRADO\n");
     }
