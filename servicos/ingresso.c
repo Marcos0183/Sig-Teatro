@@ -215,7 +215,7 @@ void procura_cad(char *assento,Mapeia *cordenadas){
 }
 
 int cadeira_usada(char *cad,int id_show){
-    int saida;
+    int saida = False;
     int parar = True;
     Cadeiras *assento;
     Mapeia *cord;
@@ -224,12 +224,13 @@ int cadeira_usada(char *cad,int id_show){
     assento = (Cadeiras *) malloc(sizeof(Cadeiras));
     arq_cadeira = fopen("arq_cadeiras.dat","rb");
     abrir_arquivo(arq_cadeira);
+    
 
     procura_cad(cad,cord);
     while(fread(assento,sizeof(Cadeiras),1,arq_cadeira) == 1 && parar){
         if(assento ->id == id_show){
-            if(strchr(assento ->cad[cord ->i][cord ->j],'!') != NULL)saida = False;
-            else saida = True;
+            parar = False;
+            if(!(strchr(assento ->cad[cord ->i][cord ->j],'!') != NULL))saida = True;
         }
     }
     fclose(arq_cadeira);
@@ -238,18 +239,37 @@ int cadeira_usada(char *cad,int id_show){
     return saida;
 }
 
-// void cadeiras(int id_show){
-//     int parar = True;
-//     Cadeiras *assento;
-//     FILE *arq_cadeira;
-//     assento = (Cadeiras *) malloc(sizeof(Cadeiras));
-//     arq_cadeira = fopen("arq_cadeiras.dat","rb");
-//     abrir_arquivo(arq_cadeira);
+void exibir_cadeiras(int id_show){
+    int parar = True;
+    Cadeiras *assento;
+    FILE *arq_cadeira;
+    assento = (Cadeiras *) malloc(sizeof(Cadeiras));
+    arq_cadeira = fopen("arq_cadeiras.dat","rb");
+    abrir_arquivo(arq_cadeira);
 
-//      while(fread(assento,sizeof(Cadeiras),1,arq_cadeira) == 1 && parar){
-//         if(assento ->id == id_show){
+     while(fread(assento,sizeof(Cadeiras),1,arq_cadeira) == 1 && parar){
+        if(assento ->id == id_show){
+            for(int i = 0; i < 5; i++){
+                printf("\n");
+                for(int p = 0;p < 70;p++){
+                    printf("-");
+                }
+                printf("\n\n");
 
-
-//         }
-//     }
-// }
+                for(int j = 0; j < 20; j++){
+                    if(strchr(assento ->cad[i][j],'!') == NULL ){
+                        printf(" %s ",assento ->cad[i][j]);
+                        printf("|");   
+                    } 
+                    else{
+                        printf("    ");
+                        printf("|");  
+                    }    
+                }          
+            }   
+        }
+    }
+    fclose(arq_cadeira);
+    free(assento);
+    printf("\n\n");
+}

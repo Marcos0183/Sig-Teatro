@@ -284,7 +284,7 @@ int valida_cadeira(char *assento,int id_show){
   if(cadeira_usada(assento,id_show) && parar){
     saida = True;
   }
-  else printf("CADEIRA JÁ OCUPADA"); 
+  else printf("CADEIRA JÁ OCUPADA\n\n"); 
 
   return saida;
 }

@@ -81,10 +81,11 @@ void cadastrar_Show(){
         free(cabecalho ->dados);
         free(cabecalho ->DHD);
         free(cabecalho ->persona);
-        printf("SHOW CADASTRADO");
+        free(cabecalho);
+        printf("SHOW CADASTRADO\n");
     }
     else{
-        printf("SHOW NÃO CADASTRADOS");
+        printf("SHOW NÃO CADASTRADO\n");
     }     
 }
 
