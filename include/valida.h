@@ -11,4 +11,6 @@ int valida_email(char *email);
 
 int valida_cliente(char *);
 
+int valida_show(int);
+
 #endif

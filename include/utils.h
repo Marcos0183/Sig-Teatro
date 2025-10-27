@@ -10,10 +10,12 @@ void limparTela();
 
 char* ler_string(char* destino, int tamanho);
 
-FILE* abrir_arquivo_leitura(const char *nome_arquivo);
+void abrir_arquivo(FILE *);
 
-FILE* abrir_arquivo_escrita(const char *nome_arquivo);
+int pot(int,int);
 
-FILE* abrir_arquivo_leitura_escrita(const char *nome_arquivo);
+int converte_numero(char *);
+
+void copia_carac_D3(char [][20][6],char [][20][6]);
 
 #endif
