@@ -48,16 +48,13 @@ void vender_Ingresso(){
     FILE *arq_Ingresso;
     Dados_I *dados;
     dados = (Dados_I*) malloc(sizeof(Dados_I));
-    char titulo[16] = "VENDER INGRESSO";
-    
-    func_Ani_Left(titulo);
     
     parar = ler_cpf_show(dados);
     if(parar){
         parar = ler_codigo(dados);
     }
     if(parar){
-        
+    
     }
        
 

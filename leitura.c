@@ -10,6 +10,7 @@
 #include "shows.h"
 #include "ingresso.h"
 #include "clientes.h"
+#include "anima.h"
 
 int id_show(void){
     int idRetorna;
@@ -28,10 +29,7 @@ int id_show(void){
     fclose(arq_id);
 
     arq_id = fopen("id.dat","wb");
-    if(idRetorna >= 101){
-        idRetorna = 0;
-    }
-    else idRetorna++;
+    idRetorna++;
     fwrite(id,sizeof(int),1,arq_id);
     fclose(arq_id);
     free(id);
@@ -52,16 +50,18 @@ void ler_id(int *id_lido){
 
 
 int ler_codigo(Dados_I *dados){
+    char id_lido[5];
     printf("V----------------------------------\n");
     printf("|  INSIRA O CÓDIGO DO SHOW: ");
-    scanf("%d",&dados ->id_show);
+    scanf("%s",id_lido);
     getchar();
 
+    dados ->id_show = converte_numero(id_lido);
     if(valida_show(dados ->id_show)){
         return True;
     }
     else{
-        printf("SHOW NÃO ENCONTRADO");
+        printf("SHOW NÃO ENCONTRADO\n\n");
         return False;
     }
 }
@@ -155,6 +155,9 @@ int ler_cpf_show(Dados_I *dados){
     int parar;
     parar = True;
     do{ 
+        limparTela();
+        char titulo[16] = "VENDER INGRESSO";
+        func_Ani_Left(titulo);
         printf("\n \n");
         printf("-----------------------------------\n");
         printf("|  INSIRA SEU CPF DE CADASTRO - SEM CPF DIGITE (C) PARA CADASTRAR-SE: ");
@@ -171,11 +174,13 @@ int ler_cpf_show(Dados_I *dados){
                 parar = False;
             }
             else{
-                printf("CLIENTE NÃO ENCONTRADO");
+                printf("CLIENTE NÃO ENCONTRADO\n\n");
+                system("pause");
                 saida = False;
                 parar = False;
             }
-        }  
+        } 
+    
     }while(parar);
 
     return saida;

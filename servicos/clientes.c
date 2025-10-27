@@ -96,32 +96,26 @@ int cpf_existente(char *cpf) {
 
 void cadastrar_cliente() { 
     
-    Cliente *clt;
-    FILE *arq_clientes;
-    clt = (Cliente*) malloc(sizeof(Cliente));
-    
+    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
     printf("\n \n");
 
     ler_cpf(clt->cpf);
-    // Lê o CPF e verifica duplicidade antes de continuar
-    if (!cpf_existente(clt->cpf)) {
-        // CPF já existe → cancelar operação
-        free(clt);
-        pausar();
-        return;
-    }
+    // if (!cpf_existente(clt->cpf)) {               // Lê o CPF e verifica duplicidade antes de continuar                                   // CPF já existe → cancelar operação
+    //     free(clt);                                // Libera memória alocada para o cliente
+    //     pausar();
+    //     return;
+    // }
 
     ler_nome(clt->nome);
     ler_email(clt->email);
     ler_telefone(clt->telefone);
     clt->status = true;
 
-    arq_clientes = fopen("clientes.dat", "ab");
+    FILE *arq_clientes = fopen("clientes.dat", "ab");
     if (arq_clientes == NULL) {
-        limparBuffer();
-        fclose(arq_clientes);
+        free(clt);
         return;
     }
 
@@ -133,7 +127,6 @@ void cadastrar_cliente() {
 
     fclose(arq_clientes);
     free(clt);
-  
     pausar();
 }
 
@@ -309,15 +302,14 @@ void excluir_cliente() {
 
 void listar_cliente() {
 
-    FILE *arq_clientes;
-    Cliente *clt;
-    clt = (Cliente*) malloc(sizeof(Cliente));
-    arq_clientes = fopen("clientes.dat", "rb");
-    if (arq_clientes == NULL) { 
+    Cliente *clt = (Cliente*) malloc(sizeof(Cliente));
+    FILE *arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
         limparBuffer();
-        return;   
+        return; 
     }
+    
     char titulo[16] = "LISTAR CLIENTE";
     func_Ani_Left(titulo);
     printf("\n \n");
@@ -328,7 +320,6 @@ void listar_cliente() {
     }
     fclose(arq_clientes);
     free(clt);
-    
     pausar();
 }
 

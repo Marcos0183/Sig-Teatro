@@ -242,16 +242,16 @@ int valida_show(int id_show){
     
     saida = False;
     parar = True;
-    while(fread(cabecalho,sizeof(Cabecalho),1,cabecalho ->arq_shows) == 1 && parar){
+    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1 && parar){
         if(id_show == cabecalho ->dados ->id){
             saida = True;
-            parar = False;
+            parar = False; 
         }
         else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
     }
     fclose(cabecalho ->arq_shows);
     free(cabecalho);
     free(cabecalho ->dados);
-
+    
     return saida;
 }
