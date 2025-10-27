@@ -102,11 +102,11 @@ void cadastrar_cliente() {
     printf("\n \n");
 
     ler_cpf(clt->cpf);
-    // if (!cpf_existente(clt->cpf)) {               // Lê o CPF e verifica duplicidade antes de continuar                                   // CPF já existe → cancelar operação
-    //     free(clt);                                // Libera memória alocada para o cliente
-    //     pausar();
-    //     return;
-    // }
+     if (!cpf_existente(clt->cpf)) {               // Lê o CPF e verifica duplicidade antes de continuar                                   // CPF já existe → cancelar operação
+         free(clt);                                // Libera memória alocada para o cliente
+         pausar();
+         return;
+     }
 
     ler_nome(clt->nome);  
     ler_email(clt->email);
