@@ -21,8 +21,7 @@ int escolha_cad_show(Cabecalho *cabecalho){
     while(parar){ 
         exibir_inf_cadastro(cabecalho);
         printf("CADASTRAR SHOW - SIM(S)/NAO(N): ");
-        scanf("%s",escolha);
-        getchar();
+        ler_string(escolha,2);
         if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
             saida = True;
             parar = False;

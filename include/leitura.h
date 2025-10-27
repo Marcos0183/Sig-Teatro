@@ -10,6 +10,8 @@ void ler_id(int *id_lido);
 
 int ler_codigo(Dados_I *);
 
+int ler_cadeira(Dados_I *);
+
 void ler_nomeShow(char *nome);
 
 void ler_DHD(Cabecalho *);

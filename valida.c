@@ -255,3 +255,36 @@ int valida_show(int id_show){
     
     return saida;
 }
+
+
+
+int valida_cadeira(char *assento,int id_show){
+  int tam = strlen(assento);
+  char numero[3] = "";
+  int convertido;
+  int saida;
+  int parar;
+
+  saida = False;
+  parar = 0;
+  if(tam <= 3)parar = 1;
+
+  if(!(assento[0] >= 65 && assento[0] <= 90 && parar)){
+    parar = 0;
+    printf("CADEIRA NÃO RECONHECIDA, POR FAVOR DIGITE APENAS LETRAS(A - E) E NUMEROS(1 - 20)\n\n");
+  }
+  else{
+    strcat(numero,&assento[1]);
+    convertido = converte_numero(numero);
+  }
+  if(!(convertido >= 1 && convertido <= 20 && parar)){
+    parar = 0;
+    printf("CADEIRA NÃO RECONHECIDA, POR FAVOR DIGITE APENAS LETRAS(A - E) E NUMEROS(1 - 20)\n\n");
+  }
+  if(cadeira_usada(assento,id_show) && parar){
+    saida = True;
+  }
+  else printf("CADEIRA JÁ OCUPADA"); 
+
+  return saida;
+}

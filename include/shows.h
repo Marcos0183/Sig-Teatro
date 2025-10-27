@@ -27,6 +27,7 @@ struct cadeiras_0
 {
     int id;
     char cad[5][20][6];
+    int cont;
 };
 
 struct cadastro_Shows{
