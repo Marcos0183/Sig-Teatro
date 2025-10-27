@@ -69,6 +69,7 @@ int ler_codigo(Dados_I *dados){
 
 
 int ler_cadeira(Dados_I *dados){ 
+    exibir_cadeiras(dados ->id_show);
     printf("V----------------------------------\n");
     printf("|  ESCOLHA SUA CADEIRA: ");
     ler_string(dados->cadeira,5);

@@ -34,4 +34,6 @@ void procura_cad(char *,Mapeia *);
 
 int cadeira_usada(char *,int);
 
+void exibir_cadeiras(int);
+
 #endif
