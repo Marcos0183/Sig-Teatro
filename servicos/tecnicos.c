@@ -117,11 +117,8 @@ void cadastro_Tecnico() {
     }
 
     ler_nome(tec->nome);
-
     ler_funcao(tec->funcao);
-
     ler_email(tec->email);
-    
     ler_telefone(tec->telefone);
 
     tec->status = true; 
@@ -172,8 +169,7 @@ void atualizar_Tecnico() {
             encontrado = 1;
             
             printf("Insira os novos dados do técnico:\n");
-
-            ler_cpf(tec->cpf);
+            
             ler_nome(tec->nome);
             ler_funcao(tec->funcao);
             ler_email(tec->email);
