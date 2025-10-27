@@ -212,11 +212,7 @@ int valida_cliente(char *cliente){
     clt = (Cliente*) malloc(sizeof(Cliente));
 
     arq_clientes = fopen("clientes.dat", "rb");
-    if (arq_clientes == NULL) {
-        limparBuffer();
-        fclose(arq_clientes);
-        exit(1);
-    }
+    abrir_arquivo(arq_clientes);
 
     while(fread(clt,sizeof(Cliente),1,arq_clientes) == 1){
         if(strcmp(clt ->cpf,cliente) == 0){
@@ -230,4 +226,32 @@ int valida_cliente(char *cliente){
     free(clt);
     return False;
 
+}
+
+
+
+int valida_show(int id_show){
+    int saida;
+    int parar;
+    Cabecalho *cabecalho;
+    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
+    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
+
+    cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
+    abrir_arquivo(cabecalho ->arq_shows);
+    
+    saida = False;
+    parar = True;
+    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1 && parar){
+        if(id_show == cabecalho ->dados ->id){
+            saida = True;
+            parar = False; 
+        }
+        else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
+    }
+    fclose(cabecalho ->arq_shows);
+    free(cabecalho);
+    free(cabecalho ->dados);
+    
+    return saida;
 }

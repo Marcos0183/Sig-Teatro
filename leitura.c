@@ -10,6 +10,7 @@
 #include "shows.h"
 #include "ingresso.h"
 #include "clientes.h"
+#include "anima.h"
 
 int id_show(void){
     int idRetorna;
@@ -44,6 +45,25 @@ void ler_id(int *id_lido){
     scanf("%d",id_lido);
     getchar();
     printf("-----------------------------------\n");
+}
+
+
+
+int ler_codigo(Dados_I *dados){
+    char id_lido[5];
+    printf("V----------------------------------\n");
+    printf("|  INSIRA O CÓDIGO DO SHOW: ");
+    scanf("%s",id_lido);
+    getchar();
+
+    dados ->id_show = converte_numero(id_lido);
+    if(valida_show(dados ->id_show)){
+        return True;
+    }
+    else{
+        printf("SHOW NÃO ENCONTRADO\n\n");
+        return False;
+    }
 }
 
 
@@ -131,9 +151,13 @@ void ler_cpf(char *cpf) {
 
 
 int ler_cpf_show(Dados_I *dados){
+    int saida;
     int parar;
     parar = True;
     do{ 
+        limparTela();
+        char titulo[16] = "VENDER INGRESSO";
+        func_Ani_Left(titulo);
         printf("\n \n");
         printf("-----------------------------------\n");
         printf("|  INSIRA SEU CPF DE CADASTRO - SEM CPF DIGITE (C) PARA CADASTRAR-SE: ");
@@ -141,19 +165,27 @@ int ler_cpf_show(Dados_I *dados){
 
         if(strcmp(dados ->cpf,"C") == 0 || strcmp(dados ->cpf, "c") == 0){
             cadastrar_cliente();
-            return False;
+            saida = False;
+            parar = False;
         }
         else if(valida_cpf(dados ->cpf)){
             if(valida_cliente(dados ->cpf)){ 
-                return True;
+                saida = True;
+                parar = False;
             }
             else{
-                printf("CLIENTE NÃO ENCONTRADO");
-                return False;
+                printf("CLIENTE NÃO ENCONTRADO\n\n");
+                system("pause");
+                saida = False;
+                parar = False;
             }
-        }  
+        } 
+    
     }while(parar);
+
+    return saida;
 }
+
 
 
 void ler_telefone(char *telefone) {

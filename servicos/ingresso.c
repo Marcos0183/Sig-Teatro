@@ -44,30 +44,32 @@ void menu_Ingresso(){
 
 
 void vender_Ingresso(){
+    int parar;
     FILE *arq_Ingresso;
     Dados_I *dados;
     dados = (Dados_I*) malloc(sizeof(Dados_I));
-    char titulo[16] = "VENDER INGRESSO";
     
-    func_Ani_Left(titulo);
-    if(ler_cpf_show(dados)){
-        ler_cpf_show(dados);
-        printf("V----------------------------------\n");
-        printf("|  INSIRA O CÓDIGO DO SHOW: ");
-        ler_string(dados->codigo_Show, 5);
-
-
-        printf("V----------------------------------\n");
-        printf("|  ESCOLHA SUA CADEIRA: ");
-        ler_string(dados->cadeira,5);
-        printf("V----------------------------------\n");
-
-        dados->status = 'V';
-        arq_Ingresso = fopen("arq_ingresso.dat","ab");
-        fwrite(dados,sizeof(Dados_I),1,arq_Ingresso);
-        fclose(arq_Ingresso);
-        free(dados);
+    parar = ler_cpf_show(dados);
+    if(parar){
+        parar = ler_codigo(dados);
     }
+    if(parar){
+    
+    }
+       
+
+
+        // printf("V----------------------------------\n");
+        // printf("|  ESCOLHA SUA CADEIRA: ");
+        // ler_string(dados->cadeira,5);
+        // printf("V----------------------------------\n");
+
+        // dados->status = 'V';
+        // arq_Ingresso = fopen("arq_ingresso.dat","ab");
+        // fwrite(dados,sizeof(Dados_I),1,arq_Ingresso);
+        // fclose(arq_Ingresso);
+        // free(dados);
+    
 }
 
 

@@ -9,8 +9,24 @@
 #include "leitura.h"
 #include "pesquisa.h"
 
-int tempo_Shows = 100;
 
+char cadeira_copia[5][20][6] = {
+        { "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10",
+          "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20" },
+
+        { "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10",
+          "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20" },
+
+        { "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10",
+          "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20" },
+
+        { "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10",
+          "D11", "D12", "D13", "D14", "D15", "D16", "D17", "D18", "D19", "D20" },
+
+        { "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10",
+          "E11", "E12", "E13", "E14", "E15", "E16", "E17", "E18", "E19", "E20" }
+    };
+int tempo_Shows = 100;
 
 void menu_Shows(){
     limparTela();
@@ -50,14 +66,14 @@ void cadastrar_Show(){
     char titulo[16] = "CADASTRAR SHOW";
     func_Ani_Left(titulo);
 
-    cabecalho ->dados ->id = id_show();
     ler_nomeShow(cabecalho ->dados ->nome); 
     ler_DHD(cabecalho);
     ler_persona(cabecalho);
-
+    cabecalho ->dados ->id = id_show();
     if(escolha_cad_show(cabecalho)){
         cabecalho ->arq_shows = fopen("arq_shows.dat","ab");
-        cabecalho ->dados ->status = True;
+        cabecalho ->dados ->status = True;      
+        cria_cadeiras(cabecalho ->dados ->id);
         fwrite(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows);
         fwrite(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
         fwrite(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
@@ -189,8 +205,6 @@ void pesquisar_Show(){
     pesquisaShow(cabecalho);
 }
 
-
-
 void shows(){ 
     int executar_S; 
 
@@ -225,4 +239,19 @@ void shows(){
                 break;
         }
     } while (executar_S != 0);
+}
+
+void cria_cadeiras(int id_parametro){
+    FILE *arq_cadeiras;
+    Cadeiras *cadeiras;
+    cadeiras = (Cadeiras *) malloc(sizeof(Cadeiras));
+    
+    copia_carac_D3(cadeira_copia,cadeiras ->cad );
+    cadeiras ->id = id_parametro;
+
+    arq_cadeiras = fopen("arq_cadeiras.dat","ab");
+    abrir_arquivo(arq_cadeiras);
+    fwrite(cadeiras,sizeof(Cadeiras),1,arq_cadeiras);
+    fclose(arq_cadeiras);
+    free(cadeiras);
 }
