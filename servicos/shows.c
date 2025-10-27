@@ -248,6 +248,7 @@ void cria_cadeiras(int id_parametro){
     
     copia_carac_D3(cadeira_copia,cadeiras ->cad );
     cadeiras ->id = id_parametro;
+    cadeiras ->cont = 0;
 
     arq_cadeiras = fopen("arq_cadeiras.dat","ab");
     abrir_arquivo(arq_cadeiras);

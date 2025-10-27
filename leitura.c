@@ -13,7 +13,7 @@
 #include "anima.h"
 
 int id_show(void){
-    int idRetorna;
+    int idRetorna; 
     int *id;
     id = &idRetorna;
     FILE *arq_id;
@@ -53,8 +53,7 @@ int ler_codigo(Dados_I *dados){
     char id_lido[5];
     printf("V----------------------------------\n");
     printf("|  INSIRA O CÓDIGO DO SHOW: ");
-    scanf("%s",id_lido);
-    getchar();
+    ler_string(id_lido,5);
 
     dados ->id_show = converte_numero(id_lido);
     if(valida_show(dados ->id_show)){
@@ -62,6 +61,29 @@ int ler_codigo(Dados_I *dados){
     }
     else{
         printf("SHOW NÃO ENCONTRADO\n\n");
+        system("pause");
+        return False;
+    }
+}
+
+
+
+int ler_cadeira(Dados_I *dados){ 
+    printf("V----------------------------------\n");
+    printf("|  ESCOLHA SUA CADEIRA: ");
+    ler_string(dados->cadeira,5);
+    printf("V----------------------------------\n\n");
+    if(valida_cadeira(dados ->cadeira,dados ->id_show)){
+        Mapeia *coord;
+        coord = (Mapeia *) malloc(sizeof(Mapeia));
+        procura_cad(dados ->cadeira,coord);
+        dados ->cord_i = coord ->i;
+        dados ->cord_j = coord ->j;
+        system("pause");
+        return True;
+    }
+    else{
+        system("pause");
         return False;
     }
 }

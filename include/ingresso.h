@@ -1,6 +1,23 @@
 #ifndef INGRESSO_H
 #define INGRESSO_H
 
+typedef struct vender_Ingresso Dados_I;
+typedef struct mapeia_cadeira Mapeia;
+struct vender_Ingresso{
+    
+    char cpf[20];
+    int id_show;
+    char cadeira[6];
+    int cord_i;
+    int cord_j;
+    int status;
+    
+};
+struct mapeia_cadeira{
+    int i;
+    int j;
+};
+
 void ingresso();
 
 void vender_Ingresso();
@@ -11,15 +28,10 @@ void atualizar_Ingresso();
 
 void pesquisar_Ingresso();
 
-typedef struct vender_Ingresso Dados_I;
+void altera_cadeira(char *,int);
 
-struct vender_Ingresso{
-    
-    char cpf[20];
-    int id_show;
-    char cadeira[5];
-    char status;
-    
-};
+void procura_cad(char *,Mapeia *);
+
+int cadeira_usada(char *,int);
 
 #endif

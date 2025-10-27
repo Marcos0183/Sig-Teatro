@@ -13,4 +13,6 @@ int valida_cliente(char *);
 
 int valida_show(int);
 
+int valida_cadeira(char *,int);
+
 #endif
