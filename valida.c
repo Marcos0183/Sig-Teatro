@@ -210,10 +210,10 @@ int valida_cliente(char *cliente){
     Cliente *clt;
     FILE *arq_clientes;
     clt = (Cliente*) malloc(sizeof(Cliente));
-
+    
     arq_clientes = fopen("clientes.dat", "rb");
-    abrir_arquivo(arq_clientes);
-
+    if(arq_clientes == NULL)return False;
+    
     while(fread(clt,sizeof(Cliente),1,arq_clientes) == 1){
         if(strcmp(clt ->cpf,cliente) == 0){
             fclose(arq_clientes);
