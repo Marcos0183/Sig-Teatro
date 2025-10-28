@@ -98,7 +98,6 @@ void cadastrar_cliente() {
     Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
-    printf("\n \n");
 
     ler_cpf(clt->cpf);
      if (!cpf_existente(clt->cpf)) {               // Lê o CPF e verifica duplicidade antes de continuar                                   // CPF já existe → cancelar operação
