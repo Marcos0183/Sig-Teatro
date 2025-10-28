@@ -69,11 +69,10 @@ int cpf_existente_tec(char *cpf) {
         return false;
     }
 
-    arq_clientes = fopen("clientes.dat", "rb");
+    arq_clientes = fopen("tecnicos.dat", "rb");
     if (arq_clientes == NULL) {
-        printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
-        return false;
+        free(tec);
+        return true;
     }
 
     while (fread(tec, sizeof(Tecnico), 1, arq_clientes) == 1) {                 // Percorre todos os técnicos cadastrados
@@ -140,7 +139,7 @@ void cadastro_Tecnico() {
 
 
 void atualizar_Tecnico() {
-
+    char confirm;
     Tecnico* tec;
     tec = (Tecnico*) malloc(sizeof(Tecnico));
     char cpf_lido[15];
@@ -180,8 +179,18 @@ void atualizar_Tecnico() {
             fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
         }
     }
-
+    limparTela();
     exibir_tecnico(tec);
+    printf("os dados do tecnico estão corretos? (s/n): ");
+    scanf(" %c", &confirm);
+    limparBuffer();
+    if (confirm == 'n' || confirm == 'N') {
+        printf("Operação de atualização cancelada.\n");
+        fclose(arq_tecnicos);
+        free(tec);
+        pausar();
+        return;
+    }
 
     fclose(arq_tecnicos);
     free(tec);
