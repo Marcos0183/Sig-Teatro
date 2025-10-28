@@ -210,10 +210,10 @@ int valida_cliente(char *cliente){
     Cliente *clt;
     FILE *arq_clientes;
     clt = (Cliente*) malloc(sizeof(Cliente));
-
+    
     arq_clientes = fopen("clientes.dat", "rb");
-    abrir_arquivo(arq_clientes);
-
+    if(arq_clientes == NULL)return False;
+    
     while(fread(clt,sizeof(Cliente),1,arq_clientes) == 1){
         if(strcmp(clt ->cpf,cliente) == 0){
             fclose(arq_clientes);
@@ -250,8 +250,52 @@ int valida_show(int id_show){
         else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
     }
     fclose(cabecalho ->arq_shows);
-    free(cabecalho);
     free(cabecalho ->dados);
+    free(cabecalho);
     
     return saida;
+}
+
+
+
+int valida_cadeira(char *assento,int id_show){
+  int tam = strlen(assento);
+  char numero[3] = "";
+  int convertido;
+  int saida;
+  int parar;
+
+  saida = False;
+  parar = 0;
+  if(tam <= 3)parar = 1;
+
+  if(!(assento[0] >= 65 && assento[0] <= 90 && parar)){
+    parar = 0;
+    printf("CADEIRA NÃO RECONHECIDA, POR FAVOR DIGITE APENAS LETRAS(A - E) E NUMEROS(1 - 20)\n\n");
+  }
+  else{
+    strcat(numero,&assento[1]);
+    convertido = converte_numero(numero);
+  }
+  if(!(convertido >= 1 && convertido <= 20 && parar)){
+    parar = 0;
+    printf("CADEIRA NÃO RECONHECIDA, POR FAVOR DIGITE APENAS LETRAS(A - E) E NUMEROS(1 - 20)\n\n");
+  }
+  if(cadeira_usada(assento,id_show) && parar){
+    saida = True;
+  }
+  else printf("CADEIRA JÁ OCUPADA\n\n"); 
+
+  return saida;
+}
+
+
+
+int valida_id(char *id){
+    for(int i = 0; i < strlen(id); i++){
+        if(id[i] < 48 || id[i] > 57 ){
+            return False;
+        }
+    }
+    return True;
 }

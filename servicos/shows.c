@@ -8,6 +8,7 @@
 #include "listachar.h"
 #include "leitura.h"
 #include "pesquisa.h"
+#include "valida.h"
 
 
 char cadeira_copia[5][20][6] = {
@@ -78,14 +79,16 @@ void cadastrar_Show(){
         fwrite(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
         fwrite(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
         fclose(cabecalho ->arq_shows);
-        free(cabecalho ->dados);
         free(cabecalho ->DHD);
         free(cabecalho ->persona);
-        printf("SHOW CADASTRADO");
+        free(cabecalho ->dados);
+        free(cabecalho);
+        printf("SHOW CADASTRADO\n");
     }
     else{
-        printf("SHOW NÃO CADASTRADOS");
+        printf("SHOW NÃO CADASTRADO\n");
     }     
+    pausar();
 }
 
 void excluir_Show(){
@@ -126,73 +129,44 @@ void excluir_Show(){
 }
 
 void atualizar_Show(){
-    int id_lido;
-    int encontrado;
-    char *DHD;
-    char *persona;
-    int parar;
-    Dados_S *dados;
-    Dados_Temp *inf;
-    inf = (Dados_Temp *) malloc(sizeof(Dados_Temp));
-    dados = (Dados_S *) malloc(sizeof(Dados_S));
-    FILE *arq_shows;
+    Cabecalho *cabecalho;
+    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
+    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
+    cabecalho ->DHD = NULL;
+    cabecalho ->persona = NULL;
     char titulo[16] = "ATUALIZAR SHOW";
     func_Ani_Left(titulo);
-
-    printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CODIGO DO SHOW: ");
-    scanf("%d",&id_lido);
-    printf("V----------------------------------\n");
-
-
-    encontrado = True;
-    arq_shows = fopen("arq_shows","r+b");
-    while(fread(dados,sizeof(Dados_S),1,arq_shows) == 1){
-        if(id_lido == dados ->id && dados ->status == True){
-            printf("\n \n");
-            printf("-----------------------------------\n");
-            printf("|  INSIRA O NOME DO SHOW: ");
-            ler_string(dados->nome,32);
-
-
-            parar = True;
-    printf("-----------------------------------\n");
-    while(parar){ 
-        printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-        ler_string(inf ->data,12);
-        
-        printf("-----------------------------------\n");
-        if(strcmp(inf ->data,"S") == 0 || strcmp(inf ->data,"s") == 0) parar = False;
-        else{ 
-            DHD = listaChar(DHD,inf ->data);
-
-            printf("|  INSIRA A HORA DE INÍCIO DO SHOW: "); 
-            ler_string(inf ->hora,6);
-            printf("-----------------------------------\n");
-            listaChar(DHD,inf ->hora);
-           
-            printf("|  INSIRA A DURAÇÃO DO SHOW: ");        
-            ler_string(inf ->duracao,5);
-            printf("-----------------------------------\n");
-            listaChar(DHD,inf ->hora);           
-        }
-    }
     
-
-    parar = True;
-    while(parar){
-        printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-        ler_string(inf ->personagem,32);
-        printf("-----------------------------------\n");
-        if(strcmp(inf ->personagem,"S") == 0 || strcmp(inf ->personagem,"s") == 0) parar = False;
-        else{
-            persona = listaChar(persona,inf ->personagem);
+    ler_id(&cabecalho ->id_lido);
+    if(valida_show(cabecalho ->id_lido)){
+        cabecalho ->arq_shows = fopen("arq_shows.dat","r+b");
+        if(cabecalho ->arq_shows == NULL)return;
+        while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
+            if(cabecalho ->id_lido == cabecalho ->dados ->id){
+                ler_nomeShow(cabecalho ->dados ->nome); 
+                ler_DHD(cabecalho);
+                ler_persona(cabecalho);
+                fseek(cabecalho ->arq_shows,-sizeof(Dados_S),SEEK_CUR);
+                fwrite(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows);
+                fwrite(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
+                fwrite(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
+                free(cabecalho ->DHD);
+                free(cabecalho ->persona);
+                printf("DADOS DE SHOW ALTERADO\n\n");
+                pausar();
+            }
+            else{
+                fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
+            }
         }
     }
-
-        }
-    }
+    else{
+        printf("SHOW NÃO ENCONTRADO\n\n");
+        system("pause");
+    } 
+    fclose(cabecalho ->arq_shows);
+    free(cabecalho ->dados);
+    free(cabecalho);
 }
 
 void pesquisar_Show(){
@@ -202,7 +176,7 @@ void pesquisar_Show(){
     char titulo[16] = "PESQUISAR SHOW";
     func_Ani_Left(titulo);
     ler_id(&cabecalho ->id_lido);
-    pesquisaShow(cabecalho);
+    pesquisa_show(cabecalho);
 }
 
 void shows(){ 
@@ -248,6 +222,7 @@ void cria_cadeiras(int id_parametro){
     
     copia_carac_D3(cadeira_copia,cadeiras ->cad );
     cadeiras ->id = id_parametro;
+    cadeiras ->cont = 0;
 
     arq_cadeiras = fopen("arq_cadeiras.dat","ab");
     abrir_arquivo(arq_cadeiras);

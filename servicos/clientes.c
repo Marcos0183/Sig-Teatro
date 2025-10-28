@@ -95,7 +95,7 @@ int cpf_existente(char *cpf) {
 
 
 void cadastrar_cliente() { 
-    
+    char confirm;
     Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
@@ -123,7 +123,18 @@ void cadastrar_cliente() {
 
     limparTela();
     exibir_cliente(clt);
-    printf("Cliente cadastrado com sucesso!\n");
+    printf("os dados do cliente estão corretos? (S/N): ");
+    scanf(" %c", &confirm);
+    limparBuffer();
+    if (confirm == 'n' || confirm == 'N') {
+        printf("\n Operação de cadastro cancelada pelo usuário.\n");
+        fclose(arq_clientes);
+        free(clt);
+        pausar();
+        return;
+    }
+
+    printf("\n Cliente cadastrado com sucesso!\n");
 
     fclose(arq_clientes);
     free(clt);
