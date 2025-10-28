@@ -22,7 +22,7 @@ void menu_cliente(){
         func_Ani(tempo_cliente);
         printf("║                                                  ║\n");
         func_Ani(tempo_cliente);
-        printf("║ ► 1 cadastrar Cliente                            ║\n");
+        printf("║ ► 1. cadastrar Cliente                           ║\n");
         func_Ani(tempo_cliente);
         printf("║ ► 2. Pesquisar Cliente                           ║\n");
         func_Ani(tempo_cliente);
@@ -70,9 +70,8 @@ int cpf_existente(char *cpf) {
 
     arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
-        printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
-        return false;
+        free(clt);
+        return true;
     }
 
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {        // Percorre o arquivo de clientes
