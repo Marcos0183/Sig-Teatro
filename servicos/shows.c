@@ -175,7 +175,7 @@ void pesquisar_Show(){
     char titulo[16] = "PESQUISAR SHOW";
     func_Ani_Left(titulo);
     ler_id(&cabecalho ->id_lido);
-    pesquisaShow(cabecalho);
+    pesquisa_show(cabecalho);
 }
 
 void shows(){ 

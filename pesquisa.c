@@ -5,12 +5,29 @@
 #include "utils.h"
 #include "anima.h"
 #include "shows.h"
+#include "ingresso.h"
+
+void exibir_ingresso(Dados_I *dados){
+    
+    printf("\n+---------------------------------------------------------------+\n");
+    printf("|                     DADOS DO INGRESSO                           |\n");
+    printf("+---------------------------------------------------------------+\n");   
+    printf("| CPF      : %-50s |\n", dados->cpf);
+    printf("| ID_SHOW  : %-50d |\n", dados->id_show);
+    printf("| Cadeira  : %-50s |\n", dados->cadeira);
+    printf("+---------------------------------------------------------------+\n");
+
+}
 
 void exibir_inf_cadastro(Cabecalho *cabecalho){
-    printf("Id: %d\n",cabecalho ->dados ->id);
-    printf("Nome: %s\n",cabecalho ->dados ->nome);
-    printf("Datas: %s\n",cabecalho ->DHD);
-    printf("Personagens: %s\n",cabecalho ->persona);
+    printf("\n+---------------------------------------------------------------+\n");
+    printf("|                     DADOS SO SHOW                             |\n");
+    printf("+---------------------------------------------------------------+\n");   
+    printf("| ID       : %-50d |\n", cabecalho ->dados ->id);
+    printf("| Nome     : %-50s |\n", cabecalho ->dados ->nome);
+    printf("| DHD      : %-50s |\n", cabecalho ->DHD);
+    printf("| Personagem : %-48s |\n", cabecalho ->persona);
+    printf("+---------------------------------------------------------------+\n");
 }
 
 int escolha_cad_show(Cabecalho *cabecalho){ 
@@ -35,7 +52,7 @@ int escolha_cad_show(Cabecalho *cabecalho){
     return saida;
 }
 
-void pesquisaShow(Cabecalho *cabecalho){
+void pesquisa_show(Cabecalho *cabecalho){
     cabecalho ->encontrado = True;
     cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
     while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
@@ -59,4 +76,15 @@ void pesquisaShow(Cabecalho *cabecalho){
     free(cabecalho ->dados);
     free(cabecalho);
     pausar();
+}
+
+void pesquisar_ingresso(Dados_I *dados,char *cpf_lido){
+    FILE *arq_ingresso;
+    arq_ingresso = fopen("arq_ingresso.dat","rb");
+
+    while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
+        if(strcmp(dados ->cpf,cpf_lido) == 0 && dados ->status == True){
+            exibir_ingresso(dados);
+        }
+    }
 }

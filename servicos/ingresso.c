@@ -6,6 +6,8 @@
 #include "ingresso.h"
 #include "utils.h"
 #include "leitura.h"
+#include "valida.h"
+#include "pesquisa.h"
 
 int tempo_Ingresso = 100;
 
@@ -113,17 +115,27 @@ void atualizar_Ingresso(){
 }
 
 void pesquisar_Ingresso(){
-    char id[6];
+    char cpf_lido[20];
+    Dados_I *dados;
+    
+    dados = (Dados_I *) malloc(sizeof(Dados_I));
     char titulo[19] = "PESQUISAR INGRESSO";
     func_Ani_Left(titulo);
 
 
     printf("\n \n");
     printf("-----------------------------------\n");
-    printf("|  INSIRA O CODIGO DO INGRESSO: ");
-    ler_string(id,6);
-    printf("-----------------------------------\n");
-    limparTela();
+    printf("|  INSIRA O SEU CPF: ");
+    ler_string(cpf_lido,20);
+    printf("-----------------------------------\n\n");
+
+    if(valida_cliente(cpf_lido) && valida_cpf(cpf_lido)){
+        pesquisar_ingresso(dados,cpf_lido);
+    }
+    else{
+        printf("\n");
+        printf("INGRESSO NÃO ENCONTARDO\n\n");
+    }
     pausar();
 }
 
