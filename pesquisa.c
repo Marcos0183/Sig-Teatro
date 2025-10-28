@@ -10,11 +10,12 @@
 void exibir_ingresso(Dados_I *dados){
     
     printf("\n+---------------------------------------------------------------+\n");
-    printf("|                     DADOS DO INGRESSO                           |\n");
+    printf("|                     DADOS DO INGRESSO                         |\n");
     printf("+---------------------------------------------------------------+\n");   
-    printf("| CPF      : %-50s |\n", dados->cpf);
-    printf("| ID_SHOW  : %-50d |\n", dados->id_show);
-    printf("| Cadeira  : %-50s |\n", dados->cadeira);
+    printf("| CPF         : %-48s |\n", dados->cpf);
+    printf("| ID_Show     : %-48d |\n", dados->id_show);
+    printf("| Cadeira     : %-48s |\n", dados->cadeira);
+    printf("| Id_Ingresso : %-48d |\n",dados ->id);
     printf("+---------------------------------------------------------------+\n");
 
 }
