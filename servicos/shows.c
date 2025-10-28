@@ -144,6 +144,7 @@ void atualizar_Show(){
     printf("-----------------------------------\n");
     printf("|  INSIRA O CODIGO DO SHOW: ");
     scanf("%d",&id_lido);
+    getchar();
     printf("V----------------------------------\n");
 
 
@@ -158,42 +159,45 @@ void atualizar_Show(){
 
 
             parar = True;
-    printf("-----------------------------------\n");
-    while(parar){ 
-        printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-        ler_string(inf ->data,12);
-        
-        printf("-----------------------------------\n");
-        if(strcmp(inf ->data,"S") == 0 || strcmp(inf ->data,"s") == 0) parar = False;
-        else{ 
-            DHD = listaChar(DHD,inf ->data);
+            printf("-----------------------------------\n");
+            while(parar){ 
+                printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
+                ler_string(inf ->data,12);
+                
+                printf("-----------------------------------\n");
+                if(strcmp(inf ->data,"S") == 0 || strcmp(inf ->data,"s") == 0) parar = False;
+                else{ 
+                    DHD = listaChar(DHD,inf ->data);
 
-            printf("|  INSIRA A HORA DE INÍCIO DO SHOW: "); 
-            ler_string(inf ->hora,6);
-            printf("-----------------------------------\n");
-            listaChar(DHD,inf ->hora);
-           
-            printf("|  INSIRA A DURAÇÃO DO SHOW: ");        
-            ler_string(inf ->duracao,5);
-            printf("-----------------------------------\n");
-            listaChar(DHD,inf ->hora);           
-        }
-    }
+                    printf("|  INSIRA A HORA DE INÍCIO DO SHOW: "); 
+                    ler_string(inf ->hora,6);
+                    printf("-----------------------------------\n");
+                    listaChar(DHD,inf ->hora);
+                
+                    printf("|  INSIRA A DURAÇÃO DO SHOW: ");        
+                    ler_string(inf ->duracao,5);
+                    printf("-----------------------------------\n");
+                    listaChar(DHD,inf ->hora);           
+                }
+            }
     
 
-    parar = True;
-    while(parar){
-        printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-        ler_string(inf ->personagem,32);
-        printf("-----------------------------------\n");
-        if(strcmp(inf ->personagem,"S") == 0 || strcmp(inf ->personagem,"s") == 0) parar = False;
-        else{
-            persona = listaChar(persona,inf ->personagem);
-        }
-    }
+            parar = True;
+            while(parar){
+                printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
+                ler_string(inf ->personagem,32);
+                printf("-----------------------------------\n");
+                if(strcmp(inf ->personagem,"S") == 0 || strcmp(inf ->personagem,"s") == 0) parar = False;
+                else{
+                    persona = listaChar(persona,inf ->personagem);
+                }
+            }
 
         }
     }
+    free(DHD);
+    free(persona);
+    free(dados);
 }
 
 void pesquisar_Show(){

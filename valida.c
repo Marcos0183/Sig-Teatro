@@ -250,8 +250,8 @@ int valida_show(int id_show){
         else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
     }
     fclose(cabecalho ->arq_shows);
-    free(cabecalho);
     free(cabecalho ->dados);
+    free(cabecalho);
     
     return saida;
 }

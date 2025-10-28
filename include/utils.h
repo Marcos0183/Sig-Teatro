@@ -16,6 +16,6 @@ int pot(int,int);
 
 int converte_numero(char *);
 
-void copia_carac_D3(char [][20][6],char [][20][6]);
+void copia_carac_D3(char [5][20][6],char [5][20][6]);
 
 #endif
