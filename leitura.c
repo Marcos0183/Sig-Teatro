@@ -32,7 +32,6 @@ int id_show(void){
     idRetorna++;
     fwrite(id,sizeof(int),1,arq_id);
     fclose(arq_id);
-    free(id);
     return idRetorna;
 }
 
