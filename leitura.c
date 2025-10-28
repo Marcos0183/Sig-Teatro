@@ -12,6 +12,33 @@
 #include "clientes.h"
 #include "anima.h"
 
+
+int id_ingresso(void){
+    int idRetorna; 
+    int *id;
+    id = &idRetorna;
+    FILE *arq_id;
+    arq_id = fopen("id_i.dat","rb");
+
+    if(arq_id == NULL){
+       arq_id = fopen("id_i.dat","w+");
+       idRetorna = 0;
+       fwrite(id,sizeof(int),1,arq_id);
+       rewind(arq_id);
+    }
+    fread(id,sizeof(int),1,arq_id);
+    fclose(arq_id);
+    if(idRetorna == 2000){
+        idRetorna = 0;
+    }
+    arq_id = fopen("id_i.dat","wb");
+    idRetorna++;
+    fwrite(id,sizeof(int),1,arq_id);
+    fclose(arq_id);
+    return idRetorna;
+}
+
+
 int id_show(void){
     int idRetorna; 
     int *id;
@@ -27,7 +54,9 @@ int id_show(void){
     }
     fread(id,sizeof(int),1,arq_id);
     fclose(arq_id);
-
+    if(idRetorna == 100){
+        idRetorna = 0;
+    }
     arq_id = fopen("id.dat","wb");
     idRetorna++;
     fwrite(id,sizeof(int),1,arq_id);

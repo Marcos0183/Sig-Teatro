@@ -288,3 +288,14 @@ int valida_cadeira(char *assento,int id_show){
 
   return saida;
 }
+
+
+
+int valida_id(char *id){
+    for(int i = 0; i < strlen(id); i++){
+        if(id[i] < 48 || id[i] > 57 ){
+            return False;
+        }
+    }
+    return True;
+}

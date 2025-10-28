@@ -3,6 +3,7 @@
 #include "shows.h"
 #include "ingresso.h"
 
+int id_ingresso(void);
 
 int id_show(void);
 

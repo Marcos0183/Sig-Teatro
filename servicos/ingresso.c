@@ -11,7 +11,6 @@
 
 int tempo_Ingresso = 100;
 
-
 void menu_Ingresso(){
     limparTela();
     printf("\n");
@@ -75,6 +74,7 @@ void vender_Ingresso(){
     }
        
     if(saida){
+        dados ->id = id_ingresso();
         dados->status = True;
         arq_Ingresso = fopen("arq_ingresso.dat","ab");
         abrir_arquivo(arq_Ingresso);
@@ -89,15 +89,39 @@ void vender_Ingresso(){
 }
 
 void excluir_Ingresso(){
-    int codigo;
+    int parar;
+    char id_lido[6];
+    FILE *arq_ingresso;
+    Dados_I *dados;
+
+    dados = (Dados_I *) malloc(sizeof(Dados_I));
     char titulo[19] = "EXCLUIR INGRESSO";
     func_Ani_Left(titulo);
     
+    do{ 
     printf("\n \n");
     printf("-----------------------------------\n");
     printf("|  INSIRA O CODIGO DO INGRESSO: ");
-    scanf("%d",&codigo);
+    ler_string(id_lido,6);
     printf("-----------------------------------\n");
+    }while(!valida_id(id_lido));
+
+    arq_ingresso = fopen("arq_ingresso.dat","r+b");
+    if(arq_ingresso == NULL)return;
+   
+    parar = True;
+    while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1 && parar){
+        if(dados ->id == converte_numero(id_lido)){
+            dados ->status = False;
+            fseek(arq_ingresso,-sizeof(Dados_I),SEEK_CUR);
+            fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
+            printf("INGRESSO EXCLUIDO\n\n");
+            parar = False;
+        }
+    }
+    if(parar)printf("INGRESSO NÃO ENCONTRADO\n\n");
+    fclose(arq_ingresso);
+    free(dados);
     pausar();
 }
 
@@ -140,31 +164,31 @@ void pesquisar_Ingresso(){
 }
 
 void ingresso(){
-    int executar_I;
+    char executar_I[2];
 
     do {
         menu_Ingresso();
-        scanf("%d", &executar_I);
+        ler_string(executar_I,3);
         limparBuffer();
-        
-        switch (executar_I) {
-            case 1:
+
+        switch (executar_I[0]) {
+            case '1':
                 vender_Ingresso();
                 break;
 
-            case 2:
+            case '2':
                 pesquisar_Ingresso();
                 break;
 
-            case 3:
+            case '3':
                 atualizar_Ingresso();
                 break;
 
-            case 4:
+            case '4':
                 excluir_Ingresso();
                 break;
 
-            case 0:
+            case '0':
                 break;
 
             default:
@@ -174,7 +198,7 @@ void ingresso(){
                 break;
             
         }
-    } while (executar_I != 0);
+    } while (executar_I[0] != '0');
 }
 
 void altera_cadeira(char *assento,int id_parametro){
@@ -274,7 +298,7 @@ void exibir_cadeiras(int id_show){
                         printf("|");   
                     } 
                     else{
-                        printf("    ");
+                        printf("     ");
                         printf("|");  
                     }    
                 }          

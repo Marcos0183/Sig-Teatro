@@ -88,6 +88,7 @@ void cadastrar_Show(){
     else{
         printf("SHOW NÃO CADASTRADO\n");
     }     
+    pausar();
 }
 
 void excluir_Show(){
