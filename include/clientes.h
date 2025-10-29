@@ -19,10 +19,10 @@ void pesquisar_cliente();
 
 void excluir_cliente();
 
+int cpf_existente(char *cpf);
+
 void listar_cliente();
 
-
-
-
+void exibir_cliente(Cliente* clt);
 
 #endif
