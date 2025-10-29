@@ -59,6 +59,18 @@ void exibir_cliente(Cliente* clt) {
 
 
 
+void gravar_cliente(Cliente* clt) {
+    FILE *arq_clientes = fopen("clientes.dat", "ab");              // Abre o arquivo em modo anexar (append)
+    if (arq_clientes == NULL) {
+        return;
+    }
+
+    fwrite(clt, sizeof(Cliente), 1, arq_clientes);
+    fclose(arq_clientes);
+}
+
+
+
 int cpf_existente(char *cpf) {
     Cliente* clt;
     FILE *arq_clientes;
@@ -100,7 +112,7 @@ void cadastrar_cliente() {
     func_Ani_Left(titulo);
 
     ler_cpf(clt->cpf);
-     if (!cpf_existente(clt->cpf)) {               // Lê o CPF e verifica duplicidade antes de continuar                                   // CPF já existe → cancelar operação
+    if (!cpf_existente(clt->cpf)) {            // Lê o CPF e verifica duplicidade antes de continuar                        
          free(clt);                                // Libera memória alocada para o cliente
          pausar();
          return;
@@ -111,30 +123,21 @@ void cadastrar_cliente() {
     ler_telefone(clt->telefone);
     clt->status = true;
 
-    FILE *arq_clientes = fopen("clientes.dat", "ab");              // Abre o arquivo em modo anexar (append)
-    if (arq_clientes == NULL) {
-        free(clt);
-        return;
-    }
-
-    fwrite(clt, sizeof(Cliente), 1, arq_clientes);
-
     limparTela();
     exibir_cliente(clt);
     printf("os dados do cliente estão corretos? (S/N): ");
     scanf(" %c", &confirm);
     limparBuffer();
+
+    gravar_cliente(clt);
+
     if (confirm == 'n' || confirm == 'N') {
         printf("\n Operação de cadastro cancelada pelo usuário.\n");
-        fclose(arq_clientes);
         free(clt);
         pausar();
         return;
     }
-
     printf("\n Cliente cadastrado com sucesso!\n");
-
-    fclose(arq_clientes);
     free(clt);
     pausar();
 }
