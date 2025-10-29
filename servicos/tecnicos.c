@@ -74,20 +74,18 @@ void gravar_tecnico(Tecnico* tec) {
 
 
 int confirma_dados_tec(Tecnico *tec) {
+
     char confirm;
-    int saida;
-    saida = 0;
     limparTela();
     exibir_tecnico(tec);
     printf("os dados estão corretos? (s/n): ");
     scanf(" %c", &confirm);
     limparBuffer();
     if (confirm == 's' || confirm == 'S') {
-        saida = 1;
+        return true;
     } else {
-        saida = 0;
+        return false;
     }
-    return saida;
 }
 
 
