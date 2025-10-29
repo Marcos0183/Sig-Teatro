@@ -71,6 +71,22 @@ void gravar_cliente(Cliente* clt) {
 
 
 
+void ler_dados_cliente(Cliente *clt) {
+    FILE *arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        return;
+    }
+    return arq_clientes;
+}
+
+
+
+void fechar_arquivo_cliente(FILE *arq_clientes) {
+    fclose(arq_clientes);
+}
+
+
+
 int cpf_existente(char *cpf) {
     Cliente* clt;
     FILE *arq_clientes;
