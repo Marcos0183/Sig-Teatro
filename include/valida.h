@@ -17,4 +17,6 @@ int valida_cadeira(char *,int);
 
 int valida_id(char *);
 
+int valida_funcao(char *funcao);
+
 #endif

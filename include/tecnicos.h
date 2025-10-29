@@ -26,4 +26,6 @@ void listar_tecnicos();
 
 void exibir_tecnico(Tecnico* tec);
 
+int cpf_existente_tec(char *cpf);
+
 #endif
