@@ -64,6 +64,7 @@ void pesquisa_show(Cabecalho *cabecalho){
             fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
             exibir_inf_cadastro(cabecalho);
             fclose(cabecalho ->arq_shows);
+            free(cabecalho ->dados);
             free(cabecalho ->DHD);
             free(cabecalho ->persona);
             cabecalho ->encontrado = False;
