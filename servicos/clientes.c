@@ -71,6 +71,23 @@ void gravar_cliente(Cliente* clt) {
 
 
 
+int confirma_dados_cliente(Cliente* clt) {
+    char confirm;
+    limparTela();
+    exibir_cliente(clt);
+    printf("Os dados do cliente estão corretos? (S/N): ");
+    scanf(" %c", &confirm);
+    limparBuffer();
+
+    if (confirm == 'S' || confirm == 's') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
 int cpf_existente(char *cpf) {
     Cliente* clt;
     FILE *arq_clientes;
@@ -106,7 +123,7 @@ int cpf_existente(char *cpf) {
 
 
 void cadastrar_cliente() { 
-    char confirm;
+
     Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
     char titulo[19] = "CADASTRAR CLIENTE";
     func_Ani_Left(titulo);
@@ -116,27 +133,19 @@ void cadastrar_cliente() {
          free(clt);                                // Libera memória alocada para o cliente
          pausar();
          return;
-     }
-
+    }
     ler_nome(clt->nome);  
     ler_email(clt->email);
     ler_telefone(clt->telefone);
     clt->status = true;
 
-    limparTela();
-    exibir_cliente(clt);
-    printf("os dados do cliente estão corretos? (S/N): ");
-    scanf(" %c", &confirm);
-    limparBuffer();
-
-    gravar_cliente(clt);
-
-    if (confirm == 'n' || confirm == 'N') {
-        printf("\n Operação de cadastro cancelada pelo usuário.\n");
+    if (!confirma_dados_cliente(clt)) {
+        printf("\nCadastro cancelado pelo usuário.\n");
         free(clt);
         pausar();
         return;
     }
+    gravar_cliente(clt);
     printf("\n Cliente cadastrado com sucesso!\n");
     free(clt);
     pausar();
@@ -174,20 +183,25 @@ void atualizar_cliente(){
             
             encontrado = 1;
             printf("Insira os novos dados do cliente:\n");
-            printf("=================================\n");
             ler_nome(clt->nome);
             ler_email(clt->email);
             ler_telefone(clt->telefone);
             clt->status = true;
+            if (!confirma_dados_cliente(clt)) {
+                printf("\nAtualização cancelada pelo usuário.\n");
+                fclose(arq_clientes);
+                free(clt);
+                pausar();
+                return;
+            }
             fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
             fwrite(clt, sizeof(Cliente), 1, arq_clientes);
             printf("=================================\n");
             printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
+            pausar();
         } 
     }
 
-   limparTela(); 
-    exibir_cliente(clt);
     fclose(arq_clientes);
     free(clt);
     if (!encontrado) {
