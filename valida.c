@@ -13,7 +13,7 @@
 
 int valida_nome(char *nome) {
     int i;
-    int tamanho = strlen(nome);
+    int tamanho = strlen(nome);             //função para validar nome
     if (tamanho < 3) {
         printf("Nome muito curto. Deve ter pelo menos 3 caracteres.\n");
         return false;
@@ -31,7 +31,7 @@ int valida_nome(char *nome) {
 
 int valida_cpf(char *cpf_raw) {
     char cpf[20];
-    int i, j, soma, resto, dig1, dig2,n;
+    int i, j, soma, resto, dig1, dig2,n;               //função para validar cpf desenvolvida com ajuda de chatgpt
 
     // Remove tudo que não for número
     j = 0;
@@ -95,7 +95,7 @@ int valida_cpf(char *cpf_raw) {
 
 int valida_telefone(char *telefone) {
 
-    int digitos = 0;
+    int digitos = 0;                        //função para validar telefone
 
     for (int i = 0; telefone[i] != '\0'; i++) {
         char c = telefone[i];
@@ -123,7 +123,7 @@ int valida_email(char *email) {
     int tamanho = strlen(email);
     int i;
     int pos_arroba = -1;
-    int pos_ponto = -1;
+    int pos_ponto = -1;                             //funçao para validar email desenvolvida com ajuda de chatgpt
 
     // Verifica tamanho mínimo e máximo
     if (tamanho < 5 || tamanho > 254)
@@ -181,7 +181,7 @@ int valida_funcao(char *funcao) {
     int i;
     bool tem_letra = false;
 
-    // Remove espaços do início
+    // Remove espaços do início                            //função para validar função
     while (*funcao == ' ') {
         funcao++;
     }
