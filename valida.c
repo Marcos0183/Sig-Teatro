@@ -15,12 +15,10 @@ int valida_nome(char *nome) {
     int i;
     int tamanho = strlen(nome);             //função para validar nome
     if (tamanho < 3) {
-        printf("Nome muito curto. Deve ter pelo menos 3 caracteres.\n");
         return false;
     }
     for (i = 0; i < tamanho; i++) {
         if (!((nome[i] >= 'A' && nome[i] <= 'Z') || (nome[i] >= 'a' && nome[i] <= 'z') || nome[i] == ' ')) {
-            printf("Nome inválido. Use apenas letras e espaços.\n");
             return false;
         }
     }
