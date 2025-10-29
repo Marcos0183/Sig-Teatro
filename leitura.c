@@ -265,5 +265,5 @@ void ler_funcao(char *funcao) {
     printf("====================================\n");
     printf("|  INSIRA A FUNÇÃO: ");
     ler_string(funcao, 16);
-    } while (!valida_nome(funcao));
+    } while (!valida_funcao(funcao));
 }
