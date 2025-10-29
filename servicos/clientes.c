@@ -71,22 +71,6 @@ void gravar_cliente(Cliente* clt) {
 
 
 
-void ler_dados_cliente(Cliente *clt) {
-    FILE *arq_clientes = fopen("clientes.dat", "rb");
-    if (arq_clientes == NULL) {
-        return;
-    }
-    return arq_clientes;
-}
-
-
-
-void fechar_arquivo_cliente(FILE *arq_clientes) {
-    fclose(arq_clientes);
-}
-
-
-
 int cpf_existente(char *cpf) {
     Cliente* clt;
     FILE *arq_clientes;
@@ -172,14 +156,11 @@ void atualizar_cliente(){
         return;
     }   
 
-    
-        
     char titulo[19] = "ATUALIZAR CLIENTE";
     func_Ani_Left(titulo);
 
-    printf("\n \n");
     ler_cpf(cpf_lido1);
-    printf("-----------------------------------\n");
+    printf("===================================\n");
 
     arq_clientes = fopen("clientes.dat", "r+b");                          // Abre o arquivo em modo leitura e escrita
     if (arq_clientes == NULL) {
@@ -190,35 +171,30 @@ void atualizar_cliente(){
        
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1 && (!encontrado)) {        // Percorre o arquivo de clientes
         if (strcmp(clt->cpf, cpf_lido1) == 0) {                                         // Compara o CPF lido com o CPF do cliente atual
+            
             encontrado = 1;
-
-            printf("Cliente encontrado. Insira os novos dados:\n");
-
+            printf("Insira os novos dados do cliente:\n");
+            printf("=================================\n");
             ler_nome(clt->nome);
             ler_email(clt->email);
             ler_telefone(clt->telefone);
             clt->status = true;
-
             fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
             fwrite(clt, sizeof(Cliente), 1, arq_clientes);
-
+            printf("=================================\n");
+            printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
         } 
     }
 
-   
    limparTela(); 
     exibir_cliente(clt);
     fclose(arq_clientes);
     free(clt);
-
-
     if (!encontrado) {
         printf("Cliente com CPF %s não encontrado.\n", cpf_lido1);
         pausar();
         return;
-    }  
-    printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
-    pausar();
+    }
 }
 
 
