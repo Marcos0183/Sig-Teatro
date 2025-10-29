@@ -13,14 +13,12 @@
 
 int valida_nome(char *nome) {
     int i;
-    int tamanho = strlen(nome);
+    int tamanho = strlen(nome);             //função para validar nome
     if (tamanho < 3) {
-        printf("Nome muito curto. Deve ter pelo menos 3 caracteres.\n");
         return false;
     }
     for (i = 0; i < tamanho; i++) {
         if (!((nome[i] >= 'A' && nome[i] <= 'Z') || (nome[i] >= 'a' && nome[i] <= 'z') || nome[i] == ' ')) {
-            printf("Nome inválido. Use apenas letras e espaços.\n");
             return false;
         }
     }
@@ -31,7 +29,7 @@ int valida_nome(char *nome) {
 
 int valida_cpf(char *cpf_raw) {
     char cpf[20];
-    int i, j, soma, resto, dig1, dig2;
+    int i, j, soma, resto, dig1, dig2,n;               //função para validar cpf desenvolvida com ajuda de chatgpt
 
     // Remove tudo que não for número
     j = 0;
@@ -44,10 +42,14 @@ int valida_cpf(char *cpf_raw) {
 
     // Verifica se tem exatamente 11 dígitos
     if (strlen(cpf) != 11) {
-        printf("CPF deve ter 11 dígitos.\n");
         return 0;
     }
 
+    for (n = 0; n < 11; n++) {
+        if (cpf[n] < '0' || cpf[n] > '9') {
+            return 0;
+        }
+    }
     // Rejeita CPFs com todos os dígitos iguais (ex: 11111111111)
     // int iguais = 1;
     //for (i = 1; i < 11; i++) {
@@ -83,7 +85,6 @@ int valida_cpf(char *cpf_raw) {
     if (dig1 == (cpf[9] - '0') && dig2 == (cpf[10] - '0')) {
         return 1; 
     } else {
-        printf("CPF inválido! Dígitos verificadores incorretos.\n");
         return 0; 
     }
 }
@@ -92,7 +93,7 @@ int valida_cpf(char *cpf_raw) {
 
 int valida_telefone(char *telefone) {
 
-    int digitos = 0;
+    int digitos = 0;                        //função para validar telefone
 
     for (int i = 0; telefone[i] != '\0'; i++) {
         char c = telefone[i];
@@ -120,7 +121,7 @@ int valida_email(char *email) {
     int tamanho = strlen(email);
     int i;
     int pos_arroba = -1;
-    int pos_ponto = -1;
+    int pos_ponto = -1;                             //funçao para validar email desenvolvida com ajuda de chatgpt
 
     // Verifica tamanho mínimo e máximo
     if (tamanho < 5 || tamanho > 254)
@@ -178,13 +179,12 @@ int valida_funcao(char *funcao) {
     int i;
     bool tem_letra = false;
 
-    // Remove espaços do início
+    // Remove espaços do início                            //função para validar função
     while (*funcao == ' ') {
         funcao++;
     }
 
     if (strlen(funcao) == 0) {
-        printf("Especialidade inválida! Campo vazio.\n");
         return false;
     }
 
@@ -197,7 +197,6 @@ int valida_funcao(char *funcao) {
     }
 
     if (!tem_letra) {
-        printf("Especialidade inválida! Deve conter letras.\n");
         return false;
     }
 

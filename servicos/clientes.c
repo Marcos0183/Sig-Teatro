@@ -59,6 +59,18 @@ void exibir_cliente(Cliente* clt) {
 
 
 
+void gravar_cliente(Cliente* clt) {
+    FILE *arq_clientes = fopen("clientes.dat", "ab");              // Abre o arquivo em modo anexar (append)
+    if (arq_clientes == NULL) {
+        return;
+    }
+
+    fwrite(clt, sizeof(Cliente), 1, arq_clientes);
+    fclose(arq_clientes);
+}
+
+
+
 int cpf_existente(char *cpf) {
     Cliente* clt;
     FILE *arq_clientes;
@@ -100,7 +112,7 @@ void cadastrar_cliente() {
     func_Ani_Left(titulo);
 
     ler_cpf(clt->cpf);
-     if (!cpf_existente(clt->cpf)) {               // Lê o CPF e verifica duplicidade antes de continuar                                   // CPF já existe → cancelar operação
+    if (!cpf_existente(clt->cpf)) {            // Lê o CPF e verifica duplicidade antes de continuar                        
          free(clt);                                // Libera memória alocada para o cliente
          pausar();
          return;
@@ -111,30 +123,21 @@ void cadastrar_cliente() {
     ler_telefone(clt->telefone);
     clt->status = true;
 
-    FILE *arq_clientes = fopen("clientes.dat", "ab");              // Abre o arquivo em modo anexar (append)
-    if (arq_clientes == NULL) {
-        free(clt);
-        return;
-    }
-
-    fwrite(clt, sizeof(Cliente), 1, arq_clientes);
-
     limparTela();
     exibir_cliente(clt);
     printf("os dados do cliente estão corretos? (S/N): ");
     scanf(" %c", &confirm);
     limparBuffer();
+
+    gravar_cliente(clt);
+
     if (confirm == 'n' || confirm == 'N') {
         printf("\n Operação de cadastro cancelada pelo usuário.\n");
-        fclose(arq_clientes);
         free(clt);
         pausar();
         return;
     }
-
     printf("\n Cliente cadastrado com sucesso!\n");
-
-    fclose(arq_clientes);
     free(clt);
     pausar();
 }
@@ -153,14 +156,11 @@ void atualizar_cliente(){
         return;
     }   
 
-    
-        
     char titulo[19] = "ATUALIZAR CLIENTE";
     func_Ani_Left(titulo);
 
-    printf("\n \n");
     ler_cpf(cpf_lido1);
-    printf("-----------------------------------\n");
+    printf("===================================\n");
 
     arq_clientes = fopen("clientes.dat", "r+b");                          // Abre o arquivo em modo leitura e escrita
     if (arq_clientes == NULL) {
@@ -171,35 +171,30 @@ void atualizar_cliente(){
        
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1 && (!encontrado)) {        // Percorre o arquivo de clientes
         if (strcmp(clt->cpf, cpf_lido1) == 0) {                                         // Compara o CPF lido com o CPF do cliente atual
+            
             encontrado = 1;
-
-            printf("Cliente encontrado. Insira os novos dados:\n");
-
+            printf("Insira os novos dados do cliente:\n");
+            printf("=================================\n");
             ler_nome(clt->nome);
             ler_email(clt->email);
             ler_telefone(clt->telefone);
             clt->status = true;
-
             fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
             fwrite(clt, sizeof(Cliente), 1, arq_clientes);
-
+            printf("=================================\n");
+            printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
         } 
     }
 
-   
    limparTela(); 
     exibir_cliente(clt);
     fclose(arq_clientes);
     free(clt);
-
-
     if (!encontrado) {
         printf("Cliente com CPF %s não encontrado.\n", cpf_lido1);
         pausar();
         return;
-    }  
-    printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
-    pausar();
+    }
 }
 
 

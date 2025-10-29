@@ -60,6 +60,38 @@ void exibir_tecnico(Tecnico* tec) {
 
     
 
+void gravar_tecnico(Tecnico* tec) {
+    FILE *arq_tecnicos = fopen("tecnicos.dat", "ab");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de tecnicos.\n");
+        limparBuffer();
+        return;   
+    }
+    fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
+    fclose(arq_tecnicos);
+}
+
+
+
+int confirma_dados_tec(Tecnico *tec) {
+    char confirm;
+    int saida;
+    saida = 0;
+    limparTela();
+    exibir_tecnico(tec);
+    printf("os dados estão corretos? (s/n): ");
+    scanf(" %c", &confirm);
+    limparBuffer();
+    if (confirm == 's' || confirm == 'S') {
+        saida = 1;
+    } else {
+        saida = 0;
+    }
+    return saida;
+}
+
+
+
 int cpf_existente_tec(char *cpf) {
     Tecnico* tec;
     FILE *arq_clientes;
@@ -96,7 +128,6 @@ int cpf_existente_tec(char *cpf) {
 
 void cadastro_Tecnico() {
 
-    FILE *arq_tecnicos;
     Tecnico* tec;
     tec = (Tecnico*) malloc(sizeof(Tecnico));
     if (tec == NULL) {
@@ -119,19 +150,16 @@ void cadastro_Tecnico() {
     ler_funcao(tec->funcao);
     ler_email(tec->email);
     ler_telefone(tec->telefone);
-
     tec->status = true; 
 
-    arq_tecnicos = fopen("tecnicos.dat", "ab");
-    if (arq_tecnicos == NULL) {
-        printf("Erro ao abrir o arquivo de tecnicos.\n");
-        limparBuffer();
-        return;   
+    if (!confirma_dados_tec(tec)) {
+        printf("Cadastro cancelado pelo usuário.\n");
+        free(tec);
+        pausar();
+        return;
     }
-    exibir_tecnico(tec);
+    gravar_tecnico(tec);
     printf("Técnico cadastrado com sucesso!\n");
-    fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
-    fclose(arq_tecnicos);
     free(tec);
     pausar();
 }
@@ -139,22 +167,17 @@ void cadastro_Tecnico() {
 
 
 void atualizar_Tecnico() {
-    char confirm;
+
     Tecnico* tec;
     tec = (Tecnico*) malloc(sizeof(Tecnico));
     char cpf_lido[15];
     FILE *arq_tecnicos;
     int encontrado = 0;
-    
-    
-
     char titulo[19] = "ATUALIZAR TÉCNICO";
     func_Ani_Left(titulo);
-    printf("\n \n");
     
     ler_cpf(cpf_lido);
-
-    printf("-----------------------------------\n");
+    printf("==================================\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "r+b");
     if (arq_tecnicos == NULL) {
@@ -165,44 +188,33 @@ void atualizar_Tecnico() {
 
     while (fread(tec, sizeof(Tecnico) , 1, arq_tecnicos)==1 && (!encontrado)) {  
         if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
+            
             encontrado = 1;
-            
             printf("Insira os novos dados do técnico:\n");
-            
+            printf("=================================\n");
             ler_nome(tec->nome);
             ler_funcao(tec->funcao);
             ler_email(tec->email);
             ler_telefone(tec->telefone);
             tec->status = true;
-
+            if (!confirma_dados_tec(tec)) {
+                printf("\nAtualização cancelada pelo usuário.\n");
+                fclose(arq_tecnicos);
+                free(tec);
+                pausar();
+                return;
+            }
             fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
             fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
+            printf("\nTécnico com CPF %s atualizado com sucesso.\n", cpf_lido);
         }
     }
-    limparTela();
-    exibir_tecnico(tec);
-    printf("os dados do tecnico estão corretos? (s/n): ");
-    scanf(" %c", &confirm);
-    limparBuffer();
-    if (confirm == 'n' || confirm == 'N') {
-        printf("Operação de atualização cancelada.\n");
-        fclose(arq_tecnicos);
-        free(tec);
-        pausar();
-        return;
-    }
-
     fclose(arq_tecnicos);
     free(tec);
-
     if (!encontrado) {
         printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
         return;
     }
-
-    printf("Técnico atualizado com sucesso!\n");
-    pausar();
-
 }
 
 
