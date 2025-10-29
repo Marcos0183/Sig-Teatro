@@ -31,7 +31,7 @@ int valida_nome(char *nome) {
 
 int valida_cpf(char *cpf_raw) {
     char cpf[20];
-    int i, j, soma, resto, dig1, dig2;
+    int i, j, soma, resto, dig1, dig2,n;
 
     // Remove tudo que não for número
     j = 0;
@@ -44,10 +44,14 @@ int valida_cpf(char *cpf_raw) {
 
     // Verifica se tem exatamente 11 dígitos
     if (strlen(cpf) != 11) {
-        printf("CPF deve ter 11 dígitos.\n");
         return 0;
     }
 
+    for (n = 0; n < 11; n++) {
+        if (cpf[n] < '0' || cpf[n] > '9') {
+            return 0;
+        }
+    }
     // Rejeita CPFs com todos os dígitos iguais (ex: 11111111111)
     // int iguais = 1;
     //for (i = 1; i < 11; i++) {
@@ -83,7 +87,6 @@ int valida_cpf(char *cpf_raw) {
     if (dig1 == (cpf[9] - '0') && dig2 == (cpf[10] - '0')) {
         return 1; 
     } else {
-        printf("CPF inválido! Dígitos verificadores incorretos.\n");
         return 0; 
     }
 }
@@ -184,7 +187,6 @@ int valida_funcao(char *funcao) {
     }
 
     if (strlen(funcao) == 0) {
-        printf("Especialidade inválida! Campo vazio.\n");
         return false;
     }
 
@@ -197,7 +199,6 @@ int valida_funcao(char *funcao) {
     }
 
     if (!tem_letra) {
-        printf("Especialidade inválida! Deve conter letras.\n");
         return false;
     }
 
