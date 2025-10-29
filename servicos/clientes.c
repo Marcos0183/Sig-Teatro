@@ -71,6 +71,23 @@ void gravar_cliente(Cliente* clt) {
 
 
 
+int confirma_dados_cliente(Cliente* clt) {
+    char confirm;
+    limparTela();
+    exibir_cliente(clt);
+    printf("Os dados do cliente estão corretos? (S/N): ");
+    scanf(" %c", &confirm);
+    limparBuffer();
+
+    if (confirm == 'S' || confirm == 's') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
 int cpf_existente(char *cpf) {
     Cliente* clt;
     FILE *arq_clientes;
