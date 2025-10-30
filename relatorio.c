@@ -22,9 +22,9 @@ void menu_relatorio(){
         func_Ani(tempo_relatorio);
         printf("║                                                  ║\n");
         func_Ani(tempo_relatorio);
-        printf("║ ► 1. Listar Clientes                             ║\n");
+        printf("║ ► 1. relatorio clientes                          ║\n");
         func_Ani(tempo_relatorio);
-        printf("║ ► 2. Listar Técnicos                             ║\n");
+        printf("║ ► 2. relatorio Técnicos                          ║\n");
         func_Ani(tempo_relatorio);
         printf("║                                                  ║\n");
         func_Ani(tempo_relatorio);
@@ -82,6 +82,8 @@ void relatorio_cliente(){
     printf("║               RELATÓRIO DE CLIENTES              ║\n");
     func_Ani(tempo_relatorio);
     printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
     func_Ani(tempo_relatorio);
     printf("║ ► 1. Listar Clientes ativos                      ║\n");
     func_Ani(tempo_relatorio);
@@ -148,6 +150,8 @@ void relatorio_tecnico(){
     func_Ani(tempo_relatorio);
     printf("╠══════════════════════════════════════════════════╣\n");
     func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_relatorio);
     printf("║ ► 1. Listar Técnicos ativos                      ║\n");
     func_Ani(tempo_relatorio);
     printf("║ ► 2. Listar Técnicos inativos                    ║\n");
@@ -179,13 +183,62 @@ void relatorio() {
 
         switch (executar_R) {
             case 1:
-                relatorio_cliente();
+                int opcao_cliente;
+                do {
+                    relatorio_cliente();
+                    scanf("%d", &opcao_cliente);
+                    limparBuffer();
+                    switch (opcao_cliente) {
+                        case 1:
+                            listar_clientes_ativos();
+                            break;
+                        case 2:
+                            listar_clientes_inativos();
+                            break;
+                        case 3:
+                            listar_clientes_por_nome();
+                            break;
+                        case 4:
+                            listar_todos_clientes();
+                            break;
+                        case 0:
+                            break;
+                    }
+                } while (opcao_cliente != 0);
                 break;
+
             case 2:
-                listar_tecnicos();
+                int opcao_tecnico;
+                do {
+                    relatorio_tecnico();
+                    scanf("%d", &opcao_tecnico);
+                    limparBuffer();
+                    switch (opcao_tecnico) {
+                        case 1:
+                            listar_tecnicos_ativos();
+                            break;
+                        case 2:
+                            listar_tecnicos_inativos();
+                            break;
+                        case 3:
+                            listar_tecnicos_por_nome();
+                            break;
+                        case 4:
+                            listar_todos_tecnicos();
+                            break;
+                        case 0:
+                            break; 
+                    }
+                } while (opcao_tecnico != 0);
                 break;
 
             case 0:
+                break;
+
+            default:
+                printf("\n \n");
+                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                pausar();
                 break;
         }
     } while (executar_R != 0);
