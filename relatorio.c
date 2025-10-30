@@ -67,6 +67,36 @@ void relatorio_cliente(){
 }
 
 
+
+void relatorio_tecnico(){ 
+    limparTela();
+    printf("╔══════════════════════════════════════════════════╗\n");
+    func_Ani(tempo_relatorio);
+    printf("║               RELATÓRIO DE TÉCNICOS              ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 1. Listar Técnicos ativos                      ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 2. Listar Técnicos inativos                    ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 3. Listar Técnicos por nome                    ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 4. listar todos os Técnicos                    ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 0. Voltar ao Menu Relatórios                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╚══════════════════════════════════════════════════╝\n");
+    func_Ani(tempo_relatorio);
+    printf("--> Digite a opção desejada: ");
+}
+
+
+
 void relatorio() {
     int executar_R;
 
