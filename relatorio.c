@@ -41,8 +41,23 @@ void menu_relatorio(){
 
 void listar_clientes_ativos() {
     limparTela();
-    printf("Listando clientes ativos...\n");
-    // Aqui você pode adicionar o código para listar os clientes ativos
+    char titulo[28] = "LISTANDO CLIENTES ATIVOS";
+    func_Ani_Left(titulo);
+    printf("\n \n");
+    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
+    FILE *arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;
+    }
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (clt -> status == true) {
+            exibir_cliente(clt);
+        }
+    }
+    fclose(arq_clientes);
+    free(clt);
     pausar();
 }
 
