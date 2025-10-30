@@ -48,6 +48,24 @@ void listar_clientes_ativos() {
 
 
 
+void listar_clientes_inativos() {
+    limparTela();
+    printf("Listando clientes inativos...\n");
+    // Aqui você pode adicionar o código para listar os clientes inativos
+    pausar();
+}
+
+
+
+void listar_clientes_por_nome() {
+    limparTela();
+    printf("Listando clientes por nome...\n");
+    // Aqui você pode adicionar o código para listar os clientes por nome
+    pausar();
+}
+
+
+
 
 
 void relatorio_cliente(){ 
