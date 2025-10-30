@@ -18,4 +18,6 @@ int converte_numero(char *);
 
 void copia_carac_D3(char [5][20][6],char [5][20][6]);
 
+void ler_ate(char *,char);
+
 #endif

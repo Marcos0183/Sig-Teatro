@@ -108,6 +108,7 @@ int ler_cadeira(Dados_I *dados){
         procura_cad(dados ->cadeira,coord);
         dados ->cord_i = coord ->i;
         dados ->cord_j = coord ->j;
+        free(coord);
         system("pause");
         return True;
     }
@@ -115,6 +116,7 @@ int ler_cadeira(Dados_I *dados){
         system("pause");
         return False;
     }
+
 }
 
 

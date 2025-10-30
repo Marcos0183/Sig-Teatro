@@ -73,3 +73,12 @@ void copia_carac_D3(char copiar[5][20][6],char copiado[5][20][6]){
         }
     }
 }
+
+void ler_ate(char *palavra,char letra){
+  for(int i = 0;i < strlen(palavra);i++){
+    if(palavra[i] == letra){
+       palavra[i] = '\0';
+      break;
+    }
+  }
+}
