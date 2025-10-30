@@ -66,6 +66,14 @@ void listar_clientes_por_nome() {
 
 
 
+void listar_todos_clientes() {
+    limparTela();
+    printf("Listando todos os clientes...\n");
+    // Aqui você pode adicionar o código para listar todos os clientes
+    pausar();
+}
+
+
 
 
 void relatorio_cliente(){ 
