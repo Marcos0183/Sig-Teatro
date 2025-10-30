@@ -39,6 +39,17 @@ void menu_relatorio(){
 
 
 
+void listar_clientes_ativos() {
+    limparTela();
+    printf("Listando clientes ativos...\n");
+    // Aqui você pode adicionar o código para listar os clientes ativos
+    pausar();
+}
+
+
+
+
+
 void relatorio_cliente(){ 
     limparTela();
     printf("╔══════════════════════════════════════════════════╗\n");
@@ -107,7 +118,7 @@ void relatorio() {
 
         switch (executar_R) {
             case 1:
-                listar_cliente();
+                relatorio_cliente();
                 break;
             case 2:
                 listar_tecnicos();
