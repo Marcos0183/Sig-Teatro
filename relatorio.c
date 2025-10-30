@@ -36,3 +36,27 @@ void menu_relatorio(){
         func_Ani(tempo_cliente);
         printf("--> Digite a opção desejada: ");
 }
+
+
+
+void relatorio() {
+    int executar_R;
+
+    do {
+        menu_relatorio();
+        scanf("%d", &executar_R);
+        limparBuffer();
+
+        switch (executar_R) {
+            case 1:
+                listar_cliente();
+                break;
+            case 2:
+                listar_tecnico();
+                break;
+
+            case 0:
+                break;
+        }
+    } while (executar_R != 0);
+}
