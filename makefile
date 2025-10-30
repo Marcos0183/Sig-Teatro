@@ -1,7 +1,7 @@
 all:
 	gcc -Wall -c include/*.h                # compila os .h em .gch
 	gcc -Wall -c servicos/*.c -I include    # compila os .c em .o
-	gcc -wall -c dados/*.c   -I include     # compila os .c em .o
+	gcc -Wall -c dados/*.c   -I include     # compila os .c em .o
 	gcc -Wall -c *.c   -I include           # compila os .c em .o
 	gcc -o m *.o                  # linka tudo
 
