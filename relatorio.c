@@ -75,7 +75,6 @@ void listar_todos_clientes() {
 
 
 
-
 void relatorio_cliente(){ 
     limparTela();
     printf("╔══════════════════════════════════════════════════╗\n");
@@ -101,6 +100,42 @@ void relatorio_cliente(){
     printf("╚══════════════════════════════════════════════════╝\n");
     func_Ani(tempo_relatorio);
     printf("--> Digite a opção desejada: ");
+}
+
+
+
+void listar_tecnicos_ativos() {
+    limparTela();
+    printf("Listando técnicos ativos...\n");
+    // Aqui você pode adicionar o código para listar os técnicos ativos
+    pausar();
+}
+
+
+
+void listar_tecnicos_inativos() {
+    limparTela();
+    printf("Listando técnicos inativos...\n");
+    // Aqui você pode adicionar o código para listar os técnicos inativos
+    pausar();
+}
+
+
+
+void listar_tecnicos_por_nome() {
+    limparTela();
+    printf("Listando técnicos por nome...\n");
+    // Aqui você pode adicionar o código para listar os técnicos por nome
+    pausar();
+}
+
+
+
+void listar_todos_tecnicos() {
+    limparTela();
+    printf("Listando todos os técnicos...\n");
+    // Aqui você pode adicionar o código para listar todos os técnicos
+    pausar();
 }
 
 
