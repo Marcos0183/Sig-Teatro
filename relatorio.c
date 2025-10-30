@@ -5,35 +5,35 @@
 #include "clientes.h"
 #include "anima.h"
 #include "utils.h"
-#include "clientes.h"
+#include "tecnicos.h"
 #include "leitura.h"
 #define true 1
 #define false 0
 
-int tempo_cliente = 100;
+int tempo_relatorio = 100;
 
 void menu_relatorio(){
     limparTela();
         printf("╔══════════════════════════════════════════════════╗\n");
-        func_Ani(tempo_cliente);
-        printf("║                MODULO RELATÓRIO                  ║\n");
-        func_Ani(tempo_cliente);
+        func_Ani(tempo_relatorio);
+        printf("║               MODULO RELATÓRIO                   ║\n");
+        func_Ani(tempo_relatorio);
         printf("╠══════════════════════════════════════════════════╣\n");
-        func_Ani(tempo_cliente);
+        func_Ani(tempo_relatorio);
         printf("║                                                  ║\n");
-        func_Ani(tempo_cliente);
-        printf("║ ► 1. Relatório de Clientes                       ║\n");
-        func_Ani(tempo_cliente);
-        printf("║ ► 2. Relatório de Técnicos                      ║\n");
-        func_Ani(tempo_cliente);
+        func_Ani(tempo_relatorio);
+        printf("║ ► 1. Listar Clientes                             ║\n");
+        func_Ani(tempo_relatorio);
+        printf("║ ► 2. Listar Técnicos                             ║\n");
+        func_Ani(tempo_relatorio);
         printf("║                                                  ║\n");
-        func_Ani(tempo_cliente);
+        func_Ani(tempo_relatorio);
         printf("╠══════════════════════════════════════════════════╣\n");
-        func_Ani(tempo_cliente);
+        func_Ani(tempo_relatorio);
         printf("║ ► 0. Voltar ao Menu principal                    ║\n");
-        func_Ani(tempo_cliente);
+        func_Ani(tempo_relatorio);
         printf("╚══════════════════════════════════════════════════╝\n");
-        func_Ani(tempo_cliente);
+        func_Ani(tempo_relatorio);
         printf("--> Digite a opção desejada: ");
 }
 
@@ -52,7 +52,7 @@ void relatorio() {
                 listar_cliente();
                 break;
             case 2:
-                listar_tecnico();
+                listar_tecnicos();
                 break;
 
             case 0:
