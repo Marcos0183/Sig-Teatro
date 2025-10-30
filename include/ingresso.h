@@ -37,4 +37,6 @@ int cadeira_usada(char *,int);
 
 void exibir_cadeiras(int);
 
+void vagar_cadeira(Dados_I *);
+
 #endif

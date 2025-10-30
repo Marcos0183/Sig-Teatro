@@ -46,7 +46,7 @@ void vender_Ingresso(){
     char escolha[2];
     int parar;
     int saida;
-    FILE *arq_Ingresso;
+    FILE *arq_ingresso;
     Dados_I *dados;
     dados = (Dados_I*) malloc(sizeof(Dados_I));
     
@@ -76,15 +76,16 @@ void vender_Ingresso(){
     if(saida){
         dados ->id = id_ingresso();
         dados->status = True;
-        arq_Ingresso = fopen("arq_ingresso.dat","ab");
-        abrir_arquivo(arq_Ingresso);
-        fwrite(dados,sizeof(Dados_I),1,arq_Ingresso);
+        arq_ingresso = fopen("arq_ingresso.dat","ab");
+        if(arq_ingresso == NULL)
+        fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
         altera_cadeira(dados ->cadeira,dados ->id_show);
-        fclose(arq_Ingresso);
-        free(dados);
+        fclose(arq_ingresso);
         printf("INGRESSO COMPRADO\n\n");
     }
     else printf("INGRESSO NÃO VENDIDO\n\n");
+    fclose(arq_ingresso);
+    free(dados);
     system("pause");
 }
 
@@ -115,6 +116,7 @@ void excluir_Ingresso(){
             dados ->status = False;
             fseek(arq_ingresso,-sizeof(Dados_I),SEEK_CUR);
             fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
+            vagar_cadeira(dados);
             printf("INGRESSO EXCLUIDO\n\n");
             parar = False;
         }
@@ -126,16 +128,25 @@ void excluir_Ingresso(){
 }
 
 void atualizar_Ingresso(){
-    int codigo;
-    char titulo[19] = "ATUALIZAR INGRESSO";
-    func_Ani_Left(titulo);
+    int parar;
+    parar = True;
+    // char id_lido[6];
+    // FILE *arq_ingresso;
+    // Dados_I *dados;
 
-    printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CODIGO DO INGRESSO: ");
-    scanf("%d",&codigo);
-    printf("-----------------------------------\n");
-    pausar();
+    // dados = (Dados_I *) malloc(sizeof(Dados_I));
+    // char titulo[19] = "ATUALIZAR INGRESSO";
+    // func_Ani_Left(titulo);
+    
+    // parar;
+    // do{ 
+    //     printf("\n \n");
+    //     printf("-----------------------------------\n");
+    //     printf("|  INSIRA O CODIGO DO INGRESSO: ");
+    //     ler_string(id_lido,6);
+    //     printf("-----------------------------------\n");
+    //     pausar();
+    // }while(parar);
 }
 
 void pesquisar_Ingresso(){
@@ -169,7 +180,6 @@ void ingresso(){
     do {
         menu_Ingresso();
         ler_string(executar_I,3);
-        limparBuffer();
 
         switch (executar_I[0]) {
             case '1':
@@ -308,4 +318,28 @@ void exibir_cadeiras(int id_show){
     fclose(arq_cadeira);
     free(assento);
     printf("\n\n");
+}
+
+void vagar_cadeira(Dados_I *dados){
+    int parar;
+    FILE *arq_cadeira;
+    Cadeiras *cadeira;
+    cadeira = (Cadeiras *) malloc(sizeof(Cadeiras));
+
+    arq_cadeira = fopen("arq_cadeiras.dat","r+b");
+    if(arq_cadeira == NULL)return;
+ 
+    parar = True;
+    while(fread(cadeira,sizeof(Cadeiras),1,arq_cadeira) == 1 && parar){
+        if(dados ->id_show == cadeira ->id){
+            ler_ate(cadeira ->cad[dados ->cord_i][dados ->cord_j],'!');
+            printf("%s",cadeira ->cad[dados ->cord_i][dados ->cord_j]);
+            pausar();
+            fseek(arq_cadeira,-sizeof(Cadeiras),SEEK_CUR);
+            fwrite(cadeira,sizeof(Cadeiras),1,arq_cadeira);
+            parar = False;
+        }
+    }
+    fclose(arq_cadeira);
+    free(cadeira);
 }
