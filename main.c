@@ -9,6 +9,7 @@
 #include "shows.h"
 #include "clientes.h"
 #include "utils.h"
+#include "relatorio.h"
 
 int banner_mostrado = 0;
 int tempo_Main = 100;
@@ -209,9 +210,7 @@ int main(void) {
                 break;
 
             case 5:
-                limparTela();
-                printf("Módulo Relatórios em construção...\n");
-                pausar();
+                relatorio();
                 break;
 
             case 6:
