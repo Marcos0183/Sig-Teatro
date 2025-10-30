@@ -45,7 +45,7 @@ void listar_clientes_ativos() {
     func_Ani_Left(titulo);
     printf("\n \n");
     Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
-    FILE *arq_clientes = fopen("clientes.dat", "rb");
+    FILE* arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
         limparBuffer();
@@ -88,19 +88,26 @@ void listar_clientes_inativos() {
 
 
 void listar_clientes_por_nome() {
+
     limparTela();
-    char titulo[28] = "LISTANDO CLIENTES POR NOME";
+    char nome_busca[50];
+    char titulo[30] = "LISTANDO CLIENTES POR NOME";
     func_Ani_Left(titulo);
     printf("\n \n");
-    Cliente *clt = (Cliente*) malloc(sizeof(Cliente));
-    FILE *arq_clientes = fopen("clientes.dat", "rb");
+    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
+
+    ler_nome(nome_busca);
+
+    FILE* arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
         limparBuffer();
         return;
     }
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        exibir_cliente(clt);
+        if (strstr(clt->nome, nome_busca) != NULL) {
+            exibir_cliente(clt);
+        }
     }
     fclose(arq_clientes);
     free(clt);
@@ -111,8 +118,21 @@ void listar_clientes_por_nome() {
 
 void listar_todos_clientes() {
     limparTela();
-    printf("Listando todos os clientes...\n");
-    // Aqui você pode adicionar o código para listar todos os clientes
+    char titulo[28] = "LISTANDO TODOS OS CLIENTES";
+    func_Ani_Left(titulo);
+    printf("\n \n");
+    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
+    FILE* arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;
+    }
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        exibir_cliente(clt);
+    }
+    fclose(arq_clientes);
+    free(clt);
     pausar();
 }
 
