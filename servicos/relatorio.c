@@ -89,8 +89,21 @@ void listar_clientes_inativos() {
 
 void listar_clientes_por_nome() {
     limparTela();
-    printf("Listando clientes por nome...\n");
-    // Aqui você pode adicionar o código para listar os clientes por nome
+    char titulo[28] = "LISTANDO CLIENTES POR NOME";
+    func_Ani_Left(titulo);
+    printf("\n \n");
+    Cliente *clt = (Cliente*) malloc(sizeof(Cliente));
+    FILE *arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        printf("Erro ao abrir o arquivo de clientes.\n");
+        limparBuffer();
+        return;
+    }
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        exibir_cliente(clt);
+    }
+    fclose(arq_clientes);
+    free(clt);
     pausar();
 }
 
