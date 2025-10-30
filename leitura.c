@@ -68,18 +68,18 @@ int id_show(void){
 //Ex: ler_id(&id_lido)
 void ler_id(int *id_lido){
     printf("\n \n");
-    printf("-----------------------------------\n");
+    printf("====================================\n"); 
     printf("|  INSIRA O CODIGO DO SHOW: ");
     scanf("%d",id_lido);
     getchar();
-    printf("-----------------------------------\n");
+    printf("====================================\n"); 
 }
 
 
 
 int ler_codigo(Dados_I *dados){
     char id_lido[5];
-    printf("V----------------------------------\n");
+    printf("====================================\n"); 
     printf("|  INSIRA O CÓDIGO DO SHOW: ");
     ler_string(id_lido,5);
 
@@ -98,10 +98,10 @@ int ler_codigo(Dados_I *dados){
 
 int ler_cadeira(Dados_I *dados){ 
     exibir_cadeiras(dados ->id_show);
-    printf("V----------------------------------\n");
+    printf("====================================\n"); 
     printf("|  ESCOLHA SUA CADEIRA: ");
     ler_string(dados->cadeira,5);
-    printf("V----------------------------------\n\n");
+    printf("====================================\n"); 
     if(valida_cadeira(dados ->cadeira,dados ->id_show)){
         Mapeia *coord;
         coord = (Mapeia *) malloc(sizeof(Mapeia));
@@ -123,7 +123,7 @@ int ler_cadeira(Dados_I *dados){
 
 void ler_nomeShow(char *nome){
     printf("\n \n");
-    printf("-----------------------------------\n");
+    printf("====================================\n"); 
     printf("|  INSIRA O NOME DO SHOW: ");
     ler_string(nome,32);
 }
@@ -135,24 +135,24 @@ void ler_DHD(Cabecalho *cabecalho){
     inf = (Dados_Temp *) malloc(sizeof(Dados_Temp));
     int parar;
     parar = True;
-    printf("-----------------------------------\n");
+    printf("====================================\n"); 
     while(parar){
         printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
         ler_string(inf ->data,12);
 
-        printf("-----------------------------------\n");
+        printf("====================================\n"); 
         if(strcmp(inf ->data,"S") == 0 || strcmp(inf ->data,"s") == 0) parar = False;
         else{
             cabecalho ->DHD = listaChar(cabecalho ->DHD,inf ->data);
 
             printf("|  INSIRA A HORA DE INÍCIO DO SHOW: ");
             ler_string(inf ->hora,6);
-            printf("-----------------------------------\n");
+            printf("====================================\n"); 
             listaChar(cabecalho ->DHD,inf ->hora);
 
             printf("|  INSIRA A DURAÇÃO DO SHOW: ");
             ler_string(inf ->duracao,5);
-            printf("-----------------------------------\n");
+            printf("====================================\n"); 
             listaChar(cabecalho ->DHD,inf ->duracao);
         }
     }
@@ -170,7 +170,7 @@ void ler_persona(Cabecalho *cabecalho){
     while(parar){
         printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
         ler_string(inf ->personagem,32);
-        printf("-----------------------------------\n");
+        printf("====================================\n"); 
         if(strcmp(inf ->personagem,"S") == 0 || strcmp(inf ->personagem,"s") == 0) parar = False;
         else{
             cabecalho ->persona = listaChar(cabecalho ->persona,inf ->personagem);
@@ -185,7 +185,7 @@ void ler_persona(Cabecalho *cabecalho){
 
 void ler_nome(char *nome) {
     do {
-    printf("-----------------------------------\n");
+    printf("====================================\n"); 
     printf("|  INSIRA O NOME: ");
     ler_string(nome, 50);
     } while (!valida_nome(nome));
@@ -195,7 +195,7 @@ void ler_nome(char *nome) {
 
 void ler_cpf(char *cpf) {
     do {
-    printf("-----------------------------------\n");
+    printf("====================================\n"); 
     printf("|  INSIRA O CPF: ");
     ler_string(cpf, 15);
     } while (!valida_cpf(cpf));
@@ -212,7 +212,7 @@ int ler_cpf_show(Dados_I *dados){
         char titulo[16] = "VENDER INGRESSO";
         func_Ani_Left(titulo);
         printf("\n \n");
-        printf("-----------------------------------\n");
+        printf("=====================================================================\n"); 
         printf("|  INSIRA SEU CPF DE CADASTRO - SEM CPF DIGITE (C) PARA CADASTRAR-SE: ");
         ler_string(dados ->cpf, 20);
 
@@ -243,7 +243,7 @@ int ler_cpf_show(Dados_I *dados){
 
 void ler_telefone(char *telefone) {
     do {
-    printf("-----------------------------------\n");
+    printf("====================================\n"); 
     printf("|  INSIRA O TELEFONE: ");
     ler_string(telefone, 16);
     } while (!valida_telefone(telefone));
@@ -253,7 +253,7 @@ void ler_telefone(char *telefone) {
 
 void ler_email(char *email) {
     do {
-    printf("-----------------------------------\n");
+    printf("====================================\n");
     printf("|  INSIRA O EMAIL: ");
     ler_string(email, 40);
     } while (!valida_email(email));
@@ -264,8 +264,8 @@ void ler_email(char *email) {
 void ler_funcao(char *funcao) {
     do
     {
-    printf("-----------------------------------\n");
+    printf("====================================\n");
     printf("|  INSIRA A FUNÇÃO: ");
     ler_string(funcao, 16);
-    } while (!valida_nome(funcao));
+    } while (!valida_funcao(funcao));
 }
