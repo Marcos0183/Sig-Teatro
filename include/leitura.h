@@ -3,6 +3,12 @@
 #include "shows.h"
 #include "ingresso.h"
 
+typedef struct sep SEP;
+struct sep{
+    int valida;
+    int error;
+};
+
 int id_ingresso(void);
 
 int id_show(void);
