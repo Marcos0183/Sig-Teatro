@@ -218,16 +218,18 @@ int ler_cpf_show(Dados_I *dados){
         ler_string(dados ->cpf, 20);
         valida_cpf_show(controle,dados);
 
-        switch (controle ->error){
-            case 1:
-            printf("\n");
-            printf("CLIENTE NÃO CADASTRADO");
-            pausar();
-            break;
-            case 2:
-            printf("\n");
-            printf("CPF INSERIDO INCORRETO OU NÃO VÁLIDO\n");
-            pausar();
+        if(!converte_numero(dados ->cpf) == SAIR){ 
+            switch (controle ->error){
+                case 1:
+                printf("\n");
+                printf("CLIENTE NÃO CADASTRADO\n");
+                pausar();
+                break;
+                case 2:
+                printf("\n");
+                printf("CPF INSERIDO INCORRETO OU NÃO VÁLIDO\n");
+                pausar();
+            }
         }
         
     }while(!controle ->valida && !converte_numero(dados ->cpf) == SAIR);

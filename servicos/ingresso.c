@@ -76,14 +76,13 @@ void vender_Ingresso(){
         else printf("ESCOLHA APENAS S PARA SIM E N PARA NÃO\n");
     }
        
+    arq_ingresso = fopen("arq_ingresso.dat","ab");
     if(saida){
         dados ->id = id_ingresso();
         dados->status = True;
-        arq_ingresso = fopen("arq_ingresso.dat","ab");
         if(arq_ingresso == NULL)
         fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
         altera_cadeira(dados ->cadeira,dados ->id_show);
-        fclose(arq_ingresso);
         printf("INGRESSO COMPRADO\n\n");
     }
     else printf("INGRESSO NÃO VENDIDO\n");
