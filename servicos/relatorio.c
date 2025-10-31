@@ -97,6 +97,7 @@ void listar_clientes_por_nome() {
     Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
 
     ler_nome(nome_busca);
+    limparTela();
 
     FILE* arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
@@ -238,6 +239,8 @@ void relatorio_tecnico(){
 
 void relatorio() {
     int executar_R;
+    int opcao_tecnico;
+    int opcao_cliente;
 
     do {
         menu_relatorio();
@@ -246,7 +249,6 @@ void relatorio() {
 
         switch (executar_R) {
             case 1:
-                int opcao_cliente;
                 do {
                     relatorio_cliente();
                     scanf("%d", &opcao_cliente);
@@ -271,7 +273,6 @@ void relatorio() {
                 break;
 
             case 2:
-                int opcao_tecnico;
                 do {
                     relatorio_tecnico();
                     scanf("%d", &opcao_tecnico);
