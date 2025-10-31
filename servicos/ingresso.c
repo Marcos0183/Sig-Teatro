@@ -131,8 +131,8 @@ void excluir_Ingresso(){
 }
 
 void atualizar_Ingresso(){
-    int parar;
-    parar = True;
+    //int parar;
+    //parar = True;
     // char id_lido[6];
     // FILE *arq_ingresso;
     // Dados_I *dados;
