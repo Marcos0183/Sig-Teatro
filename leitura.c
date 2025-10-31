@@ -205,8 +205,9 @@ void ler_cpf(char *cpf) {
 
 int ler_cpf_show(Dados_I *dados){
     int saida;
-    int parar;
-    parar = True;
+    SEP  *controle;
+    controle = (SEP *) malloc(sizeof(SEP));
+    controle ->valida = False;
     do{ 
         limparTela();
         char titulo[16] = "VENDER INGRESSO";
@@ -215,27 +216,23 @@ int ler_cpf_show(Dados_I *dados){
         printf("=====================================================================\n"); 
         printf("|  INSIRA SEU CPF DE CADASTRO - SEM CPF DIGITE (C) PARA CADASTRAR-SE: ");
         ler_string(dados ->cpf, 20);
+        valida_cpf_show(controle,dados);
 
-        if(strcmp(dados ->cpf,"C") == 0 || strcmp(dados ->cpf, "c") == 0){
-            cadastrar_cliente();
-            saida = False;
-            parar = False;
+        switch (controle ->error){
+            case 1:
+            printF("\n");
+            printf("CLIENTE NÃO CADASTRADO");
+            pausar();
+            break;
+            case 2:
+            printf("\n");
+            printf("CPF INSERIDO INCORRETO OU NÃO VÁLIDO");
+            pausar();
         }
-        else if(valida_cpf(dados ->cpf)){
-            if(valida_cliente(dados ->cpf)){ 
-                saida = True;
-                parar = False;
-            }
-            else{
-                printf("CLIENTE NÃO ENCONTRADO\n\n");
-                system("pause");
-                saida = False;
-                parar = False;
-            }
-        } 
-    
-    }while(parar);
-
+        
+    }while(!controle ->valida && !converte_numero(dados ->cpf) == SAIR);
+    saida = controle ->valida;
+    free(controle);
     return saida;
 }
 

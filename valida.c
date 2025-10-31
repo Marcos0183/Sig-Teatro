@@ -298,3 +298,24 @@ int valida_id(char *id){
     }
     return True;
 }
+
+
+
+int valida_cpf_show(SEP *controle,Dados_I *dados){
+    int parada;
+    if(strcmp(dados ->cpf,"C") == 0 || strcmp(dados ->cpf, "c") == 0){
+            cadastrar_cliente();
+        }
+        else if(valida_cpf(dados ->cpf)){
+            if(valida_cliente(dados ->cpf)){
+                controle ->valida = True;
+                //Dados corretos
+            }
+            else{
+                controle ->error = 1; //indicar que cliente não é cadastrado
+            }
+        }
+        else{
+            controle ->error = 2; //indicar cpf inválido
+        }
+}

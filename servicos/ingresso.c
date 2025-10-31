@@ -58,6 +58,9 @@ void vender_Ingresso(){
         parar = ler_cadeira(dados);
     }
     
+
+
+    
     saida = False;
     while(parar){ 
         printf("COMPRAR INGRESS0 - SIM(S)/NAO(N): ");

@@ -19,4 +19,6 @@ int valida_id(char *);
 
 int valida_funcao(char *funcao);
 
+int valida_cpf_show(SEP *,Dados_I *);
+
 #endif
