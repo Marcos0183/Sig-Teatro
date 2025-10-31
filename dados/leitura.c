@@ -78,20 +78,42 @@ void ler_id(int *id_lido){
 
 
 int ler_codigo(Dados_I *dados){
+    int saida;
     char id_lido[5];
-    printf("====================================\n"); 
-    printf("|  INSIRA O CÓDIGO DO SHOW: ");
-    ler_string(id_lido,5);
+    SEP *controle;
+    controle = (SEP *) malloc(sizeof(SEP));
+    
+    controle ->valida = False;
+    do{ 
+        limparTela();
+        char titulo[16] = "VENDER INGRESSO";
+        func_Ani_Left(titulo);
+        printf("====================================\n"); 
+        printf("|  INSIRA O CÓDIGO DO SHOW: ");
+        ler_string(id_lido,5);
+        if(converte_numero(id_lido) != SAIR){
+            valida_ler_codigo(controle,id_lido);
+            switch (controle ->error){
+                case 1:
+                printf("\n");
+                printf("SHOW NÃO ENCONTRADO\n");
+                pausar();
+                break;
 
-    dados ->id_show = converte_numero(id_lido);
-    if(valida_show(dados ->id_show)){
-        return True;
-    }
-    else{
-        printf("SHOW NÃO ENCONTRADO\n\n");
-        system("pause");
-        return False;
-    }
+                case 2:
+                printf("\n");
+                printf("CÓDIGO DO SHOW INVALIDO, DIGITE APENAS NUMEROS\n");
+                pausar();
+                break;
+            }
+        }
+       if(controle ->valida){
+        dados ->id_show = converte_numero(id_lido);
+       } 
+    }while( !controle ->valida && !converte_numero(id_lido) == 00);
+    saida = controle ->valida;
+    free(controle);
+    return saida;
 }
 
 
@@ -216,9 +238,8 @@ int ler_cpf_show(Dados_I *dados){
         printf("=====================================================================\n"); 
         printf("|  INSIRA SEU CPF DE CADASTRO - SEM CPF DIGITE (C) PARA CADASTRAR-SE: ");
         ler_string(dados ->cpf, 20);
-        valida_cpf_show(controle,dados);
-
-        if(!converte_numero(dados ->cpf) == SAIR){ 
+        if(converte_numero(dados ->cpf) != SAIR){ 
+            valida_cpf_show(controle,dados);
             switch (controle ->error){
                 case 1:
                 printf("\n");
