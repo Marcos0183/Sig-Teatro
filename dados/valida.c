@@ -237,7 +237,7 @@ int valida_show(int id_show){
     cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
 
     cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
-    abrir_arquivo(cabecalho ->arq_shows);
+    if(cabecalho ->arq_shows == NULL)return 0;
     
     saida = False;
     parar = True;
@@ -308,6 +308,7 @@ void valida_cpf_show(SEP *controle,Dados_I *dados){
         else if(valida_cpf(dados ->cpf)){
             if(valida_cliente(dados ->cpf)){
                 controle ->valida = True;
+                controle ->error = 0;
                 //Dados corretos
             }
             else{
@@ -316,5 +317,26 @@ void valida_cpf_show(SEP *controle,Dados_I *dados){
         }
         else{
             controle ->error = 2; //indicar cpf inválido
+        }
+}
+
+
+
+void valida_ler_codigo(SEP *controle,char *id_lido){
+    int converte;
+    converte = converte_numero(id_lido);
+        if(valida_id(id_lido)){
+            if(valida_show(converte)){
+                controle ->valida = True;
+                controle ->error = 0;
+                //dados corretos
+            }
+            else{
+                controle ->error = 1; //Indicar show não encontrado
+       
+            }
+        }
+        else{
+            controle ->error = 2; //Id inválido
         }
 }
