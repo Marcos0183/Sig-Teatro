@@ -172,8 +172,23 @@ void relatorio_cliente(){
 
 void listar_tecnicos_ativos() {
     limparTela();
-    printf("Listando técnicos ativos...\n");
-    // Aqui você pode adicionar o código para listar os técnicos ativos
+    char titulo[28] = "LISTANDO TÉCNICOS ATIVOS";
+    func_Ani_Left(titulo);
+    printf("\n");
+    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+    FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de técnicos.\n");
+        limparBuffer();
+        return;
+    }
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if (tec -> status == true) {
+            exibir_tecnico(tec);
+        }
+    }
+    fclose(arq_tecnicos);
+    free(tec);
     pausar();
 }
 

@@ -8,7 +8,8 @@
 #include "tecnicos.h"
 #include "shows.h"
 #include "clientes.h"
-#include "utils.h"
+#include "utils.h"  
+#include "relatorio.h"
 
 int banner_mostrado = 0;
 int tempo_Main = 100;
@@ -209,7 +210,7 @@ int main(void) {
                 break;
 
             case 5:
-                //relatorio();
+                relatorio();
                 break;
 
             case 6:
