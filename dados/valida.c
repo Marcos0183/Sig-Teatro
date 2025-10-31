@@ -301,8 +301,7 @@ int valida_id(char *id){
 
 
 
-int valida_cpf_show(SEP *controle,Dados_I *dados){
-    int parada;
+void valida_cpf_show(SEP *controle,Dados_I *dados){
     if(strcmp(dados ->cpf,"C") == 0 || strcmp(dados ->cpf, "c") == 0){
             cadastrar_cliente();
         }

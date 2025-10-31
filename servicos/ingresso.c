@@ -60,7 +60,7 @@ void vender_Ingresso(){
     
 
 
-    
+
     saida = False;
     while(parar){ 
         printf("COMPRAR INGRESS0 - SIM(S)/NAO(N): ");
@@ -86,10 +86,10 @@ void vender_Ingresso(){
         fclose(arq_ingresso);
         printf("INGRESSO COMPRADO\n\n");
     }
-    else printf("INGRESSO NÃO VENDIDO\n\n");
+    else printf("INGRESSO NÃO VENDIDO\n");
     fclose(arq_ingresso);
     free(dados);
-    system("pause");
+    pausar();
 }
 
 void excluir_Ingresso(){

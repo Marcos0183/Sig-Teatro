@@ -220,13 +220,13 @@ int ler_cpf_show(Dados_I *dados){
 
         switch (controle ->error){
             case 1:
-            printF("\n");
+            printf("\n");
             printf("CLIENTE NÃO CADASTRADO");
             pausar();
             break;
             case 2:
             printf("\n");
-            printf("CPF INSERIDO INCORRETO OU NÃO VÁLIDO");
+            printf("CPF INSERIDO INCORRETO OU NÃO VÁLIDO\n");
             pausar();
         }
         
