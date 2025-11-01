@@ -37,4 +37,6 @@ void ler_email(char *email);
 
 void ler_funcao(char *funcao);
 
+int ler_escolha(char *);
+
 #endif

@@ -6,18 +6,52 @@
 #include "anima.h"
 #include "shows.h"
 #include "ingresso.h"
+#include "clientes.h"
 
-void exibir_ingresso(Dados_I *dados){
+void exibir_ingresso(Dados_I *dados_I,int revelar){
+    int parar;
+    FILE *arq_cliente;
+    FILE *arq_show;
+    Dados_S *dados_S;
+    Cliente *dados_C;
+    dados_S = (Dados_S *) malloc(sizeof(Dados_S));
+    dados_C = (Cliente *) malloc(sizeof(Cliente));
+   
+    arq_cliente = fopen("clientes.dat","rb");
+    if(arq_cliente == NULL)return;
+    
+    parar = True;
+    while(parar && fread(dados_C,sizeof(Cliente),1,arq_cliente) == 1){
+        if(strcmp(dados_C ->cpf, dados_I ->cpf) == 0){
+            parar = False;
+        } 
+    }
+    fclose(arq_cliente);
+
+    arq_show = fopen("arq_shows.dat","rb");
+    if(arq_show == NULL)return;
+    
+    parar = True;
+    while( parar && fread(dados_S,sizeof(Dados_S),1,arq_show) == 1){
+        if(dados_S ->id == dados_I ->id_show){
+            parar = False;
+        }
+        else fseek(arq_show,dados_S ->tam_DHD + dados_S ->tam_personagem,SEEK_CUR);
+    }
+    fclose(arq_show);
     
     printf("\n+---------------------------------------------------------------+\n");
     printf("|                     DADOS DO INGRESSO                         |\n");
     printf("+---------------------------------------------------------------+\n");   
-    printf("| CPF         : %-48s |\n", dados->cpf);
-    printf("| ID_Show     : %-48d |\n", dados->id_show);
-    printf("| Cadeira     : %-48s |\n", dados->cadeira);
-    printf("| Id_Ingresso : %-48d |\n",dados ->id);
+    printf("| CPF          : %-46s |\n",dados_I->cpf);
+    printf("| Cliente      : %-46s |\n",dados_C ->nome);
+    printf("| Nome-Id Show : %s - %-28.3d  |\n",dados_S ->nome,dados_S ->id);
+    printf("| Cadeira      : %-46s |\n",dados_I->cadeira);
+    if(revelar)printf("| Id_Ingresso  : %-46d |\n",dados_I->id);
     printf("+---------------------------------------------------------------+\n");
-
+    
+    free(dados_C);
+    free(dados_S);
 }
 
 void exibir_inf_cadastro(Cabecalho *cabecalho){
@@ -56,7 +90,7 @@ int escolha_cad_show(Cabecalho *cabecalho){
 void pesquisa_show(Cabecalho *cabecalho){
     cabecalho ->encontrado = True;
     cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
-    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
+    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1 && cabecalho ->encontrado){
         if(cabecalho ->id_lido == cabecalho ->dados ->id && cabecalho ->dados ->status == True ){
             cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
             cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
@@ -84,7 +118,8 @@ void pesquisar_ingresso(Dados_I *dados,char *cpf_lido){
 
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(strcmp(dados ->cpf,cpf_lido) == 0 && dados ->status == True){
-            exibir_ingresso(dados);
+            limparTela();
+            exibir_ingresso(dados,True);
         }
     }
 }

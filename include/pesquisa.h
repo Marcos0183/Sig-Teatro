@@ -6,7 +6,7 @@
 
 int escolha_cad_show(Cabecalho *);
 
-void exibir_ingresso(Dados_I *);
+void exibir_ingresso(Dados_I *,int);
 
 void exibir_inf_cadastro(Cabecalho *);
 
