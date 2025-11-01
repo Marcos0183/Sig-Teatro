@@ -43,9 +43,7 @@ void menu_Ingresso(){
 }
 
 void vender_Ingresso(){
-    char escolha[2];
     int parar;
-    int saida;
     FILE *arq_ingresso;
     Dados_I *dados;
     dados = (Dados_I*) malloc(sizeof(Dados_I));
@@ -58,34 +56,19 @@ void vender_Ingresso(){
         parar = ler_cadeira(dados);
     }
     
-    saida = False;
-    while(parar){ 
-        printf("COMPRAR INGRESS0 - SIM(S)/NAO(N): ");
-        ler_string(escolha,2);
-        if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
-            saida = True;
-            parar = False;
-        }
-        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"N") == 0){
-            saida = False;
-            parar = False;
-        }
-        else printf("ESCOLHA APENAS S PARA SIM E N PARA NÃO\n");
-    }
-       
     arq_ingresso = fopen("arq_ingresso.dat","ab");
     if(arq_ingresso == NULL)return;
-    if(saida){
+
+    char texto[] = "COMPRAR INGRESSO";
+    if(parar)exibir_ingresso(dados,False);
+    if(parar && ler_escolha(texto)){
         dados ->id = id_ingresso();
         dados->status = True;
-        printf("%s\n",dados ->cpf);
-        printf("%d",dados ->status);
         fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
         altera_cadeira(dados ->cadeira,dados ->id_show);
         printf("INGRESSO COMPRADO\n\n");
     }
     else printf("INGRESSO NÃO VENDIDO\n");
-
     fclose(arq_ingresso);
     free(dados);
     pausar();
@@ -222,8 +205,9 @@ void altera_cadeira(char *assento,int id_parametro){
     coord = (Mapeia *) malloc(sizeof(Mapeia));
 
     arq_cadeiras = fopen("arq_cadeiras.dat","r+b");
-    abrir_arquivo(arq_cadeiras);
-    parar = 1;
+    if(arq_cadeiras == NULL)return;
+
+    parar = True;
     while(fread(cadeira,sizeof(Cadeiras),1,arq_cadeiras) == 1 && parar){
         if(cadeira ->id == id_parametro){
             procura_cad(assento,coord);
@@ -231,7 +215,7 @@ void altera_cadeira(char *assento,int id_parametro){
             cadeira ->cont++;
             fseek(arq_cadeiras,-sizeof(Cadeiras),SEEK_CUR);
             fwrite(cadeira,sizeof(Cadeiras),1,arq_cadeiras);
-            parar = 0;
+            parar = False;
         }
     }
     fclose(arq_cadeiras);
@@ -299,7 +283,7 @@ void exibir_cadeiras(int id_show){
         if(assento ->id == id_show){
             for(int i = 0; i < 5; i++){
                 printf("\n");
-                for(int p = 0;p < 70;p++){
+                for(int p = 0;p < 110;p++){
                     printf("-");
                 }
                 printf("\n\n");
@@ -335,8 +319,7 @@ void vagar_cadeira(Dados_I *dados){
     while(fread(cadeira,sizeof(Cadeiras),1,arq_cadeira) == 1 && parar){
         if(dados ->id_show == cadeira ->id){
             ler_ate(cadeira ->cad[dados ->cord_i][dados ->cord_j],'!');
-            printf("%s",cadeira ->cad[dados ->cord_i][dados ->cord_j]);
-            pausar();
+            cadeira ->cont --;
             fseek(arq_cadeira,-sizeof(Cadeiras),SEEK_CUR);
             fwrite(cadeira,sizeof(Cadeiras),1,arq_cadeira);
             parar = False;

@@ -278,7 +278,7 @@ int ler_cpf_show(Dados_I *dados){
                 break;
                 case 2:
                 printf("\n");
-                printf("CPF INSERIDO INCORRETO OU NÃO VÁLIDO\n");
+                printf("CPF INSERIDO NÃO VÁLIDO\n");
                 pausar();
             }
         }
@@ -318,4 +318,30 @@ void ler_funcao(char *funcao) {
     printf("|  INSIRA A FUNÇÃO: ");
     ler_string(funcao, 16);
     } while (!valida_funcao(funcao));
+}
+
+
+
+int ler_escolha(char *texto){
+    int parar = False;
+    int saida = False;
+    int converte;
+    char escolha[4];
+    do{ 
+        printf("%s - SIM(S)/NAO(N): ",texto);
+        ler_string(escolha,4);
+        converte = converte_numero(escolha);
+        if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
+            saida = True;
+            parar = True;
+        }
+        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"N") == 0){
+            parar = True;
+        }
+        else if(converte == SAIR){
+            parar = True;
+        }
+        else printf("ESCOLHA APENAS S-s PARA SIM E N-n PARA NÃO\n");
+    }while(!parar);
+    return saida;
 }
