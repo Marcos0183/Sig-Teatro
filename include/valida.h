@@ -15,7 +15,7 @@ int valida_cliente(char *);
 
 int valida_show(int);
 
-int valida_cadeira(char *,int);
+void valida_cadeira(char *,int,SEP *);
 
 int valida_id(char *);
 

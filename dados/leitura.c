@@ -119,26 +119,56 @@ int ler_codigo(Dados_I *dados){
 
 
 int ler_cadeira(Dados_I *dados){ 
-    exibir_cadeiras(dados ->id_show);
-    printf("====================================\n"); 
-    printf("|  ESCOLHA SUA CADEIRA: ");
-    ler_string(dados->cadeira,5);
-    printf("====================================\n"); 
-    if(valida_cadeira(dados ->cadeira,dados ->id_show)){
+    int saida;
+    SEP *controle;
+    controle = (SEP *) malloc(sizeof(SEP));
+    
+    controle ->valida = False;
+    do{ 
+        limparTela();
+        char titulo[16] = "VENDER INGRESSO";
+        func_Ani_Left(titulo);
+        exibir_cadeiras(dados ->id_show);
+        printf("====================================\n"); 
+        printf("|  ESCOLHA SUA CADEIRA: ");
+        ler_string(dados->cadeira,5);
+        if(converte_numero(dados ->cadeira) != SAIR){
+            valida_cadeira(dados ->cadeira,dados ->id_show,controle);
+            switch (controle ->error){
+                case 1:
+                printf("\n");
+                printf("CADEIRA INSERIDA NAO VALIDA, ESCOLHA DE ACORDO COM O QUE ESTÁ SENDO EXIBIDO\n");
+                pausar();
+                break;
+                case 2:
+                printf("\n");
+                printf("LINHA DE CADEIRAS NÃO EXISTENTE, DIGITE APENAS LETRAS (A - E)\n");
+                pausar();
+                break;
+                case 3:
+                printf("\n");
+                printf("COLUNA DE CADEIRAS NÃO EXISTENTE, DIGITE APENAS NUMEROS (1 - 20)\n");
+                pausar();
+                break;
+                case 4:
+                printf("\n");
+                printf("CADEIRA ESCOLHIDA JÁ OCUPADA, POR FAVOR ESCOLHER OUTRA\n");
+                pausar();
+                break;
+            }
+        }
+    }while(!controle ->valida && !dados ->id_show == SAIR);
+    if(controle ->valida){
         Mapeia *coord;
         coord = (Mapeia *) malloc(sizeof(Mapeia));
         procura_cad(dados ->cadeira,coord);
         dados ->cord_i = coord ->i;
         dados ->cord_j = coord ->j;
         free(coord);
-        system("pause");
-        return True;
     }
-    else{
-        system("pause");
-        return False;
-    }
-
+    saida = controle ->valida;
+    free(controle);
+    return saida;
 }
 
 

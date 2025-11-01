@@ -257,35 +257,36 @@ int valida_show(int id_show){
 
 
 
-int valida_cadeira(char *assento,int id_show){
-  int tam = strlen(assento);
-  char numero[3] = "";
-  int convertido;
-  int saida;
-  int parar;
+void valida_cadeira(char *assento,int id_show,SEP *controle){
+   char numero[3] = "";
+   int convertido;
+   
+   controle ->valida = False;
+    if(strlen(assento) <= 3 && strlen(assento) >= 2){
+    
+        if((assento[0] >= 65 && assento[0] <= 69)){
+            strcat(numero,&assento[1]);
+            convertido = converte_numero(numero);
 
-  saida = False;
-  parar = 0;
-  if(tam <= 3)parar = 1;
+            if(convertido >= 1 && convertido <= 20){
 
-  if(!(assento[0] >= 65 && assento[0] <= 90 && parar)){
-    parar = 0;
-    printf("CADEIRA NÃO RECONHECIDA, POR FAVOR DIGITE APENAS LETRAS(A - E) E NUMEROS(1 - 20)\n\n");
-  }
-  else{
-    strcat(numero,&assento[1]);
-    convertido = converte_numero(numero);
-  }
-  if(!(convertido >= 1 && convertido <= 20 && parar)){
-    parar = 0;
-    printf("CADEIRA NÃO RECONHECIDA, POR FAVOR DIGITE APENAS LETRAS(A - E) E NUMEROS(1 - 20)\n\n");
-  }
-  if(cadeira_usada(assento,id_show) && parar){
-    saida = True;
-  }
-  else printf("CADEIRA JÁ OCUPADA\n\n"); 
-
-  return saida;
+                if(cadeira_usada(assento,id_show)){
+                    controle ->valida = True;
+                    controle ->error = 0;
+                }
+                else controle ->error = 4; //Indicar que o assento escolhido está sendo usado
+            }
+            else{
+                controle ->error = 3; //Indicar que foi usado carateres fora de (1 - 20)
+            }
+        }
+        else{
+            controle ->error = 2; //Indicar que foi usada caracteres fora de (A - E)   
+        }
+    }
+    else{
+        controle ->error = 1; //Indicar que o tamanho não bate
+    }
 }
 
 

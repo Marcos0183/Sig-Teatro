@@ -74,15 +74,18 @@ void vender_Ingresso(){
     }
        
     arq_ingresso = fopen("arq_ingresso.dat","ab");
+    if(arq_ingresso == NULL)return;
     if(saida){
         dados ->id = id_ingresso();
         dados->status = True;
-        if(arq_ingresso == NULL)
+        printf("%s\n",dados ->cpf);
+        printf("%d",dados ->status);
         fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
         altera_cadeira(dados ->cadeira,dados ->id_show);
         printf("INGRESSO COMPRADO\n\n");
     }
     else printf("INGRESSO NÃO VENDIDO\n");
+
     fclose(arq_ingresso);
     free(dados);
     pausar();
@@ -236,7 +239,7 @@ void altera_cadeira(char *assento,int id_parametro){
     free(coord);
 }
 
-void procura_cad(char *assento,Mapeia *cordenadas){
+void procura_cad(char *assento,Mapeia *cordenadas){ 
     char converte[5] = "";
     switch(assento[0]){
         case 'A':
@@ -268,7 +271,7 @@ int cadeira_usada(char *cad,int id_show){
     cord = (Mapeia *) malloc(sizeof(Mapeia));
     assento = (Cadeiras *) malloc(sizeof(Cadeiras));
     arq_cadeira = fopen("arq_cadeiras.dat","rb");
-    abrir_arquivo(arq_cadeira);
+    if(arq_cadeira == NULL)return False;
     
 
     procura_cad(cad,cord);
@@ -307,7 +310,7 @@ void exibir_cadeiras(int id_show){
                         printf("|");   
                     } 
                     else{
-                        printf("     ");
+                        printf("    ");
                         printf("|");  
                     }    
                 }          
