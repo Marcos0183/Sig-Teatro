@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 #include "clientes.h"
 #include "anima.h"
@@ -248,7 +247,10 @@ void pesquisar_cliente(){
             return;
         }
     } 
-
+    fclose(arq_clientes); 
+    free(clt);
+    printf("Cliente com CPF %s não encontrado.\n", cpf_lido);
+    pausar();
 }
 
 
@@ -349,8 +351,8 @@ void cliente(){
         limparBuffer();
 
         switch (executar_C) {
-            case 1:
-                cadastrar_cliente();
+            case 1: 
+                cadastrar_cliente(); 
                 break;
             case 2:
                 pesquisar_cliente();
