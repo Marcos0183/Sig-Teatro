@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 #include "clientes.h"
 #include "anima.h"
@@ -30,8 +29,7 @@ void menu_cliente(){
         func_Ani(tempo_cliente);
         printf("║ ► 4. Excluir Cliente                             ║\n");
         func_Ani(tempo_cliente);
-        printf("║ ► 5. listar cliente                              ║\n");
-        func_Ani(tempo_cliente);
+
         printf("║                                                  ║\n");
         func_Ani(tempo_cliente);
         printf("╠══════════════════════════════════════════════════╣\n");
@@ -100,7 +98,7 @@ int cpf_existente(char *cpf) {
     arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
         free(clt);
-        return true;
+        return true;            // arquivo vazio, CPF pode ser cadastrado
     }
 
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {        // Percorre o arquivo de clientes
@@ -248,7 +246,10 @@ void pesquisar_cliente(){
             return;
         }
     } 
-
+    fclose(arq_clientes); 
+    free(clt);
+    printf("Cliente com CPF %s não encontrado.\n", cpf_lido);
+    pausar();
 }
 
 
@@ -283,7 +284,7 @@ void excluir_cliente() {
         if ((strcmp(clt->cpf, cpf_lido) == 0) && (clt->status == true)) {
             limparTela();
             exibir_cliente(clt);
-            printf("Tem certeza que deseja excluir este técnico? (s/n): ");
+            printf("Tem certeza que deseja excluir este Cliente? (s/n): ");
             scanf(" %c", &confirm);                                             
             limparBuffer();
             if (confirm == 's' || confirm == 'S') {                               // Confirmação de exclusão
@@ -291,7 +292,7 @@ void excluir_cliente() {
                 clt->status = false;
                 fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);                 // Move o ponteiro de arquivo de volta para o início do registro do cliente
                 fwrite(clt, sizeof(Cliente), 1, arq_clientes);                   // Atualiza o registro do cliente no arquivo
-                printf("Técnico com CPF %s encontrado e excluido.\n", cpf_lido);
+                printf("Cliente com CPF %s encontrado e excluido.\n", cpf_lido);
             } else {                                                             // Cancelamento da exclusão
                 printf("Operação de exclusão cancelada.\n");
                 fclose(arq_clientes);
@@ -313,30 +314,7 @@ void excluir_cliente() {
 
 }
 
-    
 
-void listar_cliente() {
-
-    Cliente *clt = (Cliente*) malloc(sizeof(Cliente));
-    FILE *arq_clientes = fopen("clientes.dat", "rb");
-    if (arq_clientes == NULL) {
-        printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
-        return; 
-    }
-    
-    char titulo[16] = "LISTAR CLIENTE";
-    func_Ani_Left(titulo);
-    printf("\n \n");
-    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        if (clt -> status == true) {
-            exibir_cliente(clt);
-        }
-    }
-    fclose(arq_clientes);
-    free(clt);
-    pausar();
-}
 
 
 
@@ -349,8 +327,8 @@ void cliente(){
         limparBuffer();
 
         switch (executar_C) {
-            case 1:
-                cadastrar_cliente();
+            case 1: 
+                cadastrar_cliente(); 
                 break;
             case 2:
                 pesquisar_cliente();
@@ -361,16 +339,12 @@ void cliente(){
             case 4:
                 excluir_cliente();
                 break;
-            case 5:
-                listar_cliente();
-                break;
-
             case 0:
                 break;
             
             default:
                 printf("\n \n");
-                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                printf("Valor inválido! Digite uma das opções acima.\n");
                 pausar();
                 break;
         }
