@@ -91,6 +91,7 @@ int ler_codigo(Dados_I *dados){
         printf("====================================\n"); 
         printf("|  INSIRA O CÓDIGO DO SHOW: ");
         ler_string(id_lido,5);
+        retira_char(id_lido,' ');
         if(converte_numero(id_lido) != SAIR){
             valida_ler_codigo(controle,id_lido);
             switch (controle ->error){
@@ -132,6 +133,7 @@ int ler_cadeira(Dados_I *dados){
         printf("====================================\n"); 
         printf("|  ESCOLHA SUA CADEIRA: ");
         ler_string(dados->cadeira,5);
+        retira_char(dados ->cadeira,' ');
         if(converte_numero(dados ->cadeira) != SAIR){
             valida_cadeira(dados ->cadeira,dados ->id_show,controle);
             switch (controle ->error){
@@ -173,19 +175,25 @@ int ler_cadeira(Dados_I *dados){
 
 
 
-void ler_nomeShow(char *nome){
+int ler_nome_show(char *nome){
+    limparTela();
+    char titulo[16] = "ATUALIZAR SHOW";
+    func_Ani_Left(titulo);
     printf("\n \n");
     printf("====================================\n"); 
     printf("|  INSIRA O NOME DO SHOW: ");
     ler_string(nome,32);
+    retira_char(nome,' ');
+    if(converte_numero(nome) == SAIR)return False;
+    return True;
 }
 
 
 
 void ler_DHD(Cabecalho *cabecalho){
+    int parar;
     Dados_Temp *inf;
     inf = (Dados_Temp *) malloc(sizeof(Dados_Temp));
-    int parar;
     parar = True;
     printf("====================================\n"); 
     while(parar){
@@ -212,6 +220,74 @@ void ler_DHD(Cabecalho *cabecalho){
     free(inf);
 }
 
+
+int ler_data(Cabecalho *cabecalho){
+    int saida;
+    char data[50];
+    SEP *controle;
+    controle = (SEP *) malloc(sizeof(SEP));
+    cabecalho ->DHD = listaChar(cabecalho ->DHD,"");
+
+    do{
+        limparTela();
+        char titulo[16] = "CADASTRAR SHOW";
+        func_Ani_Left(titulo);
+        printf("==================================================\n");
+        printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
+        ler_string(data,50);
+        retira_char(data,' ');
+        controle ->valida = False;
+        if(converte_numero(data) != SAIR && !(strcmp(data,"S") == 0 || strcmp(data,"s") == 0)){
+            valida_data(controle,data);
+            switch (controle ->error){
+                case 1:
+                printf("\n");
+                printf("FORMATO INVALIDO PARA DATA, INSIRA dia/mes/ano\n");
+                pausar();
+                break;
+                case 2:
+                printf("\n");
+                printf("FORMATO INVALIDO, LEMBRE-SE DE ADICIONAR AS BARRAS ");
+                pausar();
+                break;
+                case 3:
+                printf("\n");
+                printf("DIGITE APENAS NUMEROS NO ANO\n");
+                pausar();
+                break;
+                case 4:
+                printf("\n");
+                printf("DIGITE APENAS NUEMROS NO MES\n");
+                pausar();
+                break;
+                case 5:
+                printf("\n");
+                printf("MES INVALIDO, DIGITE APENAS DE 01 A 12\n");
+                pausar();
+                break;
+                case 6:
+                printf("\n");
+                printf("DIGITE APENAS NUMEROS NO DIA\n");
+                pausar();
+                break;
+                case 7:
+                printf("\n");
+                printf("DIA INVALIDO, DIGITE APENAS O DIAS CONRRESPONDENTES AO MES\n");
+                pausar();
+                break;
+                case 8:
+                printf("\n");
+                printf("LEMBRE QUE A ANO É BISSEXTO\n");
+                pausar();
+                break;
+            }
+        }
+        if(controle ->valida)listaChar(cabecalho ->DHD,data);
+    }while(!(strcmp(data,"S") == 0 || strcmp(data,"s") == 0) && !converte_numero(data) == SAIR && !(controle ->valida));
+    saida = controle ->valida;
+    free(controle);
+    return saida;
+}
 
 
 void ler_persona(Cabecalho *cabecalho){
@@ -268,6 +344,7 @@ int ler_cpf_show(Dados_I *dados){
         printf("=====================================================================\n"); 
         printf("|  INSIRA SEU CPF DE CADASTRO - SEM CPF DIGITE (C) PARA CADASTRAR-SE: ");
         ler_string(dados ->cpf, 20);
+        retira_char(dados ->cpf,' ');
         if(converte_numero(dados ->cpf) != SAIR){ 
             valida_cpf_show(controle,dados);
             switch (controle ->error){
@@ -330,6 +407,7 @@ int ler_escolha(char *texto){
     do{ 
         printf("%s - SIM(S)/NAO(N): ",texto);
         ler_string(escolha,4);
+        retira_char(escolha,' ');
         converte = converte_numero(escolha);
         if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
             saida = True;

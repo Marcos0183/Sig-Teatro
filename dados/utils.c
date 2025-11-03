@@ -76,9 +76,31 @@ void copia_carac_D3(char copiar[5][20][6],char copiado[5][20][6]){
 
 void ler_ate(char *palavra,char letra){
   for(int i = 0;i < strlen(palavra);i++){
-    if(palavra[i] == letra){
+    if(palavra[i] == letra){             //FUNÇÃO FEITA A PARTIR DO CHATGPT 4.0
        palavra[i] = '\0';
       break;
     }
   }
+}
+
+int conta_char(char *palavra, char letra){
+    int tam = strlen(palavra);
+    int cont = 0;
+    for(int i = 0; i < tam; i++){
+        if(palavra[i] == letra)cont++;
+    }
+    return cont;
+}
+
+void retira_char(char *palavra,char letra){
+    int aparece = conta_char(palavra,letra);
+    int tam = strlen(palavra);
+
+    for(int i = 0; i < aparece; i++){
+        char *x = strchr(palavra,letra);
+        int indice = x - palavra; 
+        for(int j = indice; j < tam; j++){
+            palavra[j] = palavra[j + 1];     // FUNÇÃO FEITA A PARTIR DO AUXÍLIO DO CHATGPT
+        }
+    }
 }

@@ -25,4 +25,6 @@ void valida_cpf_show(SEP *,Dados_I *);
 
 void valida_ler_codigo(SEP *,char *);
 
+int valida_data(SEP *,char *);
+
 #endif

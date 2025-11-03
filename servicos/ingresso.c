@@ -89,6 +89,7 @@ void excluir_Ingresso(){
     printf("-----------------------------------\n");
     printf("|  INSIRA O CODIGO DO INGRESSO: ");
     ler_string(id_lido,6);
+    retira_char(id_lido,' ');
     printf("-----------------------------------\n");
     }while(!valida_id(id_lido));
 
@@ -147,6 +148,7 @@ void pesquisar_Ingresso(){
     printf("-----------------------------------\n");
     printf("|  INSIRA O SEU CPF: ");
     ler_string(cpf_lido,20);
+    retira_char(cpf_lido,' ');
     printf("-----------------------------------\n\n");
 
     if(valida_cliente(cpf_lido) && valida_cpf(cpf_lido)){
