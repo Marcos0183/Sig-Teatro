@@ -100,7 +100,7 @@ int cpf_existente(char *cpf) {
     arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
         free(clt);
-        return true;
+        return true;            // arquivo vazio, CPF pode ser cadastrado
     }
 
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {        // Percorre o arquivo de clientes
