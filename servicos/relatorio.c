@@ -249,9 +249,23 @@ void listar_tecnicos_por_nome() {
 
 void listar_todos_tecnicos() {
     limparTela();
-    printf("Listando todos os técnicos...\n");
-    // Aqui você pode adicionar o código para listar todos os técnicos
+    char titulo[28] = "LISTANDO TODOS OS TÉCNICOS";
+    func_Ani_Left(titulo);
+    printf("\n");
+    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+    FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de técnicos.\n");
+        limparBuffer();
+        return;
+    }
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        exibir_tecnico(tec);
+    }
+    fclose(arq_tecnicos);
+    free(tec);
     pausar();
+
 }
 
 
