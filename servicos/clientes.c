@@ -29,8 +29,7 @@ void menu_cliente(){
         func_Ani(tempo_cliente);
         printf("║ ► 4. Excluir Cliente                             ║\n");
         func_Ani(tempo_cliente);
-        printf("║ ► 5. listar cliente                              ║\n");
-        func_Ani(tempo_cliente);
+        
         printf("║                                                  ║\n");
         func_Ani(tempo_cliente);
         printf("╠══════════════════════════════════════════════════╣\n");
@@ -315,30 +314,7 @@ void excluir_cliente() {
 
 }
 
-    
 
-void listar_cliente() {
-
-    Cliente *clt = (Cliente*) malloc(sizeof(Cliente));
-    FILE *arq_clientes = fopen("clientes.dat", "rb");
-    if (arq_clientes == NULL) {
-        printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
-        return; 
-    }
-    
-    char titulo[16] = "LISTAR CLIENTE";
-    func_Ani_Left(titulo);
-    printf("\n \n");
-    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        if (clt -> status == true) {
-            exibir_cliente(clt);
-        }
-    }
-    fclose(arq_clientes);
-    free(clt);
-    pausar();
-}
 
 
 
@@ -363,10 +339,6 @@ void cliente(){
             case 4:
                 excluir_cliente();
                 break;
-            case 5:
-                listar_cliente();
-                break;
-
             case 0:
                 break;
             
