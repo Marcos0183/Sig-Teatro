@@ -27,4 +27,8 @@ void valida_ler_codigo(SEP *,char *);
 
 int valida_data(SEP *,char *);
 
+int valida_hora(SEP *,char *);
+
+int valida_duracao(SEP *,char *);
+
 #endif

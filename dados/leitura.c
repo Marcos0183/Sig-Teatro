@@ -226,8 +226,7 @@ int ler_data(Cabecalho *cabecalho){
     char data[50];
     SEP *controle;
     controle = (SEP *) malloc(sizeof(SEP));
-    cabecalho ->DHD = listaChar(cabecalho ->DHD,"");
-
+    controle ->valida = False;
     do{
         limparTela();
         char titulo[16] = "CADASTRAR SHOW";
@@ -236,7 +235,6 @@ int ler_data(Cabecalho *cabecalho){
         printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
         ler_string(data,50);
         retira_char(data,' ');
-        controle ->valida = False;
         if(converte_numero(data) != SAIR && !(strcmp(data,"S") == 0 || strcmp(data,"s") == 0)){
             valida_data(controle,data);
             switch (controle ->error){
@@ -247,7 +245,7 @@ int ler_data(Cabecalho *cabecalho){
                 break;
                 case 2:
                 printf("\n");
-                printf("FORMATO INVALIDO, LEMBRE-SE DE ADICIONAR AS BARRAS ");
+                printf("FORMATO INVALIDO, LEMBRE-SE DE ADICIONAR AS BARRAS\n");
                 pausar();
                 break;
                 case 3:
@@ -282,12 +280,130 @@ int ler_data(Cabecalho *cabecalho){
                 break;
             }
         }
-        if(controle ->valida)listaChar(cabecalho ->DHD,data);
-    }while(!(strcmp(data,"S") == 0 || strcmp(data,"s") == 0) && !converte_numero(data) == SAIR && !(controle ->valida));
+    }while(!(strcmp(data,"S") == 0 || strcmp(data,"s") == 0) && converte_numero(data) != SAIR && !controle ->valida);
     saida = controle ->valida;
+    if(controle ->valida)listaChar(cabecalho ->DHD,data);
     free(controle);
     return saida;
 }
+
+
+
+int ler_hora(Cabecalho *cabecalho){ 
+    int saida;
+    char hora[50];
+    SEP *controle;
+    controle = (SEP *) malloc(sizeof(SEP));
+    controle ->valida = False;
+    do{ 
+        limparTela();
+        char titulo[16] = "CADASTRAR SHOW";
+        func_Ani_Left(titulo);
+        printf("==================================================\n");
+        printf("|   INSIRA A HORA DE INÍCIO DO SHOW: ");
+        ler_string(hora,50);
+        retira_char(hora,' ');
+        if(converte_numero(hora) != SAIR){
+            valida_hora(controle,hora);
+            switch(controle -> error){ 
+                case 1:
+                printf("\n");
+                printf("FORMATO INVALIDO PARA HORA, INSIRA hora:minuto\n");
+                pausar();
+                break;
+                case 2:
+                printf("\n");
+                printf("FORMATO INVALIDO PARA HORA, INSIRA O ':'\n");
+                pausar();
+                break;
+                case 3:
+                printf("\n");
+                printf("DIGITE APENAS NUMEROS EM HORAS\n");
+                pausar();
+                break;
+                case 4:
+                printf("\n");
+                printf("DIGITE APENAS DE 1 A 24 EM HORAS\n");
+                pausar();
+                break;
+                case 5:
+                printf("\n");
+                printf("DIGITE APENAS NUMEROS EM MINUTOS\n");
+                pausar();
+                break;
+                case 6:
+                printf("\n");
+                printf("DIGITE APENAS DE 1 A 59 EM MINUTOS\n");
+                pausar();
+                break;
+            }
+        }
+    }while(!controle ->valida && !converte_numero(hora) == SAIR);
+    saida = controle ->valida;
+    if(controle ->valida)listaChar(cabecalho ->DHD,hora);
+    free(controle);
+    return saida;
+}
+
+
+
+int ler_duracao(Cabecalho *cabecalho){
+    int saida;
+    char duracao[50];
+    SEP *controle;
+    controle = (SEP *) malloc(sizeof(SEP));
+    controle ->valida = False;
+    do{
+        limparTela();
+        char titulo[16] = "CADASTRAR SHOW";
+        func_Ani_Left(titulo);
+        printf("==================================================\n");
+        printf("|  INSIRA A DURAÇÃO DO SHOW : ");
+        ler_string(duracao,50);
+        retira_char(duracao,' ');
+        controle ->valida = False;
+        if(converte_numero(duracao) != SAIR){
+            valida_duracao(controle,duracao);
+             switch(controle -> error){ 
+                case 1:
+                printf("\n");
+                printf("FORMATO INVALIDO PARA HORA, INSIRA hora:minuto\n");
+                pausar();
+                break;
+                case 2:
+                printf("\n");
+                printf("FORMATO INVALIDO PARA HORA, INSIRA O ':'\n");
+                pausar();
+                break;
+                case 3:
+                printf("\n");
+                printf("DIGITE APENAS NUMEROS EM HORAS\n");
+                pausar();
+                break;
+                case 4:
+                printf("\n");
+                printf("DIGITE APENAS DE 1 A 5 EM HORAS\n");
+                pausar();
+                break;
+                case 5:
+                printf("\n");
+                printf("DIGITE APENAS NUMEROS EM MINUTOS\n");
+                pausar();
+                break;
+                case 6:
+                printf("\n");
+                printf("DIGITE APENAS DE 1 A 59 EM MINUTOS\n");
+                pausar();
+                break;
+            }  
+        }
+    }while(!controle ->valida && !converte_numero(duracao) == SAIR);
+    saida = controle ->valida;
+    if(controle ->valida)listaChar(cabecalho ->DHD,duracao);
+    free(controle);
+    return saida;
+}
+
 
 
 void ler_persona(Cabecalho *cabecalho){

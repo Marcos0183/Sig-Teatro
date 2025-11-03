@@ -435,3 +435,95 @@ int valida_data(SEP *controle,char *data){
  return controle ->valida;
 
 }
+
+
+
+int valida_hora(SEP * controle,char *hora){
+    int parar;
+    int converte;
+    char hora_f[5] = "";
+    char minuto[5] = "";
+   
+    parar = True;
+    controle ->error = 0;
+    controle ->valida = False;
+    if(strlen(hora) != 5){
+        parar = False;
+        controle ->error = 1; //Indicar formato invalido
+    }
+    if(parar && hora[2] != ':'){
+        parar = False;
+        controle ->error = 2;//INdicar formato invalido, colocar : para separar hora e 
+    }
+    if(parar && (isdigit(hora[0]) == 0 || isdigit(hora[1]) == 0)){
+        parar = False;
+        controle ->error = 3; //Indicar que a hora não é numero
+    }
+    if(parar){
+        converte = converte_numero(strncat(hora_f,&hora[0],2));
+        if(converte < 1 || converte > 24){
+            parar =  False;
+            controle ->error = 4;//Hora invalida, digite apenas entre 1 e 24
+        }
+    }
+    if(parar && (isdigit(hora[3]) == 0 || isdigit(hora[4]) == 0)){
+        parar = False;
+        controle ->error = 5; //Indicar que o minuto não é numero
+    }
+    if(parar){
+        converte = converte_numero(strncat(minuto,&hora[3],2));
+        if(converte < 0 || converte > 59){
+            parar =  False;
+            controle ->error = 6;//minutos invalido, digite apenas entre 1 e 59
+        }
+    }
+    if(parar)controle ->valida = True;
+
+ return controle ->valida;
+
+}
+
+
+int valida_duracao(SEP *controle,char *duracao){
+    int parar;
+    int converte;
+    char hora_f[5] = "";
+    char minuto[5] = "";
+   
+    parar = True;
+    controle ->error = 0;
+    controle ->valida = False;
+    if(strlen(duracao) != 4){
+        parar = False; //Indicar formato invalido
+    }
+    if(parar && duracao[1] != ':'){
+        parar = False;
+        controle ->error = 2;//INdicar formato invalido, colocar : para separar hora e 
+    }
+    if(parar && (isdigit(duracao[0]) == 0)){
+        parar = False;
+        controle ->error = 3; //Indicar que a hora não é numero
+    }
+    if(parar){
+        converte = converte_numero(strncat(hora_f,&duracao[0],1));
+        if(converte < 1 || converte > 4){
+            parar =  False;
+            controle ->error = 4;//Hora invalida, digite apenas entre 1 e 4
+        }
+    }
+    if(parar && (isdigit(duracao[2]) == 0 || isdigit(duracao[3]) == 0)){
+        parar = False;
+        controle ->error = 5; //Indicar que o minuto não é numero
+    }
+    if(parar){
+        converte = converte_numero(strncat(minuto,&duracao[2],2));
+        if(converte < 0 || converte > 59){
+            parar =  False;
+            controle ->error = 6;//minutos invalido, digite apenas entre 1 e 59
+        }
+    }
+    if(parar)controle ->valida = True;
+
+ return controle ->valida;
+
+}

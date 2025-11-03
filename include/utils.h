@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include <stdio.h>
-#define SAIR 00
+#define SAIR 0
 
 void limparBuffer();
 
