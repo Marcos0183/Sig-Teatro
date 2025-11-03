@@ -196,8 +196,23 @@ void listar_tecnicos_ativos() {
 
 void listar_tecnicos_inativos() {
     limparTela();
-    printf("Listando técnicos inativos...\n");
-    // Aqui você pode adicionar o código para listar os técnicos inativos
+    char titulo[30] = "LISTANDO TÉCNICOS INATIVOS";
+    func_Ani_Left(titulo);
+    printf("\n");
+    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+    FILE *arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de técnicos.\n");
+        limparBuffer();
+        return;
+    }
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if (tec -> status == false) {
+            exibir_tecnico(tec);
+        }
+    }
+    fclose(arq_tecnicos);
+    free(tec);
     pausar();
 }
 
@@ -205,8 +220,28 @@ void listar_tecnicos_inativos() {
 
 void listar_tecnicos_por_nome() {
     limparTela();
-    printf("Listando técnicos por nome...\n");
-    // Aqui você pode adicionar o código para listar os técnicos por nome
+    char nome_busca[50];
+    char titulo[30] = "LISTANDO TÉCNICOS POR NOME";
+    func_Ani_Left(titulo);
+    printf("\n");
+    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+
+    ler_nome(nome_busca);
+    limparTela();
+
+    FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de técnicos.\n");
+        limparBuffer();
+        return;
+    }
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if (strstr(tec->nome, nome_busca) != NULL) {
+            exibir_tecnico(tec);
+        }
+    }
+    fclose(arq_tecnicos);
+    free(tec);
     pausar();
 }
 
@@ -214,9 +249,23 @@ void listar_tecnicos_por_nome() {
 
 void listar_todos_tecnicos() {
     limparTela();
-    printf("Listando todos os técnicos...\n");
-    // Aqui você pode adicionar o código para listar todos os técnicos
+    char titulo[28] = "LISTANDO TODOS OS TÉCNICOS";
+    func_Ani_Left(titulo);
+    printf("\n");
+    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+    FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        printf("Erro ao abrir o arquivo de técnicos.\n");
+        limparBuffer();
+        return;
+    }
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        exibir_tecnico(tec);
+    }
+    fclose(arq_tecnicos);
+    free(tec);
     pausar();
+
 }
 
 
