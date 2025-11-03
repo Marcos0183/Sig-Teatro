@@ -29,7 +29,7 @@ void menu_cliente(){
         func_Ani(tempo_cliente);
         printf("║ ► 4. Excluir Cliente                             ║\n");
         func_Ani(tempo_cliente);
-        
+
         printf("║                                                  ║\n");
         func_Ani(tempo_cliente);
         printf("╠══════════════════════════════════════════════════╣\n");
@@ -344,7 +344,7 @@ void cliente(){
             
             default:
                 printf("\n \n");
-                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                printf("Valor inválido! Digite uma das opções acima.\n");
                 pausar();
                 break;
         }
