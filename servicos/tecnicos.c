@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 #include "tecnicos.h"
 #include "anima.h"
@@ -100,7 +99,7 @@ int cpf_existente_tec(char *cpf) {
      arq_tecnicos = fopen("tecnicos.dat", "rb");
     if (arq_tecnicos == NULL) {
         free(tec);
-        return true;
+        return true;    // Nenhum técnico ainda
     }
 
     while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {                 // Percorre todos os técnicos cadastrados
