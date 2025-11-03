@@ -21,4 +21,8 @@ void copia_carac_D3(char [5][20][6],char [5][20][6]);
 
 void ler_ate(char *,char);
 
+int conta_char(char *, char);
+
+void retira_char(char *,char);
+
 #endif

@@ -59,19 +59,28 @@ void menu_Shows(){
 }
 
 void cadastrar_Show(){
+    int parar;
     Cabecalho *cabecalho;
     cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
     cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
     cabecalho ->DHD = NULL;
     cabecalho ->persona = NULL;
-    char titulo[16] = "CADASTRAR SHOW";
-    func_Ani_Left(titulo);
 
-    ler_nomeShow(cabecalho ->dados ->nome); 
-    ler_DHD(cabecalho);
+    parar = ler_nome_show(cabecalho ->dados ->nome); 
+    if(parar){
+        do{ 
+        parar = ler_data(cabecalho);
+        if(parar){
+            
+        }
+        
+        //ler_DHD(cabecalho);
+        }while(!parar);
+    }
+
     ler_persona(cabecalho);
-    cabecalho ->dados ->id = id_show();
-    if(escolha_cad_show(cabecalho)){
+    if(parar && escolha_cad_show(cabecalho)){
+        cabecalho ->dados ->id = id_show();
         cabecalho ->arq_shows = fopen("arq_shows.dat","ab");
         cabecalho ->dados ->status = True;      
         cria_cadeiras(cabecalho ->dados ->id);
@@ -134,8 +143,6 @@ void atualizar_Show(){
     cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
     cabecalho ->DHD = NULL;
     cabecalho ->persona = NULL;
-    char titulo[16] = "ATUALIZAR SHOW";
-    func_Ani_Left(titulo);
     
     ler_id(&cabecalho ->id_lido);
     if(valida_show(cabecalho ->id_lido)){
@@ -143,7 +150,7 @@ void atualizar_Show(){
         if(cabecalho ->arq_shows == NULL)return;
         while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
             if(cabecalho ->id_lido == cabecalho ->dados ->id){
-                ler_nomeShow(cabecalho ->dados ->nome); 
+                ler_nome_show(cabecalho ->dados ->nome); 
                 ler_DHD(cabecalho);
                 ler_persona(cabecalho);
                 fseek(cabecalho ->arq_shows,-sizeof(Dados_S),SEEK_CUR);

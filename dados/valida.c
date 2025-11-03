@@ -7,6 +7,8 @@
 #include "leitura.h"
 #include "utils.h"
 #include "shows.h"
+#include <ctype.h>
+
 #define true 1
 #define false 0
 
@@ -340,4 +342,96 @@ void valida_ler_codigo(SEP *controle,char *id_lido){
         else{
             controle ->error = 2; //Id inválido
         }
+}
+
+
+
+int valida_data(SEP *controle,char *data){
+    int parar;
+    int max_dia;
+    int converte;
+    char dia[3] = "";
+    char mes[3] = "";
+    char ano[6] = "";
+    
+    controle ->valida = False;
+    controle ->error = 0;
+    parar = True;
+    if(strlen(data) < 10 || strlen(data) >10){
+        parar = False;
+        controle ->error = 1; //Indicar formato errado, fora do tamnho
+    }
+
+    if(parar && (data[2] != '/' || data[5] != '/')){
+        parar = False;
+        controle ->error = 2; //INidcar falta das barras para separar
+    }
+    else{
+        if(parar){ 
+            for(int i = 6; i < 10; i++){
+                if(isdigit(data[i]) == 0){
+                    parar = False;
+                    controle ->error = 3; //Indicar que os anos não sao numeros
+                    break;
+                }
+            }
+        }
+    }
+
+    if(parar){ 
+        converte = converte_numero(strcat(ano,&data[6]));
+        if((converte%4 == 0) || (converte%100 == 0 && converte%400 == 0)){
+            max_dia = 29;
+        }
+        else max_dia = 28;
+    }
+
+    if(parar && (isdigit(data[3]) == 0 || isdigit(data[4]) == 0)){
+        parar = False;
+        controle ->error = 4; //Indicar que o mes não é número;
+    }
+    else{
+        converte = converte_numero(strncat(mes,&data[3],2));
+    }
+
+    if(parar && (converte < 1 || converte > 12)){
+        parar = False;
+        controle ->error = 5; //Indicar que o mes não é valido;
+    }
+    else{
+        if(parar && (isdigit(data[0]) == 0 || isdigit(data[1]) == 0)){ //Verifica se os carateres do dia são realmente numeros;
+        parar = False;
+        controle ->error = 6; //Indicar que os dias não são numeros
+        }
+    }
+
+    if(parar){
+        if((converte == 1 || converte == 3 || converte == 5 || converte == 7 || converte == 8 || converte == 10 || converte == 12)){
+        converte = converte_numero(strncat(dia,&data[0],2));
+            if(converte < 1 || converte > 31){
+                parar = False;
+                controle ->error = 7; //Indicar que o dia não é valido
+            }
+        }
+        else if(converte == 2){
+            converte = converte_numero(strncat(dia,&data[0],2));
+            if(converte < 1 || converte > max_dia){
+                parar = False;
+                controle ->error = 8; //Lembre que é bissexto
+            }
+        }
+        else{
+            converte = converte_numero(strncat(dia,&data[0],2));
+            if(converte < 1 || converte > 30){
+                parar = False;
+                controle ->error = 7; //Indicar dia invalido
+            }  
+        }
+    }
+    if(parar){
+        controle ->valida = True;
+    }
+
+ return controle ->valida;
+
 }
