@@ -41,4 +41,8 @@ int ler_escolha(char *);
 
 int ler_data(Cabecalho *);
 
+int ler_hora(Cabecalho *);
+
+int ler_duracao(Cabecalho *);
+    
 #endif

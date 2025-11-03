@@ -65,19 +65,21 @@ void cadastrar_Show(){
     cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
     cabecalho ->DHD = NULL;
     cabecalho ->persona = NULL;
-
+    cabecalho ->DHD = listaChar(cabecalho ->DHD,"");
+    cabecalho ->persona = listaChar(cabecalho ->persona,"");
     parar = ler_nome_show(cabecalho ->dados ->nome); 
     if(parar){
         do{ 
         parar = ler_data(cabecalho);
         if(parar){
-            
+            parar = ler_hora(cabecalho);
+            if(!parar)break;
+            parar = ler_duracao(cabecalho);
+            if(!parar)break;
         }
-        
-        //ler_DHD(cabecalho);
-        }while(!parar);
+        }while(parar);
     }
-
+printf("%s",cabecalho ->DHD);pausar();
     ler_persona(cabecalho);
     if(parar && escolha_cad_show(cabecalho)){
         cabecalho ->dados ->id = id_show();
