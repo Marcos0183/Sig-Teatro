@@ -283,7 +283,7 @@ void excluir_cliente() {
         if ((strcmp(clt->cpf, cpf_lido) == 0) && (clt->status == true)) {
             limparTela();
             exibir_cliente(clt);
-            printf("Tem certeza que deseja excluir este técnico? (s/n): ");
+            printf("Tem certeza que deseja excluir este Cliente? (s/n): ");
             scanf(" %c", &confirm);                                             
             limparBuffer();
             if (confirm == 's' || confirm == 'S') {                               // Confirmação de exclusão
@@ -291,7 +291,7 @@ void excluir_cliente() {
                 clt->status = false;
                 fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);                 // Move o ponteiro de arquivo de volta para o início do registro do cliente
                 fwrite(clt, sizeof(Cliente), 1, arq_clientes);                   // Atualiza o registro do cliente no arquivo
-                printf("Técnico com CPF %s encontrado e excluido.\n", cpf_lido);
+                printf("Cliente com CPF %s encontrado e excluido.\n", cpf_lido);
             } else {                                                             // Cancelamento da exclusão
                 printf("Operação de exclusão cancelada.\n");
                 fclose(arq_clientes);
