@@ -29,8 +29,6 @@ void menu_Tecnicos(){
         func_Ani(tempo_Tecnicos);
         printf("║ ► 4. Excluir Técnico                             ║\n");
         func_Ani(tempo_Tecnicos);
-        printf("║ ► 5. Listar Técnico                              ║\n");
-        func_Ani(tempo_Tecnicos);
         printf("║                                                  ║\n");
         func_Ani(tempo_Tecnicos);
         printf("╠══════════════════════════════════════════════════╣\n");
@@ -92,32 +90,32 @@ int confirma_dados_tec(Tecnico *tec) {
 
 int cpf_existente_tec(char *cpf) {
     Tecnico* tec;
-    FILE *arq_clientes;
+    FILE *arq_tecnicos;
     tec = (Tecnico*) malloc(sizeof(Tecnico));
     if (tec == NULL) {
-        printf("Erro ao alocar memoria para o cliente.\n");
+        printf("Erro ao alocar memoria para o Tecnico.\n");
         return false;
     }
 
-    arq_clientes = fopen("tecnicos.dat", "rb");
-    if (arq_clientes == NULL) {
+     arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
         free(tec);
         return true;
     }
 
-    while (fread(tec, sizeof(Tecnico), 1, arq_clientes) == 1) {                 // Percorre todos os técnicos cadastrados
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {                 // Percorre todos os técnicos cadastrados
         if ((strcmp(tec->cpf, cpf) == 0) && (tec->status == true)) {            // Verifica se o CPF já existe
             printf("======================================================\n");
             printf("CPF já cadastrado. Por favor, insira um CPF diferente.\n");
             printf("operação cancelada.\n");
             printf("======================================================\n");
-            fclose(arq_clientes);
+            fclose(arq_tecnicos);
             free(tec);
             return false;
         }
     } 
 
-    fclose(arq_clientes);
+    fclose(arq_tecnicos);
     free(tec);
     return true;
 }
@@ -277,7 +275,7 @@ void excluir_Tecnico(){
 
     
     ler_cpf(cpf_lido);
-    printf("-----------------------------------\n");
+    printf("==================================\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "r+b");
     if (arq_tecnicos == NULL) {
@@ -309,6 +307,7 @@ void excluir_Tecnico(){
     }
 
     fclose(arq_tecnicos);
+    free(tec);
     
 
     if (!encontrado) {
@@ -319,36 +318,6 @@ void excluir_Tecnico(){
 
     pausar();
     
-}
-
-
-
-void listar_tecnicos() {
-    FILE *arq_tecnicos;
-    Tecnico* tec;
-    tec = (Tecnico*) malloc(sizeof(Tecnico));
-    if (tec == NULL) {
-        printf("Erro ao alocar memoria para o tecnico.\n");
-        return;
-    }
-    arq_tecnicos = fopen("tecnicos.dat", "rb");
-    if (arq_tecnicos == NULL) {
-        printf("Erro ao abrir o arquivo de tecnicos.\n");
-        limparBuffer();
-        return;   
-    }
-    char titulo[16] = "LISTAR TECNICO";
-    func_Ani_Left(titulo);
-    printf("\n \n");
-    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
-        if (tec -> status == true) {
-            exibir_tecnico(tec);
-        }
-    }
-    fclose(arq_tecnicos);
-    free(tec);
-    
-    pausar();
 }
 
 
@@ -379,16 +348,12 @@ void tecnicos(){
                 excluir_Tecnico();
                 break;
 
-            case 5:
-                listar_tecnicos();
-                break;
-
             case 0:
                 break;
                 
             default:
-                printf("\n \n");
-                printf("!VALOR INVALIDO, POR FAVOR INSERIR APENAS UM DOS VALORES ACIMA!\n");
+                printf("\n");
+                printf("Valor inválido! Digite uma das opções acima.\n");
                 pausar();
                 break;
             }
