@@ -8,7 +8,7 @@ int escolha_cad_show(Cabecalho *);
 
 void exibir_ingresso(Dados_I *,int);
 
-void exibir_inf_cadastro(Cabecalho *);
+void exibir_inf_cadastro(Cabecalho *,int);
 
 void pesquisa_show(Cabecalho *);
 

@@ -54,11 +54,11 @@ void exibir_ingresso(Dados_I *dados_I,int revelar){
     free(dados_S);
 }
 
-void exibir_inf_cadastro(Cabecalho *cabecalho){
+void exibir_inf_cadastro(Cabecalho *cabecalho,int revelar){
     printf("\n+---------------------------------------------------------------+\n");
     printf("|                     DADOS SO SHOW                             |\n");
     printf("+---------------------------------------------------------------+\n");   
-    printf("| ID       : %-50d |\n", cabecalho ->dados ->id);
+    if(revelar)printf("| ID       : %-50d |\n", cabecalho ->dados ->id);
     printf("| Nome     : %-50s |\n", cabecalho ->dados ->nome);
     printf("| DHD      : %-50s |\n", cabecalho ->DHD);
     printf("| Personagem : %-48s |\n", cabecalho ->persona);
@@ -71,18 +71,18 @@ int escolha_cad_show(Cabecalho *cabecalho){
     int parar;
     parar = True;
     while(parar){ 
-        exibir_inf_cadastro(cabecalho);
+        exibir_inf_cadastro(cabecalho,0);
         printf("CADASTRAR SHOW - SIM(S)/NAO(N): ");
         ler_string(escolha,2);
         if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
             saida = True;
             parar = False;
         }
-        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"N") == 0){
+        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"n") == 0){
             saida = False;
             parar = False;
         }
-        else printf("ESCOLHA APENAS S PARA SIM E N PARA NÃO\n");
+        else printf("ESCOLHA APENAS (S) PARA SIM E (N) PARA NÃO\n");
     }
     return saida;
 }
@@ -96,7 +96,7 @@ void pesquisa_show(Cabecalho *cabecalho){
             cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
             fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
             fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
-            exibir_inf_cadastro(cabecalho);
+            exibir_inf_cadastro(cabecalho,1);
             free(cabecalho ->DHD);
             free(cabecalho ->persona);
             cabecalho ->encontrado = False;
@@ -113,12 +113,12 @@ void pesquisa_show(Cabecalho *cabecalho){
 }
 
 void pesquisar_ingresso(Dados_I *dados,char *cpf_lido){
+    limparTela();
     FILE *arq_ingresso;
     arq_ingresso = fopen("arq_ingresso.dat","rb");
 
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(strcmp(dados ->cpf,cpf_lido) == 0 && dados ->status == True){
-            limparTela();
             exibir_ingresso(dados,True);
         }
     }

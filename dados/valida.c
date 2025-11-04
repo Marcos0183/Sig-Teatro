@@ -423,7 +423,7 @@ int valida_data(SEP *controle,char *data){
         else{
             converte = converte_numero(strncat(dia,&data[0],2));
             if(converte < 1 || converte > 30){
-                parar = False;
+                parar = True;
                 controle ->error = 7; //Indicar dia invalido
             }  
         }

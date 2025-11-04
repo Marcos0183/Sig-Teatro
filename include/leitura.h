@@ -21,9 +21,7 @@ int ler_cadeira(Dados_I *);
 
 int ler_nome_show(char *nome);
 
-void ler_DHD(Cabecalho *);
-
-void ler_persona(Cabecalho *);
+int ler_persona(Cabecalho *);
 
 void ler_nome(char *nome);
 

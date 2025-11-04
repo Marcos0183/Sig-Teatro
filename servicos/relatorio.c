@@ -26,7 +26,9 @@ void menu_relatorio(){
         func_Ani(tempo_relatorio);
         printf("║ ► 2. relatorio Técnicos                          ║\n");
         func_Ani(tempo_relatorio);
-        printf("║                                                  ║\n");
+        printf("║ ► 3. relatorio Shows/Espetaculos                 ║\n");
+        func_Ani(tempo_relatorio);
+        printf("║ ► 4. relatorio Ingressos                         ║\n");
         func_Ani(tempo_relatorio);
         printf("╠══════════════════════════════════════════════════╣\n");
         func_Ani(tempo_relatorio);

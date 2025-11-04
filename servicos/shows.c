@@ -65,23 +65,24 @@ void cadastrar_Show(){
     cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
     cabecalho ->DHD = NULL;
     cabecalho ->persona = NULL;
-    cabecalho ->DHD = listaChar(cabecalho ->DHD,"");
-    cabecalho ->persona = listaChar(cabecalho ->persona,"");
+    
     parar = ler_nome_show(cabecalho ->dados ->nome); 
     if(parar){
         do{ 
         parar = ler_data(cabecalho);
-        if(parar){
+        if(parar == 1){
             parar = ler_hora(cabecalho);
             if(!parar)break;
             parar = ler_duracao(cabecalho);
             if(!parar)break;
         }
-        }while(parar);
+        }while(parar && !(parar == 2));
     }
-printf("%s",cabecalho ->DHD);pausar();
-    ler_persona(cabecalho);
+    if(parar == 2)parar = ler_persona(cabecalho);
+
     if(parar && escolha_cad_show(cabecalho)){
+        cabecalho ->dados ->tam_personagem = strlen(cabecalho ->persona) + 1;
+        cabecalho ->dados ->tam_DHD = strlen(cabecalho ->DHD) + 1;
         cabecalho ->dados ->id = id_show();
         cabecalho ->arq_shows = fopen("arq_shows.dat","ab");
         cabecalho ->dados ->status = True;      
@@ -94,9 +95,11 @@ printf("%s",cabecalho ->DHD);pausar();
         free(cabecalho ->persona);
         free(cabecalho ->dados);
         free(cabecalho);
+        printf("\n\n");
         printf("SHOW CADASTRADO\n");
     }
     else{
+        printf("\n\n");
         printf("SHOW NÃO CADASTRADO\n");
     }     
     pausar();
@@ -145,6 +148,8 @@ void atualizar_Show(){
     cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
     cabecalho ->DHD = NULL;
     cabecalho ->persona = NULL;
+    cabecalho ->DHD = listaChar(cabecalho ->DHD,"");
+    cabecalho ->persona = listaChar(cabecalho ->persona,"");
     
     ler_id(&cabecalho ->id_lido);
     if(valida_show(cabecalho ->id_lido)){
@@ -153,7 +158,9 @@ void atualizar_Show(){
         while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
             if(cabecalho ->id_lido == cabecalho ->dados ->id){
                 ler_nome_show(cabecalho ->dados ->nome); 
-                ler_DHD(cabecalho);
+                ler_data(cabecalho);
+                ler_hora(cabecalho);
+                ler_duracao(cabecalho);
                 ler_persona(cabecalho);
                 fseek(cabecalho ->arq_shows,-sizeof(Dados_S),SEEK_CUR);
                 fwrite(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows);
