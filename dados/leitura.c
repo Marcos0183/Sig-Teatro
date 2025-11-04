@@ -177,48 +177,16 @@ int ler_cadeira(Dados_I *dados){
 
 int ler_nome_show(char *nome){
     limparTela();
-    char titulo[16] = "ATUALIZAR SHOW";
+    char titulo[16] = "CADASTRAR SHOW";
     func_Ani_Left(titulo);
     printf("\n \n");
     printf("====================================\n"); 
     printf("|  INSIRA O NOME DO SHOW: ");
     ler_string(nome,32);
-    retira_char(nome,' ');
     if(converte_numero(nome) == SAIR)return False;
     return True;
 }
 
-
-
-void ler_DHD(Cabecalho *cabecalho){
-    int parar;
-    Dados_Temp *inf;
-    inf = (Dados_Temp *) malloc(sizeof(Dados_Temp));
-    parar = True;
-    printf("====================================\n"); 
-    while(parar){
-        printf("|  INSIRA A DATA DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-        ler_string(inf ->data,12);
-
-        printf("====================================\n"); 
-        if(strcmp(inf ->data,"S") == 0 || strcmp(inf ->data,"s") == 0) parar = False;
-        else{
-            cabecalho ->DHD = listaChar(cabecalho ->DHD,inf ->data);
-
-            printf("|  INSIRA A HORA DE INÍCIO DO SHOW: ");
-            ler_string(inf ->hora,6);
-            printf("====================================\n"); 
-            listaChar(cabecalho ->DHD,inf ->hora);
-
-            printf("|  INSIRA A DURAÇÃO DO SHOW: ");
-            ler_string(inf ->duracao,5);
-            printf("====================================\n"); 
-            listaChar(cabecalho ->DHD,inf ->duracao);
-        }
-    }
-    cabecalho ->dados ->tam_DHD = strlen(cabecalho ->DHD) + 1;
-    free(inf);
-}
 
 
 int ler_data(Cabecalho *cabecalho){
@@ -227,6 +195,7 @@ int ler_data(Cabecalho *cabecalho){
     SEP *controle;
     controle = (SEP *) malloc(sizeof(SEP));
     controle ->valida = False;
+
     do{
         limparTela();
         char titulo[16] = "CADASTRAR SHOW";
@@ -281,8 +250,11 @@ int ler_data(Cabecalho *cabecalho){
             }
         }
     }while(!(strcmp(data,"S") == 0 || strcmp(data,"s") == 0) && converte_numero(data) != SAIR && !controle ->valida);
-    saida = controle ->valida;
-    if(controle ->valida)listaChar(cabecalho ->DHD,data);
+    if(strcmp(data,"S") == 0 || strcmp(data,"s") == 0){
+        saida = 2;
+    }
+    else saida = controle ->valida;
+    if(controle ->valida)cabecalho ->DHD = listaChar(cabecalho ->DHD,data);
     free(controle);
     return saida;
 }
@@ -340,7 +312,7 @@ int ler_hora(Cabecalho *cabecalho){
         }
     }while(!controle ->valida && !converte_numero(hora) == SAIR);
     saida = controle ->valida;
-    if(controle ->valida)listaChar(cabecalho ->DHD,hora);
+    if(controle ->valida)cabecalho ->DHD = listaChar(cabecalho ->DHD,hora);
     free(controle);
     return saida;
 }
@@ -361,10 +333,9 @@ int ler_duracao(Cabecalho *cabecalho){
         printf("|  INSIRA A DURAÇÃO DO SHOW : ");
         ler_string(duracao,50);
         retira_char(duracao,' ');
-        controle ->valida = False;
         if(converte_numero(duracao) != SAIR){
             valida_duracao(controle,duracao);
-             switch(controle -> error){ 
+             switch(controle ->error){ 
                 case 1:
                 printf("\n");
                 printf("FORMATO INVALIDO PARA HORA, INSIRA hora:minuto\n");
@@ -399,30 +370,49 @@ int ler_duracao(Cabecalho *cabecalho){
         }
     }while(!controle ->valida && !converte_numero(duracao) == SAIR);
     saida = controle ->valida;
-    if(controle ->valida)listaChar(cabecalho ->DHD,duracao);
+    if(controle ->valida)cabecalho ->DHD = listaChar(cabecalho ->DHD,duracao);
     free(controle);
     return saida;
 }
 
 
 
-void ler_persona(Cabecalho *cabecalho){
-    Dados_Temp *inf;
-    inf = (Dados_Temp *) malloc(sizeof(Dados_Temp));
+int ler_persona(Cabecalho *cabecalho){
+    int saida;
+    char nome[50];
     int parar;
+
+    saida = True;
     parar = True;
-    while(parar){
-        printf("|  INSIRA OS PERSONAGENS DO SHOW - DIGITE (S) PARA ENCERRAR: ");
-        ler_string(inf ->personagem,32);
-        printf("====================================\n"); 
-        if(strcmp(inf ->personagem,"S") == 0 || strcmp(inf ->personagem,"s") == 0) parar = False;
+    do{ 
+    limparTela();
+    char titulo[16] = "CADASTRAR SHOW";
+    func_Ani_Left(titulo);
+    printf("\n \n");
+    printf("================================================================\n"); 
+    printf("|  INSIRA O NOME DOS PERSONAGENS - DIGITE (S) PARA SAIR: ");
+    ler_string(nome,32);
+    retira_char(nome,' ');
+    if(converte_numero(nome) != SAIR && !(strcmp(nome,"S") == 0 || strcmp(nome,"s") == 0)){
+        cabecalho ->persona = listaChar(cabecalho ->persona,nome);
+    }
+    else if(strcmp(nome,"S") == 0 || strcmp(nome,"s") == 0){
+        if(strlen(cabecalho ->persona) < 2){
+            saida = False;
+            parar = False;
+        }
         else{
-            cabecalho ->persona = listaChar(cabecalho ->persona,inf ->personagem);
+            saida = True;
+            parar = False;
         }
     }
-    cabecalho ->dados ->tam_personagem = strlen(cabecalho ->persona) + 1;
-    free(inf);
+    else{
+        saida = False;
+        parar = False;
 
+    }
+    }while(parar);
+    return saida;
 }
 
 
