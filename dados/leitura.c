@@ -111,7 +111,7 @@ int ler_codigo(Dados_I *dados){
        if(controle ->valida){
         dados ->id_show = converte_numero(id_lido);
        } 
-    }while( !controle ->valida && !converte_numero(id_lido) == 00);
+    }while( !controle ->valida && !converte_numero(id_lido) == SAIR);
     saida = controle ->valida;
     free(controle);
     return saida;
