@@ -159,6 +159,7 @@ void pesquisar_Ingresso(){
         printf("INGRESSO NÃO ENCONTARDO\n\n");
     }
     pausar();
+    free(dados);
 }
 
 void ingresso(){
@@ -283,6 +284,7 @@ void exibir_cadeiras(int id_show){
 
      while(fread(assento,sizeof(Cadeiras),1,arq_cadeira) == 1 && parar){
         if(assento ->id == id_show){
+            parar = False;
             for(int i = 0; i < 5; i++){
                 printf("\n");
                 for(int p = 0;p < 110;p++){

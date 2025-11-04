@@ -25,4 +25,16 @@ void listar_tecnicos_por_nome();
 
 void listar_todos_tecnicos();
 
+void relatorio_shows();
+
+void listar_shows_ativos();
+
+void listar_shows_inativos();
+
+void relatorio_ingressos();
+
+void listar_ingressos_ativos();
+
+void listar_ingressos_inativos();
+
 #endif /* RELATORIO_H */

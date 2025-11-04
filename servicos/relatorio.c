@@ -7,6 +7,9 @@
 #include "utils.h"
 #include "tecnicos.h"
 #include "leitura.h"
+#include "shows.h"
+#include "ingresso.h"
+#include "pesquisa.h"
 #define true 1
 #define false 0
 
@@ -303,10 +306,187 @@ void relatorio_tecnico(){
 
 
 
+void listar_shows_ativos(){
+    Cabecalho *cabecalho;
+    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
+    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
+    char titulo[16] = "SHOWS AGENDADOS";
+    func_Ani_Left(titulo);
+
+    cabecalho ->encontrado = True;
+    cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
+    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
+        if(cabecalho ->dados ->status == True ){
+            cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
+            cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
+            fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
+            fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
+            exibir_inf_cadastro(cabecalho,1);
+            free(cabecalho ->DHD);
+            free(cabecalho ->persona);
+            cabecalho ->encontrado = False;
+        }
+        else{
+            fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
+        }
+    }
+    if(cabecalho ->encontrado)printf("SEM SHOWS AGENDADOS\n");
+    fclose(cabecalho ->arq_shows);
+    free(cabecalho ->dados);
+    free(cabecalho);
+    pausar();
+}
+
+
+
+void listar_shows_inativos(){
+    Cabecalho *cabecalho;
+    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
+    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
+    char titulo[20] = "SHOWS APRESENTADOS";
+    func_Ani_Left(titulo);
+
+    cabecalho ->encontrado = True;
+    cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
+    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
+        if(cabecalho ->dados ->status == False){
+            cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
+            cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
+            fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
+            fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
+            exibir_inf_cadastro(cabecalho,1);
+            free(cabecalho ->DHD);
+            free(cabecalho ->persona);
+            cabecalho ->encontrado = False;
+        }
+        else{
+            fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
+        }
+    }
+    if(cabecalho ->encontrado)printf("SEM SHOWS APRESENTADOS\n");
+    fclose(cabecalho ->arq_shows);
+    free(cabecalho ->dados);
+    free(cabecalho);
+    pausar();
+}
+
+
+
+void relatorio_shows(){ 
+    limparTela();
+    printf("╔══════════════════════════════════════════════════╗\n");
+    func_Ani(tempo_relatorio);
+    printf("║               RELATÓRIO DE SHOWS                 ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 1. Listar Shows Agendados                      ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 2. Listar Shows Apresentados                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 3. Listar Shows por Nome                       ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 4. listar todos os Shows                       ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 0. Voltar ao Menu Relatórios                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╚══════════════════════════════════════════════════╝\n");
+    func_Ani(tempo_relatorio);
+    printf("--> Digite a opção desejada: ");
+}
+
+
+
+void listar_ingressos_ativos(){
+    int achado;
+    Dados_I *dados;
+    dados = (Dados_I *) malloc(sizeof(Dados_I));
+    char titulo[19] = "INGRESSOS ATIVOS";
+    func_Ani_Left(titulo);
+
+
+    FILE *arq_ingresso;
+    arq_ingresso = fopen("arq_ingresso.dat","rb");
+    achado = True;
+    while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
+        if(dados ->status == True){
+            exibir_ingresso(dados,True);
+            achado = False;
+        }
+    }
+    if(achado)printf("SEM INGRESSOS COMPRADOS\n");
+    free(dados);
+}
+
+
+
+void listar_ingressos_inativos(){
+    int achado;
+    Dados_I *dados;
+    dados = (Dados_I *) malloc(sizeof(Dados_I));
+    char titulo[19] = "INGRESSOS ATIVOS";
+    func_Ani_Left(titulo);
+
+
+    FILE *arq_ingresso;
+    arq_ingresso = fopen("arq_ingresso.dat","rb");
+    achado = True;
+    while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
+        if(dados ->status == False){
+            exibir_ingresso(dados,True);
+            achado = False;
+        }
+    }
+    if(achado)printf("SEM INGRESSOS RASGADOS\n");
+    free(dados);
+
+}
+
+
+
+void relatorio_ingressos(){
+    limparTela();
+    printf("╔══════════════════════════════════════════════════╗\n");
+    func_Ani(tempo_relatorio);
+    printf("║               RELATÓRIO DE INGRESSOS             ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 1. Listar Igressos Comprados                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 2. Listar Ingressos Rasgados                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 3. Listar Ingressos por Show                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 4. listar Todos Ingresso Vendidos              ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 0. Voltar ao Menu Relatórios                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╚══════════════════════════════════════════════════╝\n");
+    func_Ani(tempo_relatorio);
+    printf("--> Digite a opção desejada: ");
+}
+
+
+
 void relatorio() {
     int executar_R;
     int opcao_tecnico;
     int opcao_cliente;
+    int opcao_show;
+    int opcao_ingresso;
 
     do {
         menu_relatorio();
@@ -361,7 +541,59 @@ void relatorio() {
                     }
                 } while (opcao_tecnico != 0);
                 break;
-
+            
+            case 3:
+                do{
+                    relatorio_shows();
+                    scanf(" %d", &opcao_show);
+                    limparBuffer();
+                    switch (opcao_show) {
+                        case 1:
+                            listar_shows_ativos();
+                            break;
+                        case 2:
+                            listar_shows_inativos();
+                            break;
+                        case 3:
+                            printf("Não Finalizado");
+                            pausar();
+                            break;
+                        case 4:
+                            printf("Não Finalizado");
+                            pausar();
+                            break;
+                        case 0:
+                            break; 
+                    }
+                }while(opcao_show != 0);
+            
+            case 4:
+                do{
+                    relatorio_ingressos();
+                    scanf(" %d", &opcao_ingresso);
+                    limparBuffer();
+                    switch (opcao_ingresso) {
+                        case 1:
+                            listar_ingressos_ativos();
+                            pausar();
+                            break;
+                        case 2:
+                            listar_ingressos_inativos();
+                            pausar();
+                            break;
+                        case 3:
+                            printf("Não Finalizado");
+                            pausar();
+                            break;
+                        case 4:
+                            printf("Não Finalizado");
+                            pausar();
+                            break;
+                        case 0:
+                            break; 
+                    }
+                }while(opcao_ingresso != 0);
+                
             case 0:
                 break;
 
