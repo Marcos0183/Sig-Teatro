@@ -27,7 +27,7 @@ O SIG-Theater (Sistema de Gestão Teatral) é uma solução de software desenvol
 git clone [url-do-repositorio]
 
 # Navegue até o diretório
-cd sig-massage
+cd Sig-Teatro
 
 # Compile o programa
 make
@@ -72,6 +72,7 @@ O uso, modificação ou redistribuição do código para fins comerciais é proi
     </td>
   </tr>
 </table>
+
 
 
 
