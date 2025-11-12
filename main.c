@@ -27,7 +27,7 @@ void menu_Principal() {
     func_Ani(tempo_Main);
     printf("║                                                  ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 1. Módulo clientes                             ║\n");
+    printf("║ ► 1. Módulo Clientes                             ║\n");
     func_Ani(tempo_Main);
     printf("║ ► 2. Módulo Ingressos                            ║\n");
     func_Ani(tempo_Main);
@@ -37,7 +37,7 @@ void menu_Principal() {
     func_Ani(tempo_Main);
     printf("║ ► 5. Módulo Relatórios                           ║\n");
     func_Ani(tempo_Main);
-    printf("║ ► 6. sobre o SIG-THEATER                         ║\n");
+    printf("║ ► 6. Sobre o SIG-THEATER                         ║\n");
     func_Ani(tempo_Main);
     printf("║ ► 7. Equipe SIG-THEATER                          ║\n");
     func_Ani(tempo_Main);
@@ -141,6 +141,9 @@ void equipe(){
     printf("             Aluno 2: Marcos Vinícius Dantas da Silva                    \n");
     func_Ani(tempo_Eq);
     printf("             Aluno 3: Felipe Eduardo Silva Fernandes                     \n");
+    func_Ani(tempo_Eq);
+    printf("             Aluno 4: Andriel Pereira Nogueira                           \n");
+    func_Ani(tempo_Eq);
     printf("\n");
     func_Ani(tempo_Eq);
     printf("#########################################################################\n");
