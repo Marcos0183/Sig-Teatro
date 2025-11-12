@@ -70,8 +70,15 @@ O uso, modificação ou redistribuição do código para fins comerciais é proi
       </a><br />
       <sub><b>Elidia Macedo</b></sub>
     </td>
+    <td align="center">
+      <a href="https://github.com/Andriel-Nogueira" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/218861002?v=4" width="100px;" alt="Andriel Nogueira" style="border-radius:50%;"/>
+      </a><br />
+      <sub><b>Andriel Nogueira</b></sub>
+    </td>
   </tr>
 </table>
+
 
 
 
