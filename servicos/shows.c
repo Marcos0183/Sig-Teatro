@@ -125,6 +125,7 @@ void excluir_Show(){
     
     encontrado = True;
     arq_shows = fopen("arq_shows.dat","r+b");
+    if(arq_shows == NULL)return;
     while(fread(dados,sizeof(Dados_S),1,arq_shows) == 1){
         if(id_lido == dados ->id && dados ->status == True){
             dados ->status = False;
@@ -139,7 +140,7 @@ void excluir_Show(){
     if(encontrado) printf("SHOW NÃO ENCONTRADO!\n");
     fclose(arq_shows);
     free(dados);
-    system("pause");  
+    pausar();  
 }
 
 void atualizar_Show(){
@@ -166,6 +167,7 @@ void atualizar_Show(){
                 fwrite(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows);
                 fwrite(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
                 fwrite(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
+                fclose(cabecalho ->arq_shows);
                 free(cabecalho ->DHD);
                 free(cabecalho ->persona);
                 printf("DADOS DE SHOW ALTERADO\n\n");
@@ -180,7 +182,6 @@ void atualizar_Show(){
         printf("SHOW NÃO ENCONTRADO\n\n");
         system("pause");
     } 
-    fclose(cabecalho ->arq_shows);
     free(cabecalho ->dados);
     free(cabecalho);
 }

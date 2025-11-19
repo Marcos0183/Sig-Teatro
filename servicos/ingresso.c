@@ -91,7 +91,7 @@ void excluir_Ingresso(){
     ler_string(id_lido,6);
     retira_char(id_lido,' ');
     printf("-----------------------------------\n");
-    }while(!valida_id(id_lido));
+    }while(!valida_id(id_lido) && !converte_numero(id_lido) == 0);
 
     arq_ingresso = fopen("arq_ingresso.dat","r+b");
     if(arq_ingresso == NULL)return;
@@ -114,25 +114,58 @@ void excluir_Ingresso(){
 }
 
 void atualizar_Ingresso(){
-    //int parar;
-    //parar = True;
-    // char id_lido[6];
-    // FILE *arq_ingresso;
-    // Dados_I *dados;
+    int parar =  True;
+    char id_lido[6];
+    FILE *arq_ingresso;
+    Dados_I *dados;
 
-    // dados = (Dados_I *) malloc(sizeof(Dados_I));
-    // char titulo[19] = "ATUALIZAR INGRESSO";
-    // func_Ani_Left(titulo);
+    dados = (Dados_I *) malloc(sizeof(Dados_I));
+    char titulo[19] = "ATUALIZAR INGRESSO";
+    func_Ani_Left(titulo);
+    do{ 
+        printf("\n \n");
+        printf("-----------------------------------\n");
+        printf("|  INSIRA O CODIGO DO INGRESSO: ");
+        ler_string(id_lido,6);
+        retira_char(id_lido,' ');
+        printf("-----------------------------------\n");
+        
+        arq_ingresso = fopen("arq_ingresso.dat","r+b");
+        if(arq_ingresso == NULL){
+            free(dados);
+            return;
+        }    
+        while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1 && parar){
+            if(converte_numero(id_lido) == dados ->id){
+                exibir_ingresso(dados,True);  
+                parar = False;
+            }
+        }
+    }while(parar);
     
-    // parar;
-    // do{ 
-    //     printf("\n \n");
-    //     printf("-----------------------------------\n");
-    //     printf("|  INSIRA O CODIGO DO INGRESSO: ");
-    //     ler_string(id_lido,6);
-    //     printf("-----------------------------------\n");
-    //     pausar();
-    // }while(parar);
+    char texto[] = "ATUALIZAR INGRESSO ";
+    if(!parar && ler_escolha(texto)){
+        parar = ler_cpf_show(dados);
+        if(parar){
+            parar = ler_codigo(dados);
+        }
+        if(parar){
+            parar = ler_cadeira(dados);
+        }
+        if(parar){
+            fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
+            vagar_cadeira(dados);
+            altera_cadeira(dados ->cadeira,dados ->id_show);
+            printf("INGRESSO ATUALIZADO\n");
+        }
+    }
+    else{
+        printf("\n\n");
+        printf("SHOW NÃO ENCONTRADO\n");
+        pausar();
+    }
+    fclose(arq_ingresso);
+    free(dados);
 }
 
 void pesquisar_Ingresso(){

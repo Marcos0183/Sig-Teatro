@@ -159,7 +159,7 @@ int ler_cadeira(Dados_I *dados){
                 break;
             }
         }
-    }while(!controle ->valida && !dados ->id_show == SAIR);
+    }while(!controle ->valida && !converte_numero(dados ->cadeira) == SAIR);
     if(controle ->valida){
         Mapeia *coord;
         coord = (Mapeia *) malloc(sizeof(Mapeia));
@@ -509,9 +509,9 @@ int ler_escolha(char *texto){
     int parar = False;
     int saida = False;
     int converte;
-    char escolha[4];
+    char escolha[50];
     do{ 
-        printf("%s - SIM(S)/NAO(N): ",texto);
+        printf("%s- SIM(S)/NAO(N): ",texto);
         ler_string(escolha,4);
         retira_char(escolha,' ');
         converte = converte_numero(escolha);
@@ -519,7 +519,7 @@ int ler_escolha(char *texto){
             saida = True;
             parar = True;
         }
-        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"N") == 0){
+        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"n") == 0){
             parar = True;
         }
         else if(converte == SAIR){
