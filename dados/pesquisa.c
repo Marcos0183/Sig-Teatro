@@ -56,7 +56,7 @@ void exibir_ingresso(Dados_I *dados_I,int revelar){
 
 void exibir_inf_cadastro(Cabecalho *cabecalho,int revelar){
     printf("\n+---------------------------------------------------------------+\n");
-    printf("|                     DADOS SO SHOW                             |\n");
+    printf("|                     DADOS DO SHOW                             |\n");
     printf("+---------------------------------------------------------------+\n");   
     if(revelar)printf("| ID       : %-50d |\n", cabecalho ->dados ->id);
     printf("| Nome     : %-50s |\n", cabecalho ->dados ->nome);
