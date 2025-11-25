@@ -90,35 +90,6 @@ void listar_clientes_inativos() {
 
 
 
-void listar_clientes_por_nome() {
-
-    limparTela();
-    char nome_busca[50];
-    char titulo[30] = "LISTANDO CLIENTES POR NOME";
-    func_Ani_Left(titulo);
-    printf("\n\n");
-    Cliente clt;
-
-    ler_nome(nome_busca);
-    limparTela();
-
-    FILE* arq_clientes = fopen("clientes.dat", "rb");
-    if (arq_clientes == NULL) {
-        printf("Erro ao abrir o arquivo de clientes.\n");
-        limparBuffer();
-        return;
-    }
-    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        if (strstr(clt.nome, nome_busca) != NULL) {
-            exibir_cliente(&clt);
-        }
-    }
-    fclose(arq_clientes);
-    pausar();
-}
-
-
-
 void listar_todos_clientes() {
     limparTela();
     char titulo[28] = "LISTANDO TODOS OS CLIENTES";
@@ -138,6 +109,56 @@ void listar_todos_clientes() {
     pausar();
 }
 
+NoCliente* carregar_clientes_ordenados() {
+    FILE* arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        return NULL;
+    }
+
+    NoCliente* lista = NULL;
+    Cliente clt;
+
+    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (clt.status == true) {
+            NoCliente* novo = (NoCliente*) malloc(sizeof(NoCliente));
+            novo->cliente = clt;
+
+            // Inserção ordenada
+            if (lista == NULL || strcmp(novo->cliente.nome, lista->cliente.nome) < 0) {
+                novo->prox = lista;
+                lista = novo;
+            } else {
+                NoCliente* atual = lista;
+                while (atual->prox != NULL && strcmp(novo->cliente.nome, atual->prox->cliente.nome) > 0) {
+                    atual = atual->prox;
+                }
+                novo->prox = atual->prox;
+                atual->prox = novo;
+            }
+        }
+    }
+    fclose(arq_clientes);
+    return lista;
+}
+
+void listar_clientes_ordenados_alfabeticamente() {
+    limparTela();
+    char titulo[40] = "CLIENTES ORDENADOS POR NOME";
+    func_Ani_Left(titulo);
+    printf("\n\n");
+
+    NoCliente* lista = carregar_clientes_ordenados();
+    NoCliente* p = lista;
+    while (p != NULL) {
+        exibir_cliente(&p->cliente);
+        NoCliente* temp = p;
+        p = p->prox;
+        free(temp); // Libera a memória do nó após exibi-lo
+    }
+
+    pausar();
+}
+
 
 
 void relatorio_cliente(){ 
@@ -154,7 +175,7 @@ void relatorio_cliente(){
     func_Ani(tempo_relatorio);
     printf("║ ► 2. Listar Clientes inativos                    ║\n");
     func_Ani(tempo_relatorio);
-    printf("║ ► 3. Listar clientes por nome                    ║\n");
+    printf("║ ► 3. Listar Clientes ordem alfabética            ║\n");
     func_Ani(tempo_relatorio);
     printf("║ ► 4. listar todos os clientes                    ║\n");
     func_Ani(tempo_relatorio);
@@ -175,21 +196,20 @@ void listar_tecnicos_ativos() {
     limparTela();
     char titulo[28] = "LISTANDO TÉCNICOS ATIVOS";
     func_Ani_Left(titulo);
-    printf("\n");
-    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+    printf("\n\n");
+    Tecnico tec;
     FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de técnicos.\n");
         limparBuffer();
         return;
     }
-    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
-        if (tec -> status == true) {
-            exibir_tecnico(tec);
+    while (fread(&tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if (tec.status == true) {
+            exibir_tecnico(&tec);
         }
     }
     fclose(arq_tecnicos);
-    free(tec);
     pausar();
 }
 
@@ -199,50 +219,20 @@ void listar_tecnicos_inativos() {
     limparTela();
     char titulo[30] = "LISTANDO TÉCNICOS INATIVOS";
     func_Ani_Left(titulo);
-    printf("\n");
-    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+    printf("\n\n");
+    Tecnico tec;
     FILE *arq_tecnicos = fopen("tecnicos.dat", "rb");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de técnicos.\n");
         limparBuffer();
         return;
     }
-    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
-        if (tec -> status == false) {
-            exibir_tecnico(tec);
+    while (fread(&tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if (tec.status == false) {
+            exibir_tecnico(&tec);
         }
     }
     fclose(arq_tecnicos);
-    free(tec);
-    pausar();
-}
-
-
-
-void listar_tecnicos_por_nome() {
-    limparTela();
-    char nome_busca[50];
-    char titulo[30] = "LISTANDO TÉCNICOS POR NOME";
-    func_Ani_Left(titulo);
-    printf("\n");
-    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
-
-    ler_nome(nome_busca);
-    limparTela();
-
-    FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
-    if (arq_tecnicos == NULL) {
-        printf("Erro ao abrir o arquivo de técnicos.\n");
-        limparBuffer();
-        return;
-    }
-    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
-        if (strstr(tec->nome, nome_busca) != NULL) {
-            exibir_tecnico(tec);
-        }
-    }
-    fclose(arq_tecnicos);
-    free(tec);
     pausar();
 }
 
@@ -252,23 +242,71 @@ void listar_todos_tecnicos() {
     limparTela();
     char titulo[28] = "LISTANDO TODOS OS TÉCNICOS";
     func_Ani_Left(titulo);
-    printf("\n");
-    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+    printf("\n\n");
+    Tecnico tec;
     FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
     if (arq_tecnicos == NULL) {
         printf("Erro ao abrir o arquivo de técnicos.\n");
         limparBuffer();
         return;
     }
-    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
-        exibir_tecnico(tec);
+    while (fread(&tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        exibir_tecnico(&tec);
     }
     fclose(arq_tecnicos);
-    free(tec);
     pausar();
 
 }
 
+NoTecnico* carregar_tecnicos_ordenados() {
+    FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        return NULL;
+    }
+
+    NoTecnico* lista = NULL;
+    Tecnico tec;
+
+    while (fread(&tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if (tec.status == true) {
+            NoTecnico* novo = (NoTecnico*) malloc(sizeof(NoTecnico));
+            novo->tecnico = tec;
+
+            // Inserção ordenada
+            if (lista == NULL || strcmp(novo->tecnico.nome, lista->tecnico.nome) < 0) {
+                novo->prox = lista;
+                lista = novo;
+            } else {
+                NoTecnico* atual = lista;
+                while (atual->prox != NULL && strcmp(novo->tecnico.nome, atual->prox->tecnico.nome) > 0) {
+                    atual = atual->prox;
+                }
+                novo->prox = atual->prox;
+                atual->prox = novo;
+            }
+        }
+    }
+    fclose(arq_tecnicos);
+    return lista;
+}
+
+void listar_tecnicos_ordenados_alfabeticamente() {
+    limparTela();
+    char titulo[40] = "TÉCNICOS ORDENADOS POR NOME";
+    func_Ani_Left(titulo);
+    printf("\n\n");
+
+    NoTecnico* lista = carregar_tecnicos_ordenados();
+    NoTecnico* p = lista;
+    while (p != NULL) {
+        exibir_tecnico(&p->tecnico);
+        NoTecnico* temp = p;
+        p = p->prox;
+        free(temp); // Libera a memória do nó após exibi-lo
+    }
+
+    pausar();
+}
 
 
 void relatorio_tecnico(){ 
@@ -285,7 +323,7 @@ void relatorio_tecnico(){
     func_Ani(tempo_relatorio);
     printf("║ ► 2. Listar Técnicos inativos                    ║\n");
     func_Ani(tempo_relatorio);
-    printf("║ ► 3. Listar Técnicos por nome                    ║\n");
+    printf("║ ► 3. Listar Técnicos por ordem alfabética        ║\n");
     func_Ani(tempo_relatorio);
     printf("║ ► 4. listar todos os Técnicos                    ║\n");
     func_Ani(tempo_relatorio);
@@ -503,7 +541,7 @@ void relatorio() {
                             listar_clientes_inativos();
                             break;
                         case 3:
-                            listar_clientes_por_nome();
+                            listar_clientes_ordenados_alfabeticamente();
                             break;
                         case 4:
                             listar_todos_clientes();
@@ -527,7 +565,7 @@ void relatorio() {
                             listar_tecnicos_inativos();
                             break;
                         case 3:
-                            listar_tecnicos_por_nome();
+                            listar_tecnicos_ordenados_alfabeticamente();
                             break;
                         case 4:
                             listar_todos_tecnicos();
@@ -562,6 +600,7 @@ void relatorio() {
                             break; 
                     }
                 }while(opcao_show != 0);
+                break;
             
             case 4:
                 do{
@@ -589,6 +628,7 @@ void relatorio() {
                             break; 
                     }
                 }while(opcao_ingresso != 0);
+                break;
                 
             case 0:
                 break;

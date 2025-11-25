@@ -11,7 +11,7 @@ void listar_clientes_ativos();
 
 void listar_clientes_inativos();
 
-void listar_clientes_por_nome();
+void listar_clientes_ordenados_alfabeticamente();
 
 void listar_todos_clientes();
 
@@ -21,7 +21,7 @@ void listar_tecnicos_ativos();
 
 void listar_tecnicos_inativos();
 
-void listar_tecnicos_por_nome();
+void listar_tecnicos_ordenados_alfabeticamente();
 
 void listar_todos_tecnicos();
 

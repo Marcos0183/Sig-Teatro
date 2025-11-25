@@ -10,6 +10,11 @@ typedef struct {
     int status;
 } Tecnico;
 
+typedef struct no_tecnico {
+    Tecnico tecnico;
+    struct no_tecnico *prox;
+} NoTecnico;
+
 void tecnicos();
 
 void menu_Tecnicos();
