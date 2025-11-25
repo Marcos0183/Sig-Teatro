@@ -42,8 +42,6 @@ void menu_relatorio(){
         printf("--> Digite a opção desejada: ");
 }
 
-
-
 void listar_clientes_ativos() {
     limparTela();
     char titulo[28] = "LISTANDO CLIENTES ATIVOS";
@@ -65,8 +63,6 @@ void listar_clientes_ativos() {
     pausar();
 }
 
-
-
 void listar_clientes_inativos() {
     limparTela();
     char titulo[30] = "LISTANDO CLIENTES INATIVOS";
@@ -87,8 +83,6 @@ void listar_clientes_inativos() {
     fclose(arq_clientes);
     pausar();
 }
-
-
 
 void listar_todos_clientes() {
     limparTela();
@@ -159,8 +153,6 @@ void listar_clientes_ordenados_alfabeticamente() {
     pausar();
 }
 
-
-
 void relatorio_cliente(){ 
     limparTela();
     printf("╔══════════════════════════════════════════════════╗\n");
@@ -190,8 +182,6 @@ void relatorio_cliente(){
     printf("--> Digite a opção desejada: ");
 }
 
-
-
 void listar_tecnicos_ativos() {
     limparTela();
     char titulo[28] = "LISTANDO TÉCNICOS ATIVOS";
@@ -213,8 +203,6 @@ void listar_tecnicos_ativos() {
     pausar();
 }
 
-
-
 void listar_tecnicos_inativos() {
     limparTela();
     char titulo[30] = "LISTANDO TÉCNICOS INATIVOS";
@@ -235,8 +223,6 @@ void listar_tecnicos_inativos() {
     fclose(arq_tecnicos);
     pausar();
 }
-
-
 
 void listar_todos_tecnicos() {
     limparTela();
@@ -308,7 +294,6 @@ void listar_tecnicos_ordenados_alfabeticamente() {
     pausar();
 }
 
-
 void relatorio_tecnico(){ 
     limparTela();
     printf("╔══════════════════════════════════════════════════╗\n");
@@ -338,7 +323,24 @@ void relatorio_tecnico(){
     printf("--> Digite a opção desejada: ");
 }
 
+//###########################################  FUNÇÕES DO MODO RELATÓRIO SHOWS  ###########################################################
 
+int contar_ingressos_por_show(int id_show) {
+    FILE* arq_ingresso = fopen("arq_ingresso.dat", "rb");
+    if (arq_ingresso == NULL) {
+        return 0;
+    }
+
+    Dados_I ingresso;
+    int contador = 0;
+    while (fread(&ingresso, sizeof(Dados_I), 1, arq_ingresso) == 1) {
+        if (ingresso.id_show == id_show && ingresso.status == true) {
+            contador++;
+        }
+    }
+    fclose(arq_ingresso);
+    return contador;
+}
 
 void listar_shows_ativos(){
     Cabecalho *cabecalho;
@@ -369,132 +371,6 @@ void listar_shows_ativos(){
     free(cabecalho ->dados);
     free(cabecalho);
     pausar();
-}
-
-
-
-void listar_shows_inativos(){
-    Cabecalho *cabecalho;
-    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
-    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
-    char titulo[20] = "SHOWS APRESENTADOS";
-    func_Ani_Left(titulo);
-
-    cabecalho ->encontrado = True;
-    cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
-    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
-        if(cabecalho ->dados ->status == False){
-            cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
-            cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
-            fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
-            fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
-            exibir_inf_cadastro(cabecalho,1);
-            free(cabecalho ->DHD);
-            free(cabecalho ->persona);
-            cabecalho ->encontrado = False;
-        }
-        else{
-            fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
-        }
-    }
-    if(cabecalho ->encontrado)printf("SEM SHOWS APRESENTADOS\n");
-    fclose(cabecalho ->arq_shows);
-    free(cabecalho ->dados);
-    free(cabecalho);
-    pausar();
-}
-
-
-
-void relatorio_shows(){ 
-    limparTela();
-    printf("╔══════════════════════════════════════════════════╗\n");
-    func_Ani(tempo_relatorio);
-    printf("║               RELATÓRIO DE SHOWS                 ║\n");
-    func_Ani(tempo_relatorio);
-    printf("╠══════════════════════════════════════════════════╣\n");
-    func_Ani(tempo_relatorio);
-    printf("║                                                  ║\n");
-    func_Ani(tempo_relatorio);
-    printf("║ ► 1. Listar Shows Agendados                      ║\n");
-    func_Ani(tempo_relatorio);
-    printf("║ ► 2. Relatório de Ocupação                       ║\n");
-    func_Ani(tempo_relatorio);
-    printf("║ ► 3. Listar Shows Apresentados                   ║\n");
-    func_Ani(tempo_relatorio);
-    printf("║                                                  ║\n");
-    func_Ani(tempo_relatorio);
-    printf("╠══════════════════════════════════════════════════╣\n");
-    func_Ani(tempo_relatorio);
-    printf("║ ► 0. Voltar ao Menu Relatórios                   ║\n");
-    func_Ani(tempo_relatorio);
-    printf("╚══════════════════════════════════════════════════╝\n");
-    func_Ani(tempo_relatorio);
-    printf("--> Digite a opção desejada: ");
-}
-
-int contar_ingressos_por_cpf(const char* cpf) {
-    FILE* arq_ingresso = fopen("arq_ingresso.dat", "rb");
-    if (arq_ingresso == NULL) {
-        return 0;
-    }
-
-    Dados_I ingresso;
-    int contador = 0;
-    while (fread(&ingresso, sizeof(Dados_I), 1, arq_ingresso) == 1) {
-        if (strcmp(ingresso.cpf, cpf) == 0 && ingresso.status == true) {
-            contador++;
-        }
-    }
-    fclose(arq_ingresso);
-    return contador;
-}
-
-void relatorio_resumo_compras_cliente() {
-    limparTela();
-    char titulo[] = "RESUMO DE COMPRAS POR CLIENTE";
-    func_Ani_Left(titulo);
-    printf("\n\n");
-
-    FILE* arq_clientes = fopen("clientes.dat", "rb");
-    if (arq_clientes == NULL) {
-        printf("Nenhum cliente cadastrado.\n");
-        pausar();
-        return;
-    }
-
-    printf("╔══════════════════════════════════════════════════════════════════════════════════╗\n");
-    printf("║ %-50s │ %-20s ║\n", "NOME DO CLIENTE", "INGRESSOS COMPRADOS");
-    printf("╠══════════════════════════════════════════════════════════╧════════════════════════╣\n");
-
-    Cliente clt;
-    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        if (clt.status == true) {
-            int num_ingressos = contar_ingressos_por_cpf(clt.cpf);
-            printf("║ %-50s │ %-20d ║\n", clt.nome, num_ingressos);
-        }
-    }
-
-    printf("╚══════════════════════════════════════════════════════════════════════════════════╝\n");
-    fclose(arq_clientes);
-    pausar();
-}
-
-int contar_ingressos_por_show(int id_show) {
-    FILE* arq_ingresso = fopen("arq_ingresso.dat", "rb");
-    if (arq_ingresso == NULL) {
-        return 0;
-    }
-
-    Dados_I ingresso;
-    int contador = 0;
-    while (fread(&ingresso, sizeof(Dados_I), 1, arq_ingresso) == 1) {
-        if (ingresso.id_show == id_show && ingresso.status == true) {
-            contador++;
-        }
-    }
-    fclose(arq_ingresso);
-    return contador;
 }
 
 void relatorio_ocupacao_shows() {
@@ -535,6 +411,83 @@ void relatorio_ocupacao_shows() {
     pausar();
 }
 
+void listar_shows_inativos(){
+    Cabecalho *cabecalho;
+    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
+    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
+    char titulo[20] = "SHOWS APRESENTADOS";
+    func_Ani_Left(titulo);
+
+    cabecalho ->encontrado = True;
+    cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
+    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
+        if(cabecalho ->dados ->status == False){
+            cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
+            cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
+            fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
+            fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
+            exibir_inf_cadastro(cabecalho,1);
+            free(cabecalho ->DHD);
+            free(cabecalho ->persona);
+            cabecalho ->encontrado = False;
+        }
+        else{
+            fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
+        }
+    }
+    if(cabecalho ->encontrado)printf("SEM SHOWS APRESENTADOS\n");
+    fclose(cabecalho ->arq_shows);
+    free(cabecalho ->dados);
+    free(cabecalho);
+    pausar();
+}
+
+void relatorio_shows(){ 
+    limparTela();
+    printf("╔══════════════════════════════════════════════════╗\n");
+    func_Ani(tempo_relatorio);
+    printf("║               RELATÓRIO DE SHOWS                 ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 1. Listar Shows Agendados                      ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 2. Relatório de Ocupação                       ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 3. Listar Shows Apresentados                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("║                                                  ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╠══════════════════════════════════════════════════╣\n");
+    func_Ani(tempo_relatorio);
+    printf("║ ► 0. Voltar ao Menu Relatórios                   ║\n");
+    func_Ani(tempo_relatorio);
+    printf("╚══════════════════════════════════════════════════╝\n");
+    func_Ani(tempo_relatorio);
+    printf("--> Digite a opção desejada: ");
+}
+
+//########################################  FUNÇÕES DO MODO RELATÓRIO INGRESSO  ###########################################################
+
+int contar_ingressos_por_cpf(const char* cpf) {
+    FILE* arq_ingresso = fopen("arq_ingresso.dat", "rb");
+    if (arq_ingresso == NULL) {
+        return 0;
+    }
+
+    Dados_I ingresso;
+    int contador = 0;
+    while (fread(&ingresso, sizeof(Dados_I), 1, arq_ingresso) == 1) {
+        if (strcmp(ingresso.cpf, cpf) == 0 && ingresso.status == true) {
+            contador++;
+        }
+    }
+    fclose(arq_ingresso);
+    return contador;
+}
+
 void exibir_ingresso_com_nome_cliente(Dados_I* ingresso) {
     Cliente* clt = buscar_cliente_por_cpf(ingresso->cpf);
     char nome_cliente[51] = "Cliente não encontrado";
@@ -565,9 +518,14 @@ void listar_ingressos_ativos(){
     FILE *arq_ingresso;
     arq_ingresso = fopen("arq_ingresso.dat","rb");
     achado = True;
+
+    printf("\n\n");
+    printf("-------------------------------------------------------------------------------------------------------------------------\n");
+    printf("|CPF             |CLIENTE                                        |SHOW_ID                                |CADEIRA  |ID  |\n ");
+    printf("-------------------------------------------------------------------------------------------------------------------------\n");
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(dados ->status == True){
-            exibir_ingresso_com_nome_cliente(dados);
+            exibir_rel_ingresso(dados);
             achado = False;
         }
     }
@@ -576,7 +534,35 @@ void listar_ingressos_ativos(){
     free(dados);
 }
 
+void relatorio_resumo_compras_cliente() {
+    limparTela();
+    char titulo[] = "RESUMO DE COMPRAS POR CLIENTE";
+    func_Ani_Left(titulo);
+    printf("\n\n");
 
+    FILE* arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        printf("Nenhum cliente cadastrado.\n");
+        pausar();
+        return;
+    }
+
+    printf("╔══════════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║ %-50s │ %-20s ║\n", "NOME DO CLIENTE", "INGRESSOS COMPRADOS");
+    printf("╠══════════════════════════════════════════════════════════╧════════════════════════╣\n");
+
+    Cliente clt;
+    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (clt.status == true) {
+            int num_ingressos = contar_ingressos_por_cpf(clt.cpf);
+            printf("║ %-50s │ %-20d ║\n", clt.nome, num_ingressos);
+        }
+    }
+
+    printf("╚══════════════════════════════════════════════════════════════════════════════════╝\n");
+    fclose(arq_clientes);
+    pausar();
+}
 
 void listar_ingressos_inativos(){
     int achado;
@@ -599,8 +585,6 @@ void listar_ingressos_inativos(){
     free(dados);
 
 }
-
-
 
 void relatorio_ingressos(){
     limparTela();
@@ -630,7 +614,7 @@ void relatorio_ingressos(){
 }
 
 
-
+//ESCOLHA DOS MODULOS
 void relatorio() {
     int executar_R;
     int opcao_tecnico;

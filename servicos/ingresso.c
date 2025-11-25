@@ -60,6 +60,7 @@ void vender_Ingresso(){
     if(arq_ingresso == NULL)return;
 
     char texto[] = "COMPRAR INGRESSO";
+    limparTela();
     if(parar)exibir_ingresso(dados,False);
     if(parar && ler_escolha(texto)){
         dados ->id = id_ingresso();

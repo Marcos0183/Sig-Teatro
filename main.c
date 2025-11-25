@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
-#include <unistd.h>
 #include "anima.h"
 #include "ingresso.h"
 #include "tecnicos.h"
@@ -185,7 +184,7 @@ int main(void) {
         limparTela();
         if (!banner_mostrado) {
             mostrar_banner();
-            usleep(2000000);
+            func_Ani(2000000);
             limparTela();
             banner_mostrado = 1; 
         }
