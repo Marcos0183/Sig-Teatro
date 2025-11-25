@@ -30,4 +30,6 @@ void listar_cliente();
 
 void exibir_cliente(Cliente* clt);
 
+Cliente* buscar_cliente_por_cpf(const char* cpf);
+
 #endif

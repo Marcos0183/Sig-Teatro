@@ -350,3 +350,22 @@ void cliente(){
         }
     } while (executar_C != 0);        
 }
+
+Cliente* buscar_cliente_por_cpf(const char* cpf) {
+    FILE* arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        return NULL;
+    }
+
+    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
+    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (strcmp(clt->cpf, cpf) == 0 && clt->status == true) {
+            fclose(arq_clientes);
+            return clt;
+        }
+    }
+
+    fclose(arq_clientes);
+    free(clt);
+    return NULL;
+}

@@ -435,26 +435,44 @@ void relatorio_shows(){
     printf("--> Digite a opção desejada: ");
 }
 
+void exibir_ingresso_com_nome_cliente(Dados_I* ingresso) {
+    Cliente* clt = buscar_cliente_por_cpf(ingresso->cpf);
+    char nome_cliente[51] = "Cliente não encontrado";
 
+    if (clt != NULL) {
+        strncpy(nome_cliente, clt->nome, 50);
+        nome_cliente[50] = '\0'; // Garante terminação nula
+        free(clt);
+    }
+
+    printf("\n+---------------------------------------------------------------+\n");
+    printf("| ID do Ingresso: %-45d |\n", ingresso->id);
+    printf("+---------------------------------------------------------------+\n");
+    printf("| Cliente  : %-50s |\n", nome_cliente);
+    printf("| ID do Show : %-50d |\n", ingresso->id_show);
+    printf("| Cadeira    : %-50s |\n", ingresso->cadeira);
+    printf("+---------------------------------------------------------------+\n");
+}
 
 void listar_ingressos_ativos(){
     int achado;
     Dados_I *dados;
     dados = (Dados_I *) malloc(sizeof(Dados_I));
-    char titulo[19] = "INGRESSOS ATIVOS";
+    char titulo[22] = "INGRESSOS COMPRADOS";
     func_Ani_Left(titulo);
-
+    printf("\n");
 
     FILE *arq_ingresso;
     arq_ingresso = fopen("arq_ingresso.dat","rb");
     achado = True;
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(dados ->status == True){
-            exibir_ingresso(dados,True);
+            exibir_ingresso_com_nome_cliente(dados);
             achado = False;
         }
     }
     if(achado)printf("SEM INGRESSOS COMPRADOS\n");
+    fclose(arq_ingresso);
     free(dados);
 }
 
