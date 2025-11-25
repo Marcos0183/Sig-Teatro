@@ -48,21 +48,20 @@ void listar_clientes_ativos() {
     limparTela();
     char titulo[28] = "LISTANDO CLIENTES ATIVOS";
     func_Ani_Left(titulo);
-    printf("\n \n");
-    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
+    printf("\n\n");
+    Cliente clt;
     FILE* arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
         limparBuffer();
         return;
     }
-    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        if (clt -> status == true) {
-            exibir_cliente(clt);
+    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (clt.status == true) {
+            exibir_cliente(&clt);
         }
     }
     fclose(arq_clientes);
-    free(clt);
     pausar();
 }
 
@@ -72,21 +71,20 @@ void listar_clientes_inativos() {
     limparTela();
     char titulo[30] = "LISTANDO CLIENTES INATIVOS";
     func_Ani_Left(titulo);
-    printf("\n \n");
-    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
+    printf("\n\n");
+    Cliente clt;
     FILE *arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
         limparBuffer();
         return;
     }
-    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        if (clt -> status == false) {
-            exibir_cliente(clt);
+    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (clt.status == false) {
+            exibir_cliente(&clt);
         }
     }
     fclose(arq_clientes);
-    free(clt);
     pausar();
 }
 
@@ -98,8 +96,8 @@ void listar_clientes_por_nome() {
     char nome_busca[50];
     char titulo[30] = "LISTANDO CLIENTES POR NOME";
     func_Ani_Left(titulo);
-    printf("\n \n");
-    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
+    printf("\n\n");
+    Cliente clt;
 
     ler_nome(nome_busca);
     limparTela();
@@ -110,13 +108,12 @@ void listar_clientes_por_nome() {
         limparBuffer();
         return;
     }
-    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        if (strstr(clt->nome, nome_busca) != NULL) {
-            exibir_cliente(clt);
+    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (strstr(clt.nome, nome_busca) != NULL) {
+            exibir_cliente(&clt);
         }
     }
     fclose(arq_clientes);
-    free(clt);
     pausar();
 }
 
@@ -126,19 +123,18 @@ void listar_todos_clientes() {
     limparTela();
     char titulo[28] = "LISTANDO TODOS OS CLIENTES";
     func_Ani_Left(titulo);
-    printf("\n \n");
-    Cliente* clt = (Cliente*) malloc(sizeof(Cliente));
+    printf("\n\n");
+    Cliente clt;
     FILE* arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
         printf("Erro ao abrir o arquivo de clientes.\n");
         limparBuffer();
         return;
     }
-    while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {
-        exibir_cliente(clt);
+    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        exibir_cliente(&clt);
     }
     fclose(arq_clientes);
-    free(clt);
     pausar();
 }
 
