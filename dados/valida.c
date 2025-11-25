@@ -493,8 +493,9 @@ int valida_duracao(SEP *controle,char *duracao){
     parar = True;
     controle ->error = 0;
     controle ->valida = False;
-    if(strlen(duracao) != 4){
-        parar = False; //Indicar formato invalido
+    if(strlen(duracao) < 4 || strlen(duracao) > 5){
+        parar = False;
+        controle ->error = 1; //Indicar formato invalido
     }
     if(parar && duracao[1] != ':'){
         parar = False;
@@ -506,9 +507,9 @@ int valida_duracao(SEP *controle,char *duracao){
     }
     if(parar){
         converte = converte_numero(strncat(hora_f,&duracao[0],1));
-        if(converte < 1 || converte > 4){
+        if(converte < 0 || converte > 5){ // Permitindo até 5 horas
             parar =  False;
-            controle ->error = 4;//Hora invalida, digite apenas entre 1 e 4
+            controle ->error = 4;//Hora invalida, digite apenas entre 0 e 5
         }
     }
     if(parar && (isdigit(duracao[2]) == 0 || isdigit(duracao[3]) == 0)){

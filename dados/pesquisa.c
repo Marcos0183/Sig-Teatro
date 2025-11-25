@@ -108,7 +108,6 @@ void pesquisa_show(Cabecalho *cabecalho){
     if(cabecalho ->encontrado)printf("SHOW NÃO ENCONTRADO!\n");
     fclose(cabecalho ->arq_shows);
     free(cabecalho ->dados);
-    free(cabecalho);
     pausar();
 }
 
