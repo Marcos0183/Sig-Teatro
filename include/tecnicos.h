@@ -33,4 +33,6 @@ void exibir_tecnico(Tecnico* tec);
 
 int cpf_existente_tec(char *cpf);
 
+Tecnico* buscar_tecnico_por_cpf(const char* cpf);
+
 #endif

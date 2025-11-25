@@ -37,4 +37,14 @@ void listar_ingressos_ativos();
 
 void listar_ingressos_inativos();
 
+void relatorio_ocupacao_shows();
+
+void relatorio_shows_por_tecnico();
+
+void relatorio_resumo_compras_cliente();
+
+void relatorio_resumo_compras_cliente();
+
+void relatorio_ocupacao_shows();
+
 #endif /* RELATORIO_H */

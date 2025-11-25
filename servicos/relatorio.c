@@ -418,11 +418,9 @@ void relatorio_shows(){
     func_Ani(tempo_relatorio);
     printf("║ ► 1. Listar Shows Agendados                      ║\n");
     func_Ani(tempo_relatorio);
-    printf("║ ► 2. Listar Shows Apresentados                   ║\n");
+    printf("║ ► 2. Relatório de Ocupação                       ║\n");
     func_Ani(tempo_relatorio);
-    printf("║ ► 3. Listar Shows por Nome                       ║\n");
-    func_Ani(tempo_relatorio);
-    printf("║ ► 4. listar todos os Shows                       ║\n");
+    printf("║ ► 3. Listar Shows Apresentados                   ║\n");
     func_Ani(tempo_relatorio);
     printf("║                                                  ║\n");
     func_Ani(tempo_relatorio);
@@ -433,6 +431,108 @@ void relatorio_shows(){
     printf("╚══════════════════════════════════════════════════╝\n");
     func_Ani(tempo_relatorio);
     printf("--> Digite a opção desejada: ");
+}
+
+int contar_ingressos_por_cpf(const char* cpf) {
+    FILE* arq_ingresso = fopen("arq_ingresso.dat", "rb");
+    if (arq_ingresso == NULL) {
+        return 0;
+    }
+
+    Dados_I ingresso;
+    int contador = 0;
+    while (fread(&ingresso, sizeof(Dados_I), 1, arq_ingresso) == 1) {
+        if (strcmp(ingresso.cpf, cpf) == 0 && ingresso.status == true) {
+            contador++;
+        }
+    }
+    fclose(arq_ingresso);
+    return contador;
+}
+
+void relatorio_resumo_compras_cliente() {
+    limparTela();
+    char titulo[] = "RESUMO DE COMPRAS POR CLIENTE";
+    func_Ani_Left(titulo);
+    printf("\n\n");
+
+    FILE* arq_clientes = fopen("clientes.dat", "rb");
+    if (arq_clientes == NULL) {
+        printf("Nenhum cliente cadastrado.\n");
+        pausar();
+        return;
+    }
+
+    printf("╔══════════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║ %-50s │ %-20s ║\n", "NOME DO CLIENTE", "INGRESSOS COMPRADOS");
+    printf("╠══════════════════════════════════════════════════════════╧════════════════════════╣\n");
+
+    Cliente clt;
+    while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
+        if (clt.status == true) {
+            int num_ingressos = contar_ingressos_por_cpf(clt.cpf);
+            printf("║ %-50s │ %-20d ║\n", clt.nome, num_ingressos);
+        }
+    }
+
+    printf("╚══════════════════════════════════════════════════════════════════════════════════╝\n");
+    fclose(arq_clientes);
+    pausar();
+}
+
+int contar_ingressos_por_show(int id_show) {
+    FILE* arq_ingresso = fopen("arq_ingresso.dat", "rb");
+    if (arq_ingresso == NULL) {
+        return 0;
+    }
+
+    Dados_I ingresso;
+    int contador = 0;
+    while (fread(&ingresso, sizeof(Dados_I), 1, arq_ingresso) == 1) {
+        if (ingresso.id_show == id_show && ingresso.status == true) {
+            contador++;
+        }
+    }
+    fclose(arq_ingresso);
+    return contador;
+}
+
+void relatorio_ocupacao_shows() {
+    limparTela();
+    char titulo[] = "RELATÓRIO DE OCUPAÇÃO POR SHOW";
+    func_Ani_Left(titulo);
+    printf("\n\n");
+
+    FILE* arq_shows = fopen("arq_shows.dat", "rb");
+    if (arq_shows == NULL) {
+        printf("Nenhum show cadastrado.\n");
+        pausar();
+        return;
+    }
+
+    printf("╔═════════╤══════════════════════════════════╤═════════════╤═══════════╗\n");
+    printf("║ %-7s │ %-32s │ %-11s │ %-9s ║\n", "ID SHOW", "NOME DO SHOW", "VENDIDOS", "OCUPAÇÃO");
+    printf("╠═════════╪══════════════════════════════════╪═════════════╪═══════════╣\n");
+
+    Dados_S show;
+    int shows_encontrados = 0;
+    while (fread(&show, sizeof(Dados_S), 1, arq_shows) == 1) {
+        if (show.status == true) {
+            int vendidos = contar_ingressos_por_show(show.id);
+            float ocupacao = (vendidos / 100.0) * 100.0;
+            printf("║ %-7d │ %-32s │ %-11d │ %-8.1f%% ║\n", show.id, show.nome, vendidos, ocupacao);
+            shows_encontrados++;
+        }
+        fseek(arq_shows, show.tam_DHD + show.tam_personagem, SEEK_CUR);
+    }
+
+    if (shows_encontrados == 0) {
+        printf("║ %-74s ║\n", "Nenhum show ativo encontrado.");
+    }
+
+    printf("╚═════════╧══════════════════════════════════╧═════════════╧═══════════╝\n");
+    fclose(arq_shows);
+    pausar();
 }
 
 void exibir_ingresso_com_nome_cliente(Dados_I* ingresso) {
@@ -514,11 +614,9 @@ void relatorio_ingressos(){
     func_Ani(tempo_relatorio);
     printf("║ ► 1. Listar Igressos Comprados                   ║\n");
     func_Ani(tempo_relatorio);
-    printf("║ ► 2. Listar Ingressos Rasgados                   ║\n");
+    printf("║ ► 2. Resumo de Compras por Cliente               ║\n");
     func_Ani(tempo_relatorio);
-    printf("║ ► 3. Listar Ingressos por Show                   ║\n");
-    func_Ani(tempo_relatorio);
-    printf("║ ► 4. listar Todos Ingresso Vendidos              ║\n");
+    printf("║ ► 3. Listar Ingressos Rasgados                   ║\n");
     func_Ani(tempo_relatorio);
     printf("║                                                  ║\n");
     func_Ani(tempo_relatorio);
@@ -604,15 +702,10 @@ void relatorio() {
                             listar_shows_ativos();
                             break;
                         case 2:
-                            listar_shows_inativos();
+                            relatorio_ocupacao_shows();
                             break;
                         case 3:
-                            printf("Não Finalizado");
-                            pausar();
-                            break;
-                        case 4:
-                            printf("Não Finalizado");
-                            pausar();
+                            listar_shows_inativos();
                             break;
                         case 0:
                             break; 
@@ -631,19 +724,13 @@ void relatorio() {
                             pausar();
                             break;
                         case 2:
-                            listar_ingressos_inativos();
-                            pausar();
+                            relatorio_resumo_compras_cliente();
                             break;
                         case 3:
-                            printf("Não Finalizado");
-                            pausar();
-                            break;
-                        case 4:
-                            printf("Não Finalizado");
-                            pausar();
+                            listar_ingressos_inativos();
                             break;
                         case 0:
-                            break; 
+                            break;
                     }
                 }while(opcao_ingresso != 0);
                 break;
