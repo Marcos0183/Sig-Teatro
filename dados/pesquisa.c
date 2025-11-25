@@ -17,9 +17,6 @@ void exibir_rel_ingresso(Dados_I *dados_I){
     dados_S = (Dados_S *) malloc(sizeof(Dados_S));
     dados_C = (Cliente *) malloc(sizeof(Cliente));
     
-    printf("\n\n");
-    printf("-------------------------------------------------------------------------------------------------------------------------------------------\n");
-    printf("|        CPF        |                      CLIENTE                        |                  SHOW_ID                |  CADEIRA  |   ID    |\n ");
     
     arq_cliente = fopen("clientes.dat","rb");
     if(arq_cliente == NULL)return;
@@ -34,12 +31,14 @@ void exibir_rel_ingresso(Dados_I *dados_I){
     }
 
     parar = True;
-    while( parar && fread(dados_S,sizeof(Dados_S),1,arq_show) == 1){
+    while( parar && fread(dados_S,sizeof(Dados_S),1,arq_show) == 1){ 
         if(dados_S ->id == dados_I ->id_show){
         parar = False;
         }
         else fseek(arq_show,dados_S ->tam_DHD + dados_S ->tam_personagem,SEEK_CUR);
     }
+    printf(" %-16s|%-41s|%s - %.3d",dados_I ->cpf,dados_C ->nome,dados_S ->nome,dados_S ->id);
+   
     
     fclose(arq_cliente);
     fclose(arq_show);
@@ -95,7 +94,7 @@ void exibir_ingresso(Dados_I *dados_I,int revelar){
 
 void exibir_inf_cadastro(Cabecalho *cabecalho,int revelar){
     printf("\n+---------------------------------------------------------------+\n");
-    printf("|                     DADOS SO SHOW                             |\n");
+    printf("|                     DADOS DO SHOW                             |\n");
     printf("+---------------------------------------------------------------+\n");   
     if(revelar)printf("| ID       : %-50.3d |\n", cabecalho ->dados ->id);
     printf("| Nome     : %-50s |\n", cabecalho ->dados ->nome);
@@ -147,7 +146,6 @@ void pesquisa_show(Cabecalho *cabecalho){
     if(cabecalho ->encontrado)printf("SHOW NÃO ENCONTRADO!\n");
     fclose(cabecalho ->arq_shows);
     free(cabecalho ->dados);
-    free(cabecalho);
     pausar();
 }
 

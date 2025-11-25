@@ -10,6 +10,11 @@ typedef struct {
     int status;
 } Tecnico;
 
+typedef struct no_tecnico {
+    Tecnico tecnico;
+    struct no_tecnico *prox;
+} NoTecnico;
+
 void tecnicos();
 
 void menu_Tecnicos();
@@ -27,5 +32,7 @@ void listar_tecnicos();
 void exibir_tecnico(Tecnico* tec);
 
 int cpf_existente_tec(char *cpf);
+
+Tecnico* buscar_tecnico_por_cpf(const char* cpf);
 
 #endif

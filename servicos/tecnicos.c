@@ -358,3 +358,22 @@ void tecnicos(){
             }
     } while (executar_T != 0);
 }
+
+Tecnico* buscar_tecnico_por_cpf(const char* cpf) {
+    FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
+    if (arq_tecnicos == NULL) {
+        return NULL;
+    }
+
+    Tecnico* tec = (Tecnico*) malloc(sizeof(Tecnico));
+    while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
+        if (strcmp(tec->cpf, cpf) == 0 && tec->status == true) {
+            fclose(arq_tecnicos);
+            return tec;
+        }
+    }
+
+    fclose(arq_tecnicos);
+    free(tec);
+    return NULL;
+}

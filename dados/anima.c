@@ -17,7 +17,7 @@ void ani_Encerrar(){
     int i;
     int j;
     for (i = 0; i < 4; i++){
-        system("clear||cls");
+        system("clear || cls");
         printf("ENCERRAR PROGRAMA ");
         for (j = 0; j < 5; j++){
             func_Ani(300);
@@ -57,7 +57,7 @@ void func_Ani(int tempo){  //Função retirada do ChatGPT 4.0
 }
 
 void func_Ani_Left(const char titulo[]) {
-    system("clear||cls");
+    system("clear || cls");
 
     int i;
 

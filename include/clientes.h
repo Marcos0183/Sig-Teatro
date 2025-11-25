@@ -9,6 +9,11 @@ typedef struct {
     int status;
 } Cliente; 
 
+typedef struct no_cliente {
+    Cliente cliente;
+    struct no_cliente *prox;
+} NoCliente;
+
 void cliente();
 
 void cadastrar_cliente();
@@ -24,5 +29,7 @@ int cpf_existente(char *cpf);
 void listar_cliente();
 
 void exibir_cliente(Cliente* clt);
+
+Cliente* buscar_cliente_por_cpf(const char* cpf);
 
 #endif
