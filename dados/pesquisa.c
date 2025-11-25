@@ -8,6 +8,45 @@
 #include "ingresso.h"
 #include "clientes.h"
 
+void exibir_rel_ingresso(Dados_I *dados_I){
+    int parar;
+    FILE *arq_cliente;
+    FILE *arq_show;
+    Dados_S *dados_S;
+    Cliente *dados_C;
+    dados_S = (Dados_S *) malloc(sizeof(Dados_S));
+    dados_C = (Cliente *) malloc(sizeof(Cliente));
+    
+    printf("\n\n");
+    printf("-------------------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("|        CPF        |                      CLIENTE                        |                  SHOW_ID                |  CADEIRA  |   ID    |\n ");
+    
+    arq_cliente = fopen("clientes.dat","rb");
+    if(arq_cliente == NULL)return;
+    arq_show = fopen("arq_shows.dat","rb");
+    if(arq_show == NULL)return;
+
+    parar = True;
+    while(parar && fread(dados_C,sizeof(Cliente),1,arq_cliente) == 1){
+        if(strcmp(dados_C ->cpf, dados_I ->cpf) == 0){
+            parar = False;
+        } 
+    }
+
+    parar = True;
+    while( parar && fread(dados_S,sizeof(Dados_S),1,arq_show) == 1){
+        if(dados_S ->id == dados_I ->id_show){
+        parar = False;
+        }
+        else fseek(arq_show,dados_S ->tam_DHD + dados_S ->tam_personagem,SEEK_CUR);
+    }
+    
+    fclose(arq_cliente);
+    fclose(arq_show);
+    free(dados_C);
+    free(dados_S);
+}
+    
 void exibir_ingresso(Dados_I *dados_I,int revelar){
     int parar;
     FILE *arq_cliente;
@@ -45,7 +84,7 @@ void exibir_ingresso(Dados_I *dados_I,int revelar){
     printf("+---------------------------------------------------------------+\n");   
     printf("| CPF          : %-46s |\n",dados_I->cpf);
     printf("| Cliente      : %-46s |\n",dados_C ->nome);
-    printf("| Nome-Id Show : %s - %-28.3d  |\n",dados_S ->nome,dados_S ->id);
+    printf("| Nome-Id Show : %s - %-38.4d  |\n",dados_S ->nome,dados_S ->id);
     printf("| Cadeira      : %-46s |\n",dados_I->cadeira);
     if(revelar)printf("| Id_Ingresso  : %-46d |\n",dados_I->id);
     printf("+---------------------------------------------------------------+\n");
@@ -58,7 +97,7 @@ void exibir_inf_cadastro(Cabecalho *cabecalho,int revelar){
     printf("\n+---------------------------------------------------------------+\n");
     printf("|                     DADOS SO SHOW                             |\n");
     printf("+---------------------------------------------------------------+\n");   
-    if(revelar)printf("| ID       : %-50d |\n", cabecalho ->dados ->id);
+    if(revelar)printf("| ID       : %-50.3d |\n", cabecalho ->dados ->id);
     printf("| Nome     : %-50s |\n", cabecalho ->dados ->nome);
     printf("| DHD      : %-50s |\n", cabecalho ->DHD);
     printf("| Personagem : %-48s |\n", cabecalho ->persona);

@@ -75,6 +75,7 @@ void cadastrar_Show(){
             if(!parar)break;
             parar = ler_duracao(cabecalho);
             if(!parar)break;
+            
         }
         }while(parar && !(parar == 2));
     }

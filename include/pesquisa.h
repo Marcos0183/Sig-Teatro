@@ -3,6 +3,7 @@
 #include "shows.h"
 #include "ingresso.h"
 
+void exibir_rel_ingresso(Dados_I *);
 
 int escolha_cad_show(Cabecalho *);
 

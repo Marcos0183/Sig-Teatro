@@ -416,7 +416,7 @@ void listar_ingressos_ativos(){
     achado = True;
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(dados ->status == True){
-            exibir_ingresso(dados,True);
+            exibir_rel_ingresso(dados);
             achado = False;
         }
     }
@@ -439,7 +439,7 @@ void listar_ingressos_inativos(){
     achado = True;
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(dados ->status == False){
-            exibir_ingresso(dados,True);
+            exibir_rel_ingresso(dados);
             achado = False;
         }
     }

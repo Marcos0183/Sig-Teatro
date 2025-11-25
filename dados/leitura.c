@@ -13,33 +13,48 @@
 #include "anima.h"
 
 
-int id_ingresso(void){
-    int idRetorna; 
-    int *id;
-    id = &idRetorna;
-    FILE *arq_id;
-    arq_id = fopen("id_i.dat","rb");
+//  ##############################       FUNÇÕES DE LEITURA GERAIS       ################################
+//1. Passe o endereço da variável
+//Ex: ler_id(&id_lido)
+void ler_id(int *id_lido){
+    printf("\n \n");
+    printf("====================================\n"); 
+    printf("|  INSIRA O CODIGO DO SHOW: ");
+    scanf("%d",id_lido);
+    getchar();
+    printf("====================================\n"); 
+}
 
-    if(arq_id == NULL){
-       arq_id = fopen("id_i.dat","w+");
-       idRetorna = 0;
-       fwrite(id,sizeof(int),1,arq_id);
-       rewind(arq_id);
-    }
-    fread(id,sizeof(int),1,arq_id);
-    fclose(arq_id);
-    if(idRetorna == 2000){
-        idRetorna = 0;
-    }
-    arq_id = fopen("id_i.dat","wb");
-    idRetorna++;
-    fwrite(id,sizeof(int),1,arq_id);
-    fclose(arq_id);
-    return idRetorna;
+int ler_escolha(char *texto){
+    int parar = False;
+    int saida = False;
+    int converte;
+    char escolha[50];
+    do{ 
+        printf("%s- SIM(S)/NAO(N): ",texto);
+        ler_string(escolha,4);
+        retira_char(escolha,' ');
+        converte = converte_numero(escolha);
+        if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
+            saida = True;
+            parar = True;
+        }
+        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"n") == 0){
+            parar = True;
+        }
+        else if(converte == SAIR){
+            parar = True;
+        }
+        else printf("ESCOLHA APENAS S-s PARA SIM E N-n PARA NÃO\n");
+    }while(!parar);
+    return saida;
 }
 
 
-int id_show(void){
+
+//  ##############################   FUNÇÕES DE LEITURA DO MÓDULO SHOWS   ################################
+
+int id_show(void){  //Cria um id(codigo) para um show cadastrado
     int idRetorna; 
     int *id;
     id = &idRetorna;
@@ -64,117 +79,6 @@ int id_show(void){
     return idRetorna;
 }
 
-//1. Passe o endereço da variável
-//Ex: ler_id(&id_lido)
-void ler_id(int *id_lido){
-    printf("\n \n");
-    printf("====================================\n"); 
-    printf("|  INSIRA O CODIGO DO SHOW: ");
-    scanf("%d",id_lido);
-    getchar();
-    printf("====================================\n"); 
-}
-
-
-
-int ler_codigo(Dados_I *dados){
-    int saida;
-    char id_lido[5];
-    SEP *controle;
-    controle = (SEP *) malloc(sizeof(SEP));
-    
-    controle ->valida = False;
-    do{ 
-        limparTela();
-        char titulo[16] = "VENDER INGRESSO";
-        func_Ani_Left(titulo);
-        printf("====================================\n"); 
-        printf("|  INSIRA O CÓDIGO DO SHOW: ");
-        ler_string(id_lido,5);
-        retira_char(id_lido,' ');
-        if(converte_numero(id_lido) != SAIR){
-            valida_ler_codigo(controle,id_lido);
-            switch (controle ->error){
-                case 1:
-                printf("\n");
-                printf("SHOW NÃO ENCONTRADO\n");
-                pausar();
-                break;
-
-                case 2:
-                printf("\n");
-                printf("CÓDIGO DO SHOW INVALIDO, DIGITE APENAS NUMEROS\n");
-                pausar();
-                break;
-            }
-        }
-       if(controle ->valida){
-        dados ->id_show = converte_numero(id_lido);
-       } 
-    }while( !controle ->valida && !converte_numero(id_lido) == SAIR);
-    saida = controle ->valida;
-    free(controle);
-    return saida;
-}
-
-
-
-int ler_cadeira(Dados_I *dados){ 
-    int saida;
-    SEP *controle;
-    controle = (SEP *) malloc(sizeof(SEP));
-    
-    controle ->valida = False;
-    do{ 
-        limparTela();
-        char titulo[16] = "VENDER INGRESSO";
-        func_Ani_Left(titulo);
-        exibir_cadeiras(dados ->id_show);
-        printf("====================================\n"); 
-        printf("|  ESCOLHA SUA CADEIRA: ");
-        ler_string(dados->cadeira,5);
-        retira_char(dados ->cadeira,' ');
-        if(converte_numero(dados ->cadeira) != SAIR){
-            valida_cadeira(dados ->cadeira,dados ->id_show,controle);
-            switch (controle ->error){
-                case 1:
-                printf("\n");
-                printf("CADEIRA INSERIDA NAO VALIDA, ESCOLHA DE ACORDO COM O QUE ESTÁ SENDO EXIBIDO\n");
-                pausar();
-                break;
-                case 2:
-                printf("\n");
-                printf("LINHA DE CADEIRAS NÃO EXISTENTE, DIGITE APENAS LETRAS (A - E)\n");
-                pausar();
-                break;
-                case 3:
-                printf("\n");
-                printf("COLUNA DE CADEIRAS NÃO EXISTENTE, DIGITE APENAS NUMEROS (1 - 20)\n");
-                pausar();
-                break;
-                case 4:
-                printf("\n");
-                printf("CADEIRA ESCOLHIDA JÁ OCUPADA, POR FAVOR ESCOLHER OUTRA\n");
-                pausar();
-                break;
-            }
-        }
-    }while(!controle ->valida && !converte_numero(dados ->cadeira) == SAIR);
-    if(controle ->valida){
-        Mapeia *coord;
-        coord = (Mapeia *) malloc(sizeof(Mapeia));
-        procura_cad(dados ->cadeira,coord);
-        dados ->cord_i = coord ->i;
-        dados ->cord_j = coord ->j;
-        free(coord);
-    }
-    saida = controle ->valida;
-    free(controle);
-    return saida;
-}
-
-
-
 int ler_nome_show(char *nome){
     limparTela();
     char titulo[16] = "CADASTRAR SHOW";
@@ -186,8 +90,6 @@ int ler_nome_show(char *nome){
     if(converte_numero(nome) == SAIR)return False;
     return True;
 }
-
-
 
 int ler_data(Cabecalho *cabecalho){
     int saida;
@@ -259,8 +161,6 @@ int ler_data(Cabecalho *cabecalho){
     return saida;
 }
 
-
-
 int ler_hora(Cabecalho *cabecalho){ 
     int saida;
     char hora[50];
@@ -316,8 +216,6 @@ int ler_hora(Cabecalho *cabecalho){
     free(controle);
     return saida;
 }
-
-
 
 int ler_duracao(Cabecalho *cabecalho){
     int saida;
@@ -375,8 +273,6 @@ int ler_duracao(Cabecalho *cabecalho){
     return saida;
 }
 
-
-
 int ler_persona(Cabecalho *cabecalho){
     int saida;
     char nome[50];
@@ -417,27 +313,34 @@ int ler_persona(Cabecalho *cabecalho){
 
 
 
-void ler_nome(char *nome) {
-    do {
-    printf("====================================\n"); 
-    printf("|  INSIRA O NOME: ");
-    ler_string(nome, 50);
-    } while (!valida_nome(nome));
+//  ##############################  FUNÇÕES DE LEITURA DO MÓDULO INGRESSO  ################################
+
+int id_ingresso(void){  //Cria um id(codigo) para um ingresso vendido
+    int idRetorna; 
+    int *id;
+    id = &idRetorna;
+    FILE *arq_id;
+    arq_id = fopen("id_i.dat","rb");
+
+    if(arq_id == NULL){
+       arq_id = fopen("id_i.dat","w+");
+       idRetorna = 0;
+       fwrite(id,sizeof(int),1,arq_id);
+       rewind(arq_id);
+    }
+    fread(id,sizeof(int),1,arq_id);
+    fclose(arq_id);
+    if(idRetorna == 2000){
+        idRetorna = 0;
+    }
+    arq_id = fopen("id_i.dat","wb");
+    idRetorna++;
+    fwrite(id,sizeof(int),1,arq_id);
+    fclose(arq_id);
+    return idRetorna;
 }
 
-
-
-void ler_cpf(char *cpf) {
-    do {
-    printf("====================================\n"); 
-    printf("|  INSIRA O CPF: ");
-    ler_string(cpf, 15);
-    } while (!valida_cpf(cpf));
-}
-
-
-
-int ler_cpf_show(Dados_I *dados){
+int ler_cpf_show(Dados_I *dados){  //Ler o CPF do cliente que realiza a compra do ingresso
     int saida;
     SEP  *controle;
     controle = (SEP *) malloc(sizeof(SEP));
@@ -472,7 +375,118 @@ int ler_cpf_show(Dados_I *dados){
     return saida;
 }
 
+int ler_codigo(Dados_I *dados){  //Ler o id(codigo) do show que o cliente escolheu
+    int saida;
+    char id_lido[5];
+    SEP *controle;
+    controle = (SEP *) malloc(sizeof(SEP));
+    
+    controle ->valida = False;
+    do{ 
+        limparTela();
+        char titulo[16] = "VENDER INGRESSO";
+        func_Ani_Left(titulo);
+        printf("====================================\n"); 
+        printf("|  INSIRA O CÓDIGO DO SHOW: ");
+        ler_string(id_lido,5);
+        retira_char(id_lido,' ');
+        if(converte_numero(id_lido) != SAIR){
+            valida_ler_codigo(controle,id_lido);
+            switch (controle ->error){
+                case 1:
+                printf("\n");
+                printf("SHOW NÃO ENCONTRADO\n");
+                pausar();
+                break;
 
+                case 2:
+                printf("\n");
+                printf("CÓDIGO DO SHOW INVALIDO, DIGITE APENAS NUMEROS\n");
+                pausar();
+                break;
+            }
+        }
+       if(controle ->valida){
+        dados ->id_show = converte_numero(id_lido);
+       } 
+    }while( !controle ->valida && !converte_numero(id_lido) == SAIR);
+    saida = controle ->valida;
+    free(controle);
+    return saida;
+}
+
+int ler_cadeira(Dados_I *dados){ //Ler o assento do show que o cliente escolheu
+    int saida;
+    SEP *controle;
+    controle = (SEP *) malloc(sizeof(SEP));
+    
+    controle ->valida = False;
+    do{ 
+        limparTela();
+        char titulo[16] = "VENDER INGRESSO";
+        func_Ani_Left(titulo);
+        exibir_cadeiras(dados ->id_show);
+        printf("====================================\n"); 
+        printf("|  ESCOLHA SUA CADEIRA: ");
+        ler_string(dados->cadeira,5);
+        retira_char(dados ->cadeira,' ');
+        if(converte_numero(dados ->cadeira) != SAIR){
+            valida_cadeira(dados ->cadeira,dados ->id_show,controle);
+            switch (controle ->error){
+                case 1:
+                printf("\n");
+                printf("CADEIRA INSERIDA NAO VALIDA, ESCOLHA DE ACORDO COM O QUE ESTÁ SENDO EXIBIDO\n");
+                pausar();
+                break;
+                case 2:
+                printf("\n");
+                printf("LINHA DE CADEIRAS NÃO EXISTENTE, DIGITE APENAS LETRAS (A - E)\n");
+                pausar();
+                break;
+                case 3:
+                printf("\n");
+                printf("COLUNA DE CADEIRAS NÃO EXISTENTE, DIGITE APENAS NUMEROS (1 - 20)\n");
+                pausar();
+                break;
+                case 4:
+                printf("\n");
+                printf("CADEIRA ESCOLHIDA JÁ OCUPADA, POR FAVOR ESCOLHER OUTRA\n");
+                pausar();
+                break;
+            }
+        }
+    }while(!controle ->valida && !converte_numero(dados ->cadeira) == SAIR);
+    if(controle ->valida){
+        Mapeia *coord;
+        coord = (Mapeia *) malloc(sizeof(Mapeia));
+        procura_cad(dados ->cadeira,coord);
+        dados ->cord_i = coord ->i;
+        dados ->cord_j = coord ->j;
+        free(coord);
+    }
+    saida = controle ->valida;
+    free(controle);
+    return saida;
+}
+
+
+//  ##############################  FUNÇÕES DE LEITURA DO MÓDULO CLIENTES E TECNICOS  ################################
+
+void ler_nome(char *nome) {
+    do {
+    printf("====================================\n"); 
+    printf("|  INSIRA O NOME: ");
+    ler_string(nome, 50);
+    } while (!valida_nome(nome));
+}
+
+void ler_cpf(char *cpf) {
+    do {
+    printf("====================================\n"); 
+    printf("|  INSIRA O CPF: ");
+    ler_string(cpf, 15);
+    } while (!valida_cpf(cpf));
+}
 
 void ler_telefone(char *telefone) {
     do {
@@ -482,8 +496,6 @@ void ler_telefone(char *telefone) {
     } while (!valida_telefone(telefone));
 }
 
-
-
 void ler_email(char *email) {
     do {
     printf("====================================\n");
@@ -491,8 +503,6 @@ void ler_email(char *email) {
     ler_string(email, 40);
     } while (!valida_email(email));
 }
-
-
 
 void ler_funcao(char *funcao) {
     do
@@ -503,29 +513,3 @@ void ler_funcao(char *funcao) {
     } while (!valida_funcao(funcao));
 }
 
-
-
-int ler_escolha(char *texto){
-    int parar = False;
-    int saida = False;
-    int converte;
-    char escolha[50];
-    do{ 
-        printf("%s- SIM(S)/NAO(N): ",texto);
-        ler_string(escolha,4);
-        retira_char(escolha,' ');
-        converte = converte_numero(escolha);
-        if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
-            saida = True;
-            parar = True;
-        }
-        else if(strcmp(escolha,"N") == 0 || strcmp(escolha,"n") == 0){
-            parar = True;
-        }
-        else if(converte == SAIR){
-            parar = True;
-        }
-        else printf("ESCOLHA APENAS S-s PARA SIM E N-n PARA NÃO\n");
-    }while(!parar);
-    return saida;
-}
