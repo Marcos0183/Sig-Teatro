@@ -11,6 +11,7 @@
 #include "ingresso.h"
 #include "clientes.h"
 #include "anima.h"
+#include "pesquisa.h"
 
 
 //  ##############################       FUNÇÕES DE LEITURA GERAIS       ################################
@@ -349,6 +350,7 @@ int ler_cpf_show(Dados_I *dados){  //Ler o CPF do cliente que realiza a compra d
         limparTela();
         char titulo[16] = "VENDER INGRESSO";
         func_Ani_Left(titulo);
+
         printf("\n \n");
         printf("=====================================================================\n"); 
         printf("|  INSIRA SEU CPF DE CADASTRO - SEM CPF DIGITE (C) PARA CADASTRAR-SE: ");
@@ -377,7 +379,7 @@ int ler_cpf_show(Dados_I *dados){  //Ler o CPF do cliente que realiza a compra d
 
 int ler_codigo(Dados_I *dados){  //Ler o id(codigo) do show que o cliente escolheu
     int saida;
-    char id_lido[5];
+    char id_lido[50];
     SEP *controle;
     controle = (SEP *) malloc(sizeof(SEP));
     
@@ -388,7 +390,7 @@ int ler_codigo(Dados_I *dados){  //Ler o id(codigo) do show que o cliente escolh
         func_Ani_Left(titulo);
         printf("====================================\n"); 
         printf("|  INSIRA O CÓDIGO DO SHOW: ");
-        ler_string(id_lido,5);
+        ler_string(id_lido,50);
         retira_char(id_lido,' ');
         if(converte_numero(id_lido) != SAIR){
             valida_ler_codigo(controle,id_lido);

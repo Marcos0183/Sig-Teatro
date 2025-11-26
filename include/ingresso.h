@@ -29,14 +29,4 @@ void atualizar_Ingresso();
 
 void pesquisar_Ingresso();
 
-void altera_cadeira(char *,int);
-
-void procura_cad(char *,Mapeia *);
-
-int cadeira_usada(char *,int);
-
-void exibir_cadeiras(int);
-
-void vagar_cadeira(Dados_I *);
-
 #endif

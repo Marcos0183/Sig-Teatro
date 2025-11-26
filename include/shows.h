@@ -16,8 +16,6 @@ void atualizar_Show();
 
 void pesquisar_Show();
 
-void cria_cadeiras(int);
-
 typedef struct cadeiras_0 Cadeiras;
 typedef struct cadastro_Shows Dados_S;
 typedef struct cadastro_Temp Dados_Temp;
@@ -28,6 +26,7 @@ struct cadeiras_0
     int id;
     char cad[5][20][6];
     int cont;
+    int status;
 };
 
 struct cadastro_Shows{
