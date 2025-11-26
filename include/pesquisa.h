@@ -15,5 +15,21 @@ void pesquisa_show(Cabecalho *);
 
 void pesquisar_ingresso(Dados_I *,char *);
 
+void cria_cadeiras(int);
+
+void vagar_cadeira(Dados_I *);
+
+void exibir_cadeiras(int);
+
+int cadeira_usada(char *,int);
+
+void procura_cad(char *,Mapeia *);
+
+void altera_cadeira(char *,int);
+
+void apaga_cadeiras(int id_parametro);
+
+void apaga_ingressos(int id_parametro);
+
 #endif
 

@@ -10,23 +10,6 @@
 #include "pesquisa.h"
 #include "valida.h"
 
-
-char cadeira_copia[5][20][6] = {
-        { "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10",
-          "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20" },
-
-        { "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10",
-          "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20" },
-
-        { "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10",
-          "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20" },
-
-        { "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10",
-          "D11", "D12", "D13", "D14", "D15", "D16", "D17", "D18", "D19", "D20" },
-
-        { "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10",
-          "E11", "E12", "E13", "E14", "E15", "E16", "E17", "E18", "E19", "E20" }
-    };
 int tempo_Shows = 100;
 
 void menu_Shows(){
@@ -107,41 +90,62 @@ void cadastrar_Show(){
 }
 
 void excluir_Show(){
-    int id_lido;
-    int encontrado;
-    Dados_S *dados;
-    dados = (Dados_S *) malloc(sizeof(Dados_S));
-    FILE *arq_shows;
-    char titulo[16] = "EXCLUIR SHOW";
-    func_Ani_Left(titulo);
+    int compara;
+    char leitura_id[50];
+    Cabecalho *cabecalho;
+    SEP * controle;
+    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
+    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
+    controle = (SEP *) malloc(sizeof(SEP));
+    controle ->valida = False;
+ 
+    do{ 
+        limparTela();
+        char titulo[16] = "EXCLUIR SHOW";
+        func_Ani_Left(titulo);
+        printf("\n");
+        printf("-----------------------------------\n");
+        printf("|  INSIRA O CODIGO DO SHOW - DIGITE (S) PARA SAIR: ");
+        ler_string(leitura_id,50);
+        retira_char(leitura_id,' ');
+        printf("V----------------------------------\n");
+        compara = strcmp(leitura_id,"S") != 0 && strcmp(leitura_id,"s") != 0;
 
+        if(compara){
+            valida_ler_codigo(controle,leitura_id);
+            switch (controle ->error){
+                case 1:
+                printf("\n");
+                printf("SHOW NÃO ENCONTRADO\n");
+                pausar();
+                break;
 
-    printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CODIGO DO SHOW: ");
-    scanf("%d",&id_lido);
-    getchar();
-    printf("V----------------------------------\n");
-
-    
-    encontrado = True;
-    arq_shows = fopen("arq_shows.dat","r+b");
-    if(arq_shows == NULL)return;
-    while(fread(dados,sizeof(Dados_S),1,arq_shows) == 1){
-        if(id_lido == dados ->id && dados ->status == True){
-            dados ->status = False;
-            fseek(arq_shows,-1*sizeof(Dados_S),SEEK_CUR);
-            fwrite(dados,sizeof(Dados_S),1,arq_shows);
-            encontrado = False;
-            printf("SHOW EXCLUÍDO!\n");
+                case 2:
+                printf("\n");
+                printf("CÓDIGO DO SHOW INVALIDO, DIGITE APENAS NUMEROS\n");
+                pausar();
+                break;
+            }
         }
-        else fseek(arq_shows,dados ->tam_DHD + dados ->tam_personagem,SEEK_CUR);
-    }
 
-    if(encontrado) printf("SHOW NÃO ENCONTRADO!\n");
-    fclose(arq_shows);
-    free(dados);
-    pausar();  
+    }while(compara && !controle ->valida);
+    
+    if(controle ->valida){
+        cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
+        if(cabecalho ->arq_shows == NULL){
+            printf("PROBLEMAS AO ABRIR O ARQUIVO DE SHOWS\n");
+            pausar();
+            return;
+        }
+
+        while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
+            if(converte_numero(leitura_id) == cabecalho ->dados ->id){
+                cabecalho ->dados ->status = False;
+                apaga_cadeiras(converte_numero(leitura_id));
+            }
+        }
+
+    }
 }
 
 void atualizar_Show(){
@@ -233,18 +237,4 @@ void shows(){
     } while (executar_S != 0);
 }
 
-void cria_cadeiras(int id_parametro){
-    FILE *arq_cadeiras;
-    Cadeiras *cadeiras;
-    cadeiras = (Cadeiras *) malloc(sizeof(Cadeiras));
-    
-    copia_carac_D3(cadeira_copia,cadeiras ->cad );
-    cadeiras ->id = id_parametro;
-    cadeiras ->cont = 0;
 
-    arq_cadeiras = fopen("arq_cadeiras.dat","ab");
-    abrir_arquivo(arq_cadeiras);
-    fwrite(cadeiras,sizeof(Cadeiras),1,arq_cadeiras);
-    fclose(arq_cadeiras);
-    free(cadeiras);
-}

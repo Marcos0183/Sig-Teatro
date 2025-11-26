@@ -522,7 +522,7 @@ void listar_ingressos_ativos(){
     printf("\n\n");
     printf("-------------------------------------------------------------------------------------------------------------------------\n");
     printf("|CPF             |CLIENTE                                        |SHOW_ID                                |CADEIRA  |ID  |\n ");
-    printf("-------------------------------------------------------------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------------------------------------------------------\n");
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(dados ->status == True){
             exibir_rel_ingresso(dados);
@@ -568,22 +568,27 @@ void listar_ingressos_inativos(){
     int achado;
     Dados_I *dados;
     dados = (Dados_I *) malloc(sizeof(Dados_I));
-    char titulo[19] = "INGRESSOS ATIVOS";
+    char titulo[22] = "INGRESSOS COMPRADOS";
     func_Ani_Left(titulo);
-
+    printf("\n");
 
     FILE *arq_ingresso;
     arq_ingresso = fopen("arq_ingresso.dat","rb");
     achado = True;
+
+    printf("\n\n");
+    printf("-------------------------------------------------------------------------------------------------------------------------\n");
+    printf("|CPF             |CLIENTE                                        |SHOW_ID                                |CADEIRA  |ID  |\n ");
+    printf("------------------------------------------------------------------------------------------------------------------------\n");
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(dados ->status == False){
-            exibir_ingresso(dados,True);
+            exibir_rel_ingresso(dados);
             achado = False;
         }
     }
-    if(achado)printf("SEM INGRESSOS RASGADOS\n");
+    if(achado)printf("SEM INGRESSOS COMPRADOS\n");
+    fclose(arq_ingresso);
     free(dados);
-
 }
 
 void relatorio_ingressos(){

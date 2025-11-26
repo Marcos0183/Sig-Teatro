@@ -7,7 +7,8 @@
 #include "leitura.h"
 #include "utils.h"
 #include "shows.h"
-#include <ctype.h>
+#include "pesquisa.h"
+
 
 #define true 1
 #define false 0
@@ -26,8 +27,6 @@ int valida_nome(char *nome) {
     }
     return true;
 }
-
-
 
 int valida_cpf(char *cpf_raw) {
     char cpf[20];
@@ -91,8 +90,6 @@ int valida_cpf(char *cpf_raw) {
     }
 }
 
-
-
 int valida_telefone(char *telefone) {
 
     int digitos = 0;                        //função para validar telefone
@@ -116,8 +113,6 @@ int valida_telefone(char *telefone) {
 
     return true;
     }
-
-
 
 int valida_email(char *email) {
     int tamanho = strlen(email);
@@ -175,8 +170,6 @@ int valida_email(char *email) {
     return true;
 }
 
-
-
 int valida_funcao(char *funcao) {
     int i;
     bool tem_letra = false;
@@ -206,6 +199,7 @@ int valida_funcao(char *funcao) {
 }
 
 
+//############################## FUNÇÕES DE VALIDAÇÃO COM FOCO NO MÓDULO INGRESSO ####################################
 
 int valida_cliente(char *cliente){
     Cliente *clt;
@@ -229,9 +223,7 @@ int valida_cliente(char *cliente){
 
 }
 
-
-
-int valida_show(int id_show){
+int valida_show(int id_show){ // Verifica se um show está cadastrado - Retorna: True(cadastrado) - False(não cadastrado) 
     int saida;
     int parar;
     Cabecalho *cabecalho;
@@ -256,8 +248,6 @@ int valida_show(int id_show){
     
     return saida;
 }
-
-
 
 void valida_cadeira(char *assento,int id_show,SEP *controle){
    char numero[3] = "";
@@ -291,9 +281,7 @@ void valida_cadeira(char *assento,int id_show,SEP *controle){
     }
 }
 
-
-
-int valida_id(char *id){
+int valida_id(char *id){ // Verifica se um id qualquer(show ou ingresso) possui apenas números - Retorna: True(apenas numeros) / False(mais do que numeros)
     for(int i = 0; i < strlen(id); i++){
         if(id[i] < 48 || id[i] > 57 ){
             return False;
@@ -301,8 +289,6 @@ int valida_id(char *id){
     }
     return True;
 }
-
-
 
 void valida_cpf_show(SEP *controle,Dados_I *dados){
     if(strcmp(dados ->cpf,"C") == 0 || strcmp(dados ->cpf, "c") == 0){
@@ -323,10 +309,8 @@ void valida_cpf_show(SEP *controle,Dados_I *dados){
         }
 }
 
-
-
-void valida_ler_codigo(SEP *controle,char *id_lido){
-    int converte;
+void valida_ler_codigo(SEP *controle,char *id_lido){ // Indica se o id de show é valido, se não, indica o porque
+    int converte; 
     converte = converte_numero(id_lido);
         if(valida_id(id_lido)){
             if(valida_show(converte)){
@@ -345,6 +329,7 @@ void valida_ler_codigo(SEP *controle,char *id_lido){
 }
 
 
+//################################# FUNÇÕES DE VALIDAÇÃO COM FOCO NO MÓDULO SHOW ####################################
 
 int valida_data(SEP *controle,char *data){
     int parar;
@@ -436,8 +421,6 @@ int valida_data(SEP *controle,char *data){
 
 }
 
-
-
 int valida_hora(SEP * controle,char *hora){
     int parar;
     int converte;
@@ -482,7 +465,6 @@ int valida_hora(SEP * controle,char *hora){
  return controle ->valida;
 
 }
-
 
 int valida_duracao(SEP *controle,char *duracao){
     int parar;
