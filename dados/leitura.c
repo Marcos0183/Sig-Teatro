@@ -52,7 +52,6 @@ int ler_escolha(char *texto){
 }
 
 
-
 //  ##############################   FUNÇÕES DE LEITURA DO MÓDULO SHOWS   ################################
 
 int id_show(void){  //Cria um id(codigo) para um show cadastrado
@@ -277,6 +276,7 @@ int ler_duracao(Cabecalho *cabecalho){
 int ler_persona(Cabecalho *cabecalho){
     int saida;
     char nome[50];
+    char nome_tratado[50];
     int parar;
 
     saida = True;
@@ -288,8 +288,11 @@ int ler_persona(Cabecalho *cabecalho){
     printf("\n \n");
     printf("================================================================\n"); 
     printf("|  INSIRA O NOME DOS PERSONAGENS - DIGITE (S) PARA SAIR: ");
-    ler_string(nome,32);
-    retira_char(nome,' ');
+    ler_string(nome,50);
+    
+    strcpy(nome_tratado,nome);
+
+    retira_char(nome_tratado,' ');
     if(converte_numero(nome) != SAIR && !(strcmp(nome,"S") == 0 || strcmp(nome,"s") == 0)){
         cabecalho ->persona = listaChar(cabecalho ->persona,nome);
     }

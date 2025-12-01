@@ -357,10 +357,10 @@ void listar_shows_ativos(){
             cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
             fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
             fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
-            exibir_inf_cadastro(cabecalho,1);
+            exibir_inf_cadastro(cabecalho,True);
+            cabecalho ->encontrado = False;
             free(cabecalho ->DHD);
             free(cabecalho ->persona);
-            cabecalho ->encontrado = False;
         }
         else{
             fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
@@ -520,9 +520,9 @@ void listar_ingressos_ativos(){
     achado = True;
 
     printf("\n\n");
-    printf("-------------------------------------------------------------------------------------------------------------------------\n");
-    printf("|CPF             |CLIENTE                                        |SHOW_ID                                |CADEIRA  |ID  |\n ");
-    printf("------------------------------------------------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+    printf("|CPF             |CLIENTE                                        |ID - SHOW                                  |CADEIRA  |ID  |\n ");
+    printf("----------------------------------------------------------------------------------------------------------------------------\n");
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(dados ->status == True){
             exibir_rel_ingresso(dados);
@@ -568,7 +568,7 @@ void listar_ingressos_inativos(){
     int achado;
     Dados_I *dados;
     dados = (Dados_I *) malloc(sizeof(Dados_I));
-    char titulo[22] = "INGRESSOS COMPRADOS";
+    char titulo[22] = "INGRESSOS RASGADOS";
     func_Ani_Left(titulo);
     printf("\n");
 
@@ -577,9 +577,9 @@ void listar_ingressos_inativos(){
     achado = True;
 
     printf("\n\n");
-    printf("-------------------------------------------------------------------------------------------------------------------------\n");
-    printf("|CPF             |CLIENTE                                        |SHOW_ID                                |CADEIRA  |ID  |\n ");
-    printf("------------------------------------------------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------------------------------------------------------------\n");
+    printf("|CPF             |CLIENTE                                        |ID - SHOW                                  |CADEIRA  |ID  |\n ");
+    printf("----------------------------------------------------------------------------------------------------------------------------\n");
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(dados ->status == False){
             exibir_rel_ingresso(dados);
@@ -589,6 +589,7 @@ void listar_ingressos_inativos(){
     if(achado)printf("SEM INGRESSOS COMPRADOS\n");
     fclose(arq_ingresso);
     free(dados);
+    pausar();
 }
 
 void relatorio_ingressos(){

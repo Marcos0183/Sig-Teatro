@@ -31,7 +31,7 @@ struct cadeiras_0
 
 struct cadastro_Shows{
     int id;
-    char nome[32]; 
+    char nome[50]; 
     int tam_DHD;
     int tam_personagem;
     int status;
