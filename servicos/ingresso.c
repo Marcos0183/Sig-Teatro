@@ -94,12 +94,11 @@ void excluir_Ingresso(){
     printf("-----------------------------------\n");
     }while(!valida_id(id_lido) && !converte_numero(id_lido) == 0);
 
-    arq_ingresso = fopen("arq_ingresso.dat","r+b");
+    arq_ingresso = fopen("arq_ingresso.dat","rb+");
     if(arq_ingresso == NULL)return;
-   
     parar = True;
-    while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1 && parar){
-        if(dados ->id == converte_numero(id_lido)){
+    while(parar && fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
+        if(dados ->id == converte_numero(id_lido) && dados ->status == True){
             dados ->status = False;
             fseek(arq_ingresso,-sizeof(Dados_I),SEEK_CUR);
             fwrite(dados,sizeof(Dados_I),1,arq_ingresso);

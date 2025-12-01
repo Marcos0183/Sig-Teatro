@@ -130,22 +130,40 @@ void excluir_Show(){
 
     }while(compara && !controle ->valida);
     
-    if(controle ->valida){
-        cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
-        if(cabecalho ->arq_shows == NULL){
-            printf("PROBLEMAS AO ABRIR O ARQUIVO DE SHOWS\n");
-            pausar();
-            return;
-        }
-
-        while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
-            if(converte_numero(leitura_id) == cabecalho ->dados ->id){
+    cabecalho ->arq_shows = fopen("arq_shows.dat","r+b");
+    if(cabecalho ->arq_shows == NULL){
+        printf("PROBLEMAS AO ABRIR O ARQUIVO DE SHOWS\n");
+        pausar();
+        return;
+    }
+    
+    while(controle ->valida && fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
+        if(converte_numero(leitura_id) == cabecalho ->dados ->id && cabecalho ->dados ->status == True){
+            cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
+            cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
+            fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
+            fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
+            if(escolha_cad_show(cabecalho)){ 
                 cabecalho ->dados ->status = False;
                 apaga_cadeiras(converte_numero(leitura_id));
+                apaga_ingressos(converte_numero(leitura_id));
+                fseek(cabecalho ->arq_shows,-sizeof(Dados_S),SEEK_CUR);
+                fwrite(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows);
+                printf("SHOW APAGADO\n");
+                free(cabecalho ->DHD);
+                free(cabecalho ->persona);
+                break;
             }
         }
-
+        else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem, SEEK_CUR);
     }
+    
+    
+    fclose(cabecalho ->arq_shows);
+    free(controle);
+    free(cabecalho ->dados);
+    free(cabecalho);
+    pausar();
 }
 
 void atualizar_Show(){

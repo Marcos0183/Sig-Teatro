@@ -236,7 +236,7 @@ int valida_show(int id_show){ // Verifica se um show está cadastrado - Retorna:
     saida = False;
     parar = True;
     while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1 && parar){
-        if(id_show == cabecalho ->dados ->id){
+        if(id_show == cabecalho ->dados ->id && cabecalho ->dados ->status == True){
             saida = True;
             parar = False; 
         }

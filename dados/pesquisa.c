@@ -38,7 +38,6 @@ void exibir_rel_ingresso(Dados_I *dados_I){ // Exibe dados dos ingressos comprad
     dados_S = (Dados_S *) malloc(sizeof(Dados_S));
     dados_C = (Cliente *) malloc(sizeof(Cliente));
     
-    
     arq_cliente = fopen("clientes.dat","rb");
     if(arq_cliente == NULL)return;
     arq_show = fopen("arq_shows.dat","rb");
@@ -54,12 +53,13 @@ void exibir_rel_ingresso(Dados_I *dados_I){ // Exibe dados dos ingressos comprad
     parar = True;
     while( parar && fread(dados_S,sizeof(Dados_S),1,arq_show) == 1){ 
         if(dados_S ->id == dados_I ->id_show){
-        parar = False;
+            parar = False;
         }
         else fseek(arq_show,dados_S ->tam_DHD + dados_S ->tam_personagem,SEEK_CUR);
     }
-    printf("|%-16s|%-47s|%s - %-32.3d|%-9s|%.4d|\n",dados_I ->cpf,dados_C ->nome,dados_S ->nome,dados_S ->id,dados_I ->cadeira,dados_I ->id);
-    printf("|-----------------------------------------------------------------------------------------------------------------------|\n");
+    
+    printf("|%-16s|%-47s|%-3.3d - %-37s|%-9s|%.4d|\n",dados_I ->cpf,dados_C ->nome,dados_S ->id,dados_S ->nome,dados_I ->cadeira,dados_I ->id);
+    printf("|---------------------------------------------------------------------------------------------------------------------------|\n");
    
     
     fclose(arq_cliente);
@@ -108,7 +108,7 @@ void exibir_ingresso(Dados_I *dados_I,int revelar){ // Exibe os dados do ingress
     printf("+---------------------------------------------------------------+\n");   
     printf("| CPF          : %-46s |\n",dados_I->cpf);
     printf("| Cliente      : %-46s |\n",dados_C ->nome);
-    printf("| Nome-Id Show : %s - %-38.3d  |\n",dados_S ->nome,dados_S ->id);
+    printf("| Nome-Id Show : %.4d - %-40s  |\n",dados_S ->id,dados_S ->nome);
     printf("| Cadeira      : %-46s |\n",dados_I->cadeira);
     if(revelar)printf("| Id_Ingresso  : %-46.4d |\n",dados_I->id);
     printf("+---------------------------------------------------------------+\n");
@@ -121,12 +121,18 @@ void pesquisar_ingresso(Dados_I *dados,char *cpf_lido){ // Procura os dados de u
     limparTela();
     FILE *arq_ingresso;
     arq_ingresso = fopen("arq_ingresso.dat","rb");
+    if(arq_ingresso == NULL){
+        printf("ERRO AO ABRIR ARQUIVO DE INGRESSOS\n");
+        pausar();
+        exit(1);
+    }
 
     while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
         if(strcmp(dados ->cpf,cpf_lido) == 0 && dados ->status == True){
             exibir_ingresso(dados,True);
         }
     }
+    fclose(arq_ingresso);
 }
 
 void exibir_cadeiras(int id_show){
@@ -267,7 +273,7 @@ void altera_cadeira(char *assento,int id_parametro){
 //######################################## FUNÇÕES DE PROCURA/CRIAÇÃO DO MÓDULO SHOWS #############################################
 
 void exibir_inf_cadastro(Cabecalho *cabecalho,int revelar){
-    printf("\n+---------------------------------------------------------------+\n");
+    printf("+---------------------------------------------------------------+\n");
     printf("|                     DADOS DO SHOW                             |\n");
     printf("+---------------------------------------------------------------+\n");   
     if(revelar)printf("| ID       : %-50.3d |\n", cabecalho ->dados ->id);
@@ -278,14 +284,15 @@ void exibir_inf_cadastro(Cabecalho *cabecalho,int revelar){
 }
 
 int escolha_cad_show(Cabecalho *cabecalho){ 
-    char escolha[2];
+    char escolha[50];
     int saida;
     int parar;
     parar = True;
     while(parar){ 
-        exibir_inf_cadastro(cabecalho,0);
-        printf("CADASTRAR SHOW - SIM(S)/NAO(N): ");
-        ler_string(escolha,2);
+        limparTela();
+        exibir_inf_cadastro(cabecalho,False);
+        printf("CADASTRAR - EXCLUIR SHOW - SIM(S)/NAO(N): ");
+        ler_string(escolha,50);
         if(strcmp(escolha,"S") == 0 || strcmp(escolha,"s") == 0){
             saida = True;
             parar = False;
@@ -303,7 +310,7 @@ void pesquisa_show(Cabecalho *cabecalho){
     cabecalho ->encontrado = True;
     cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
     while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1 && cabecalho ->encontrado){
-        if(cabecalho ->id_lido == cabecalho ->dados ->id && cabecalho ->dados ->status == True ){
+        if(cabecalho ->id_lido == cabecalho ->dados ->id && cabecalho ->dados ->status == True){
             cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
             cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
             fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
@@ -340,7 +347,7 @@ void cria_cadeiras(int id_parametro){
     free(cadeiras);
 }
 
-void apaga_cadeiras(int id_parametro){
+void apaga_cadeiras(int id_parametro){ // Apaga determido grupo de assentos do show pelo id especificado no parâmetro
     Cadeiras *cadeira;
     FILE *arq_cadeiras;
     cadeira = (Cadeiras *) malloc(sizeof(Cadeiras));
@@ -353,17 +360,38 @@ void apaga_cadeiras(int id_parametro){
     }
      
     while(fread(cadeira,sizeof(Cadeiras),1,arq_cadeiras) == 1){
-        if(cadeira ->id == id_parametro){
+        if(cadeira ->id == id_parametro && cadeira ->status == True){
             fseek(arq_cadeiras,-sizeof(Cadeiras),SEEK_CUR);
             cadeira ->status = False;
             fwrite(cadeira,sizeof(Cadeiras),1,arq_cadeiras);
             break;
         }
     }
+    fclose(arq_cadeiras);
+    free(cadeira);
 }
 
 void apaga_ingressos(int id_parametro){
+    Dados_I *dados;
+    FILE *arq_ingresso;
+    dados = (Dados_I *) malloc(sizeof(Dados_I));
+    arq_ingresso = fopen("arq_ingresso.dat","r+b");
+    if(arq_ingresso == NULL){
+        printf("ERRO AO ABRIR ARQUIVO DE INGRESSOS/n");
+        pausar();
+        exit(1);
+    }
 
+    while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
+        if(dados ->id_show  == id_parametro && dados ->status == True){
+            dados ->status = False;
+            fseek(arq_ingresso,-sizeof(Dados_I),SEEK_CUR);
+            fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
+            fseek(arq_ingresso, 0, SEEK_CUR);
+        }
+    }
+    fclose(arq_ingresso);
+    free(dados);
 }
 
 
