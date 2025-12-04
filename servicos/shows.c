@@ -130,7 +130,7 @@ void excluir_Show(){
 
     }while(compara && !controle ->valida);
     
-    cabecalho ->arq_shows = fopen("arq_shows.dat","r+b");
+    cabecalho ->arq_shows = fopen("arq_shows.dat","rb+");
     if(cabecalho ->arq_shows == NULL){
         printf("PROBLEMAS AO ABRIR O ARQUIVO DE SHOWS\n");
         pausar();
@@ -144,20 +144,22 @@ void excluir_Show(){
             fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
             fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
             if(escolha_cad_show(cabecalho)){ 
-                cabecalho ->dados ->status = False;
+                cabecalho ->dados ->status = 0;
                 apaga_cadeiras(converte_numero(leitura_id));
                 apaga_ingressos(converte_numero(leitura_id));
-                fseek(cabecalho ->arq_shows,-sizeof(Dados_S),SEEK_CUR);
+                fseek(cabecalho ->arq_shows,-(sizeof(Dados_S) + cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem),SEEK_CUR);
                 fwrite(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows);
                 printf("SHOW APAGADO\n");
                 free(cabecalho ->DHD);
                 free(cabecalho ->persona);
                 break;
             }
+            else{
+                printf("SHOW NÃO EXCLUIDO\n");
+                break;
+            }
         }
-        else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem, SEEK_CUR);
     }
-    
     
     fclose(cabecalho ->arq_shows);
     free(controle);

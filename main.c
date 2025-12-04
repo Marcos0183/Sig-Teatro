@@ -184,7 +184,7 @@ int main(void) {
         limparTela();
         if (!banner_mostrado) {
             mostrar_banner();
-            func_Ani(2000000);
+            func_Ani(2);
             limparTela();
             banner_mostrado = 1; 
         }
