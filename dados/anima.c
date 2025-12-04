@@ -5,7 +5,7 @@
 #include "utils.h"
 #define TAM_LINHA 60
 #define TAM_INTERNO (TAM_LINHA - 2)
-#ifdef _WIN64 // Caso windows 64, use:
+#ifdef _WIN32 // Caso windows 64, use:
     #include <windows.h>  //Trecho de código tirado do ChatGPT
 #else // Se não, Linux,Mcos, use:
     #include <unistd.h>
@@ -45,14 +45,10 @@ void ani_Encerrar(){
 }
 
 void func_Ani(int tempo){  //Função retirada do ChatGPT 4.0
-    #ifdef _WIN64
+    #ifdef _WIN32
         Sleep(tempo);
     #else
         usleep(tempo * 1000); 
-        //struct timespec ts;
-        //ts.tv_sec = tempo / 1000;                 
-        //ts.tv_nsec = (tempo % 1000) * 1000000L;   
-        //nanosleep(&ts, NULL);
     #endif
 }
 

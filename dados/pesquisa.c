@@ -68,6 +68,39 @@ void exibir_rel_ingresso(Dados_I *dados_I){ // Exibe dados dos ingressos comprad
     free(dados_S);
 }
     
+void exibir_rel_show(ListaID *lista){
+    Cabecalho *cabecalho;
+    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
+    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
+
+    cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
+    if(cabecalho ->arq_shows == NULL){
+        printf("ERRO AO ABRIR ARQUIVO DE SHOWS\n");
+        pausar();
+        exit(1);
+    }
+    
+    ListaID *temp = lista;
+    while(temp != NULL){
+        cabecalho ->encontrado = True;
+        while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1 && cabecalho ->encontrado){
+            if(temp ->id == cabecalho ->dados ->id){
+                cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
+                fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
+                cabecalho ->encontrado = False;
+                printf("|%-5.3d|%-44s|%-41s|\n",cabecalho ->dados ->id,cabecalho ->dados ->nome,cabecalho ->DHD);
+                printf("|--------------------------------------------------------------------------------------------|\n");
+            }
+            else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
+        }
+        temp = temp ->prox;
+        rewind(cabecalho ->arq_shows);
+       
+    }
+    fclose(cabecalho ->arq_shows);
+    free(cabecalho ->dados);
+    free(cabecalho);
+}
 
 //######################################### FUNÇÕES DE PROCURA DO MÓDULO INGRESSO #################################################
 
@@ -395,9 +428,77 @@ void apaga_ingressos(int id_parametro){
 }
 
 
+//######################################## FUNÇÕES DE PROCURA PARA CRIAÇÃO DE LISTAS ###############################################
 
+ListaID *listaI_id_show(){
+    Dados_S *dados;
+    ListaID *lista_id;
+    ListaID *id;
+    FILE *arq_show;
+    
+    dados = (Dados_S *) malloc(sizeof(Dados_S));
+    lista_id = NULL;
 
+    arq_show = fopen("arq_shows.dat","rb");
+    if(arq_show == NULL){
+        printf("ERRO AO ABRIR ARQUIVO\n");
+        pausar();
+        exit(1);
+    }
 
+    while(fread(dados,sizeof(Dados_S),1,arq_show) == 1){
+        if(dados ->status == True){ 
+            id = (ListaID *) malloc(sizeof(ListaID));
+            id ->id = dados ->id;
+            id ->prox = lista_id;
+            lista_id = id;
+        }
+        fseek(arq_show,dados ->tam_DHD + dados ->tam_personagem,SEEK_CUR);
+    }
+    return lista_id;
+}
+
+ListaID *listaD_id_show(){
+    Dados_S *dados;
+    ListaID *lista_id;
+    ListaID *id;
+    ListaID *novo;
+    FILE *arq_show;
+    
+    dados = (Dados_S *) malloc(sizeof(Dados_S));
+    novo = (ListaID *) malloc(sizeof(ListaID));
+
+    arq_show = fopen("arq_shows.dat","rb");
+    if(arq_show == NULL){
+        printf("ERRO AO ABRIR ARQUIVO\n");
+        pausar();
+        exit(1);
+    }
+    
+    novo ->id = 0; 
+    novo ->prox = NULL;
+    lista_id = novo;
+
+    while(fread(dados,sizeof(Dados_S),1,arq_show) == 1){
+        if(dados ->status == False){
+            id = novo;
+            novo = (ListaID *) malloc(sizeof(ListaID));
+            novo ->id = dados ->id;
+            id ->prox = novo;
+            novo ->prox = NULL;
+        }
+        fseek(arq_show,dados ->tam_DHD + dados ->tam_personagem,SEEK_CUR);
+    }
+    
+    ListaID *tem = lista_id;
+    while(tem != NULL){
+        printf("%.3d",tem ->id);
+        tem = tem ->prox;
+    }
+    pausar();
+
+    return lista_id;
+}
 
 
 

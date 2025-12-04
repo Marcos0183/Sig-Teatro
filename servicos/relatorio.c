@@ -302,33 +302,23 @@ int contar_ingressos_por_show(int id_show) {
 }
 
 void listar_shows_ativos(){
-    Cabecalho *cabecalho;
-    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
-    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
+    ListaID *lista;
     char titulo[16] = "SHOWS AGENDADOS";
     func_Ani_Left(titulo);
-
-    cabecalho ->encontrado = True;
-    cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
-    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
-        if(cabecalho ->dados ->status == True ){
-            cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
-            cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
-            fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
-            fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
-            exibir_inf_cadastro(cabecalho,True);
-            cabecalho ->encontrado = False;
-            free(cabecalho ->DHD);
-            free(cabecalho ->persona);
-        }
-        else{
-            fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
-        }
+   
+    lista = listaI_id_show();
+    printf("\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("|ID   |NOME                                        |DHD - DATA - HORA - DURACAO              |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    exibir_rel_show(lista);
+    
+    ListaID *temp = lista;
+    while(lista !=NULL){
+        lista = lista ->prox;
+        free(temp);
+        temp = lista;
     }
-    if(cabecalho ->encontrado)printf("SEM SHOWS AGENDADOS\n");
-    fclose(cabecalho ->arq_shows);
-    free(cabecalho ->dados);
-    free(cabecalho);
     pausar();
 }
 
@@ -371,33 +361,16 @@ void relatorio_ocupacao_shows() {
 }
 
 void listar_shows_inativos(){
-    Cabecalho *cabecalho;
-    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
-    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
-    char titulo[20] = "SHOWS APRESENTADOS";
+    ListaID *lista;
+    char titulo[16] = "SHOWS AGENDADOS";
     func_Ani_Left(titulo);
-
-    cabecalho ->encontrado = True;
-    cabecalho ->arq_shows = fopen("arq_shows.dat","rb");
-    while(fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
-        if(cabecalho ->dados ->status == False){
-            cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
-            cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
-            fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
-            fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
-            exibir_inf_cadastro(cabecalho,1);
-            free(cabecalho ->DHD);
-            free(cabecalho ->persona);
-            cabecalho ->encontrado = False;
-        }
-        else{
-            fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
-        }
-    }
-    if(cabecalho ->encontrado)printf("SEM SHOWS APRESENTADOS\n");
-    fclose(cabecalho ->arq_shows);
-    free(cabecalho ->dados);
-    free(cabecalho);
+   
+    lista = listaD_id_show();
+    printf("\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("|ID   |NOME                                        |DHD - DATA DURACAO E HORA                |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    exibir_rel_show(lista);
     pausar();
 }
 

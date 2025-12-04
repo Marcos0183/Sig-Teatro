@@ -31,5 +31,11 @@ void apaga_cadeiras(int id_parametro);
 
 void apaga_ingressos(int id_parametro);
 
+ListaID *listaI_id_show();
+
+void exibir_rel_show(ListaID *);
+
+ListaID *listaD_id_show();
+
 #endif
 

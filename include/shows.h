@@ -20,6 +20,7 @@ typedef struct cadeiras_0 Cadeiras;
 typedef struct cadastro_Shows Dados_S;
 typedef struct cadastro_Temp Dados_Temp;
 typedef struct cabecalho_0 Cabecalho;
+typedef struct lista_id ListaID;
 
 struct cadeiras_0
 {
@@ -53,5 +54,9 @@ struct cabecalho_0{
     Dados_S *dados;
 };
 
+struct lista_id{
+    int id;
+    ListaID *prox;
+};
 
 #endif
