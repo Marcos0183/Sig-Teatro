@@ -58,7 +58,6 @@ void cadastrar_Show(){
             if(!parar)break;
             parar = ler_duracao(cabecalho);
             if(!parar)break;
-            
         }
         }while(parar && !(parar == 2));
     }
@@ -90,80 +89,41 @@ void cadastrar_Show(){
 }
 
 void excluir_Show(){
-    int compara;
-    char leitura_id[50];
-    Cabecalho *cabecalho;
-    SEP * controle;
-    cabecalho = (Cabecalho *) malloc(sizeof(Cabecalho));
-    cabecalho ->dados = (Dados_S *) malloc(sizeof(Dados_S));
-    controle = (SEP *) malloc(sizeof(SEP));
-    controle ->valida = False;
- 
-    do{ 
-        limparTela();
-        char titulo[16] = "EXCLUIR SHOW";
-        func_Ani_Left(titulo);
-        printf("\n");
-        printf("-----------------------------------\n");
-        printf("|  INSIRA O CODIGO DO SHOW - DIGITE (S) PARA SAIR: ");
-        ler_string(leitura_id,50);
-        retira_char(leitura_id,' ');
-        printf("V----------------------------------\n");
-        compara = strcmp(leitura_id,"S") != 0 && strcmp(leitura_id,"s") != 0;
+    int id_lido;
+    int encontrado;
+    Dados_S *dados;
+    dados = (Dados_S *) malloc(sizeof(Dados_S));
+    FILE *arq_shows;
+    char titulo[16] = "EXCLUIR SHOW";
+    func_Ani_Left(titulo);
 
-        if(compara){
-            valida_ler_codigo(controle,leitura_id);
-            switch (controle ->error){
-                case 1:
-                printf("\n");
-                printf("SHOW NÃO ENCONTRADO\n");
-                pausar();
-                break;
 
-                case 2:
-                printf("\n");
-                printf("CÓDIGO DO SHOW INVALIDO, DIGITE APENAS NUMEROS\n");
-                pausar();
-                break;
-            }
+    printf("\n \n");
+    printf("╔═════════════════════════════════╗\n");
+    printf("║     INSIRA O CÓDIGO DO SHOW:      ║\n");
+    printf("╚═════════════════════════════════╝\n");
+    printf("--> ");
+    scanf("%d",&id_lido);
+    getchar();
+    
+    encontrado = True;
+    arq_shows = fopen("arq_shows.dat","r+b");
+    if(arq_shows == NULL)return;
+    while(fread(dados,sizeof(Dados_S),1,arq_shows) == 1){
+        if(id_lido == dados ->id && dados ->status == True){
+            dados ->status = False;
+            fseek(arq_shows,-1*sizeof(Dados_S),SEEK_CUR);
+            fwrite(dados,sizeof(Dados_S),1,arq_shows);
+            encontrado = False;
+            printf("SHOW EXCLUÍDO!\n");
         }
+        else fseek(arq_shows,dados ->tam_DHD + dados ->tam_personagem,SEEK_CUR);
+    }
 
-    }while(compara && !controle ->valida);
-    
-    cabecalho ->arq_shows = fopen("arq_shows.dat","r+b");
-    if(cabecalho ->arq_shows == NULL){
-        printf("PROBLEMAS AO ABRIR O ARQUIVO DE SHOWS\n");
-        pausar();
-        return;
-    }
-    
-    while(controle ->valida && fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
-        if(converte_numero(leitura_id) == cabecalho ->dados ->id && cabecalho ->dados ->status == True){
-            cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
-            cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
-            fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
-            fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
-            if(escolha_cad_show(cabecalho)){ 
-                cabecalho ->dados ->status = False;
-                apaga_cadeiras(converte_numero(leitura_id));
-                apaga_ingressos(converte_numero(leitura_id));
-                fseek(cabecalho ->arq_shows,-sizeof(Dados_S),SEEK_CUR);
-                fwrite(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows);
-                printf("SHOW APAGADO\n");
-                free(cabecalho ->DHD);
-                free(cabecalho ->persona);
-                break;
-            }
-        }
-        else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem, SEEK_CUR);
-    }
-    
-    
-    fclose(cabecalho ->arq_shows);
-    free(controle);
-    free(cabecalho ->dados);
-    free(cabecalho);
-    pausar();
+    if(encontrado) printf("SHOW NÃO ENCONTRADO!\n");
+    fclose(arq_shows);
+    free(dados);
+    pausar();  
 }
 
 void atualizar_Show(){
@@ -254,5 +214,3 @@ void shows(){
         }
     } while (executar_S != 0);
 }
-
-

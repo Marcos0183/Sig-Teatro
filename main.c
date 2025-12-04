@@ -118,60 +118,58 @@ void equipe(){
 
 
     printf("\n \n");
-    printf("#########################################################################\n");
+    printf("╔═══════════════════════════════════════════════════════════════════════╗\n");
     func_Ani(tempo_Eq);
-    printf("             Universidade Federal do Rio Grande do Norte                 \n");
+    printf("║             Universidade Federal do Rio Grande do Norte                 ║\n");
     func_Ani(tempo_Eq);
-    printf("                 Disciplina DCT1106 -- Programacao                       \n");
+    printf("║                 Disciplina DCT1106 -- Programacao                       ║\n");
     func_Ani(tempo_Eq);
-    printf("                   Professor: Flavius Gorgonio                           \n");
+    printf("║                   Professor: Flavius Gorgonio                           ║\n");
     func_Ani(tempo_Eq);
-    printf("#########################################################################\n");
+    printf("╠═══════════════════════════════════════════════════════════════════════╣\n");
     func_Ani(tempo_Eq);
-    printf("-+-+-+-+-+-+-+-+-+- Sistema de Gestao de Teatro +-+-+-+-+-+-+-+-+-+-+-+-+\n");
+    printf("║               Sistema de Gestao de Teatro (SIG-THEATER)                 ║\n");
     func_Ani(tempo_Eq);
-    printf("#########################################################################\n");
-    func_Ani(tempo_Eq);
-    printf("\n");
-    printf("             Projeto desenvolvido por:                                   \n");
-    func_Ani(tempo_Eq);
-    printf("             Aluno 1: Emilly Elidia Andrade Macedo dos Santos            \n");
-    func_Ani(tempo_Eq);
-    printf("             Aluno 2: Marcos Vinícius Dantas da Silva                    \n");
-    func_Ani(tempo_Eq);
-    printf("             Aluno 3: Felipe Eduardo Silva Fernandes                     \n");
-    func_Ani(tempo_Eq);
-    printf("             Aluno 4: Andriel Pereira Nogueira                           \n");
+    printf("╠═══════════════════════════════════════════════════════════════════════╣\n");
     func_Ani(tempo_Eq);
     printf("\n");
+    printf("║             Projeto desenvolvido por:                                   ║\n");
     func_Ani(tempo_Eq);
-    printf("#########################################################################\n");
+    printf("║             Aluno 1: Emilly Elidia Andrade Macedo dos Santos            ║\n");
+    func_Ani(tempo_Eq);
+    printf("║             Aluno 2: Marcos Vinícius Dantas da Silva                    ║\n");
+    func_Ani(tempo_Eq);
+    printf("║             Aluno 3: Felipe Eduardo Silva Fernandes                     ║\n");
+    func_Ani(tempo_Eq);
+    printf("║             Aluno 4: Andriel Pereira Nogueira                           ║\n");
+    func_Ani(tempo_Eq);
+    printf("\n");
+    func_Ani(tempo_Eq);
+    printf("╚═══════════════════════════════════════════════════════════════════════╝\n");
     func_Ani(tempo_Eq);
     pausar();
     printf("\n \n \n");
 }
 
 
-
 void proj_Descrit(){
     limparTela();
     printf("\n \n");
-    printf("=========================================================================================\n");
-    printf("|                   Universidade Federal do Rio Grande do Norte                          |\n");
-    printf("|                        Disciplina DCT1106 -- Programacao                               |\n");
-    printf("|                           Professor: Flavius Gorgonio                                  |\n");
-    printf("|                                                                                        |\n");
-    printf("|   O Sistema de Gestao Teatral ou SGT, trata-se codigo produzido para fins pontuacao    |\n");
-    printf("|   na disciplina de Programacao administrada pelo Professor Flavius Gorgonio.           |\n");
-    printf("|                                                                                        |\n");
-    printf("|   A linguagem de programacao utilizada e o C, se restrigindo apenas as suas bibliotecas|\n");
-    printf("|   padroes.                                                                             |\n");
-    printf("|                                                                                        |\n");
-    printf("|   O sistema SGT e um software que gerencia e armazena dados referentes a uma casa de   |\n");
-    printf("|   tetro, contanto com 5 modulos: Clientes, Ingresso, Shows, Sessoes, Tecnicos          |\n");               
-    printf("|   e Relatorios.                                                                        |\n");
-    printf("|                                                                                        |\n");
-    printf("=========================================================================================\n");
+    printf("╔═══════════════════════════════════════════════════════════════════════════════════════╗\n");
+    printf("║                   Universidade Federal do Rio Grande do Norte                           ║\n");
+    printf("║                        Disciplina DCT1106 -- Programacao                                ║\n");
+    printf("║                           Professor: Flavius Gorgonio                                   ║\n");
+    printf("╠═══════════════════════════════════════════════════════════════════════════════════════╣\n");
+    printf("║   O Sistema de Gestao Teatral (SIG-THEATER) é um projeto para a disciplina de           ║\n");
+    printf("║   Programação. O objetivo é gerenciar as operações de um teatro, como o cadastro        ║\n");
+    printf("║   de clientes, técnicos e espetáculos, além da venda de ingressos e geração de          ║\n");
+    printf("║   relatórios.                                                                           ║\n");
+    printf("║                                                                                         ║\n");
+    printf("║   A linguagem de programação utilizada é o C, restringindo-se apenas às suas            ║\n");
+    printf("║   bibliotecas padrões.                                                                  ║\n");
+    printf("║                                                                                         ║\n");
+    printf("║   Módulos: Clientes, Ingressos, Shows, Técnicos e Relatórios.                           ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════════════════════════╝\n");
     pausar();
     printf("\n \n");
 }
@@ -184,7 +182,7 @@ int main(void) {
         limparTela();
         if (!banner_mostrado) {
             mostrar_banner();
-            func_Ani(2000000);
+            func_Ani(2);
             limparTela();
             banner_mostrado = 1; 
         }

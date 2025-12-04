@@ -45,14 +45,14 @@ void menu_cliente(){
 
 void exibir_cliente(Cliente* clt) {
     
-    printf("\n+---------------------------------------------------------------+\n");
-    printf("|                     DADOS DO CLIENTE                          |\n");
-    printf("+---------------------------------------------------------------+\n");   
-    printf("| CPF      : %-50s |\n", clt->cpf);
-    printf("| Nome     : %-50s |\n", clt->nome);
-    printf("| E-mail   : %-50s |\n", clt->email);
-    printf("| Telefone : %-50s |\n", clt->telefone);
-    printf("+---------------------------------------------------------------+\n");
+    printf("\n╔═════════════════════════════════════════════════════════════╗\n");
+    printf("║                     DADOS DO CLIENTE                          ║\n");
+    printf("╠═════════════════════════════════════════════════════════════╣\n");
+    printf("║ CPF      : %-50s ║\n", clt->cpf);
+    printf("║ Nome     : %-50s ║\n", clt->nome);
+    printf("║ E-mail   : %-50s ║\n", clt->email);
+    printf("║ Telefone : %-50s ║\n", clt->telefone);
+    printf("╚═════════════════════════════════════════════════════════════╝\n");
 }
 
 
@@ -103,10 +103,10 @@ int cpf_existente(char *cpf) {
 
     while (fread(clt, sizeof(Cliente), 1, arq_clientes) == 1) {        // Percorre o arquivo de clientes
         if ((strcmp(clt->cpf, cpf) == 0) && (clt->status == true)) {   // Compara o CPF lido com o CPF do cliente atual
-            printf("======================================================\n");
-            printf("CPF já cadastrado. Por favor, insira um CPF diferente.\n");
-            printf("operação cancelada.\n");
-            printf("======================================================\n");  
+            printf("╔════════════════════════════════════════════════════════════╗\n");
+            printf("║ CPF já cadastrado. Por favor, insira um CPF diferente.     ║\n");
+            printf("║ Operação cancelada.                                        ║\n");
+            printf("╚════════════════════════════════════════════════════════════╝\n");
             fclose(arq_clientes);
             free(clt);
             return false;
@@ -167,7 +167,7 @@ void atualizar_cliente(){
     func_Ani_Left(titulo);
 
     ler_cpf(cpf_lido1);
-    printf("===================================\n");
+    printf("═══════════════════════════════════\n");
 
     arq_clientes = fopen("clientes.dat", "r+b");                          // Abre o arquivo em modo leitura e escrita
     if (arq_clientes == NULL) {
@@ -194,8 +194,8 @@ void atualizar_cliente(){
             }
             fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);
             fwrite(clt, sizeof(Cliente), 1, arq_clientes);
-            printf("=================================\n");
-            printf("Cliente com CPF %s atualizado com sucesso.\n", cpf_lido1);
+            printf("═════════════════════════════════\n");
+            printf("Cliente com CPF '%s' atualizado com sucesso.\n", cpf_lido1);
             pausar();
         } 
     }
@@ -203,7 +203,7 @@ void atualizar_cliente(){
     fclose(arq_clientes);
     free(clt);
     if (!encontrado) {
-        printf("Cliente com CPF %s não encontrado.\n", cpf_lido1);
+        printf("Cliente com CPF '%s' não encontrado.\n", cpf_lido1);
         pausar();
         return;
     }
@@ -226,7 +226,7 @@ void pesquisar_cliente(){
 
     printf("\n \n");
     ler_cpf(cpf_lido);
-    printf("-----------------------------------\n");
+    printf("═══════════════════════════════════\n");
 
     arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
@@ -248,7 +248,7 @@ void pesquisar_cliente(){
     } 
     fclose(arq_clientes); 
     free(clt);
-    printf("Cliente com CPF %s não encontrado.\n", cpf_lido);
+    printf("Cliente com CPF '%s' não encontrado.\n", cpf_lido);
     pausar();
 }
 
@@ -271,7 +271,7 @@ void excluir_cliente() {
     printf("\n \n");
 
     ler_cpf(cpf_lido);
-    printf("-----------------------------------\n");
+    printf("═══════════════════════════════════\n");
 
     arq_clientes = fopen("clientes.dat", "r+b");
     if (arq_clientes == NULL) {
@@ -292,7 +292,7 @@ void excluir_cliente() {
                 clt->status = false;
                 fseek(arq_clientes, -sizeof(Cliente), SEEK_CUR);                 // Move o ponteiro de arquivo de volta para o início do registro do cliente
                 fwrite(clt, sizeof(Cliente), 1, arq_clientes);                   // Atualiza o registro do cliente no arquivo
-                printf("Cliente com CPF %s encontrado e excluido.\n", cpf_lido);
+                printf("Cliente com CPF '%s' encontrado e excluido.\n", cpf_lido);
             } else {                                                             // Cancelamento da exclusão
                 printf("Operação de exclusão cancelada.\n");
                 fclose(arq_clientes);
@@ -307,7 +307,7 @@ void excluir_cliente() {
     free(clt);
 
     if (!encontrado) {
-        printf("Cliente com CPF %s não encontrado.\n", cpf_lido);
+        printf("Cliente com CPF '%s' não encontrado.\n", cpf_lido);
     }
 
     pausar();
