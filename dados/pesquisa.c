@@ -490,13 +490,6 @@ ListaID *listaD_id_show(){
         fseek(arq_show,dados ->tam_DHD + dados ->tam_personagem,SEEK_CUR);
     }
     
-    ListaID *tem = lista_id;
-    while(tem != NULL){
-        printf("%.3d",tem ->id);
-        tem = tem ->prox;
-    }
-    pausar();
-
     return lista_id;
 }
 
