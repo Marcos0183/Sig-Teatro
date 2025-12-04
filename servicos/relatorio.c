@@ -371,7 +371,14 @@ void listar_shows_inativos(){
     printf("|ID   |NOME                                        |DHD - DATA DURACAO E HORA                |\n");
     printf("----------------------------------------------------------------------------------------------\n");
     exibir_rel_show(lista);
+    ListaID *temp = lista;
+    while(lista !=NULL){
+        lista = lista ->prox;
+        free(temp);
+        temp = lista;
+    }
     pausar();
+    
 }
 
 void relatorio_shows(){ 
