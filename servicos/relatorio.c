@@ -85,7 +85,7 @@ void listar_clientes_inativos() {
 }
 
 
-NoCliente* carregar_clientes_ordenados() {
+NoCliente* carregar_clientes_ordenados() { //Créditos Gemini
     FILE* arq_clientes = fopen("clientes.dat", "rb");
     if (arq_clientes == NULL) {
         return NULL;
@@ -96,14 +96,17 @@ NoCliente* carregar_clientes_ordenados() {
 
     while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
         if (clt.status == true) {
+            // Aloca memória para um novo "nó" da lista.
             NoCliente* novo = (NoCliente*) malloc(sizeof(NoCliente));
             novo->cliente = clt;
 
-            // Inserção ordenada
+            // LÓGICA DE INSERÇÃO ORDENADA (Insertion Sort em lista ligada)
+            // Se a lista está vazia ou o novo nome vem antes do primeiro, insere no início.
             if (lista == NULL || strcmp(novo->cliente.nome, lista->cliente.nome) < 0) {
                 novo->prox = lista;
                 lista = novo;
             } else {
+                // Senão, percorre a lista para achar a posição correta e insere no meio/fim.
                 NoCliente* atual = lista;
                 while (atual->prox != NULL && strcmp(novo->cliente.nome, atual->prox->cliente.nome) > 0) {
                     atual = atual->prox;
@@ -114,22 +117,26 @@ NoCliente* carregar_clientes_ordenados() {
         }
     }
     fclose(arq_clientes);
+    // Retorna o ponteiro para o início da lista, agora ordenada.
     return lista;
 }
 
-void listar_clientes_ordenados_alfabeticamente() {
+void listar_clientes_ordenados_alfabeticamente() { //Créditos Gemini
     limparTela();
     char titulo[40] = "CLIENTES ORDENADOS POR NOME";
     func_Ani_Left(titulo);
     printf("\n\n");
 
+    // Carrega os clientes do arquivo para uma lista já ordenada em memória.
     NoCliente* lista = carregar_clientes_ordenados();
     NoCliente* p = lista;
+    // Percorre a lista ligada do início ao fim.
     while (p != NULL) {
         exibir_cliente(&p->cliente);
+        // Libera a memória do nó atual após exibi-lo para evitar vazamentos.
         NoCliente* temp = p;
-        p = p->prox;
-        free(temp); // Libera a memória do nó após exibi-lo
+        p = p->prox; // Avança para o próximo nó.
+        free(temp); 
     }
 
     pausar();
@@ -205,7 +212,7 @@ void listar_tecnicos_inativos() {
 }
 
 
-NoTecnico* carregar_tecnicos_ordenados() {
+NoTecnico* carregar_tecnicos_ordenados() { //Créditos Gemini
     FILE* arq_tecnicos = fopen("tecnicos.dat", "rb");
     if (arq_tecnicos == NULL) {
         return NULL;
@@ -214,12 +221,15 @@ NoTecnico* carregar_tecnicos_ordenados() {
     NoTecnico* lista = NULL;
     Tecnico tec;
 
+    // Lê cada técnico do arquivo.
     while (fread(&tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {
         if (tec.status == true) {
+            // Aloca um novo "nó" para a lista.
             NoTecnico* novo = (NoTecnico*) malloc(sizeof(NoTecnico));
             novo->tecnico = tec;
 
-            // Inserção ordenada
+            // LÓGICA DE INSERÇÃO ORDENADA (igual à de clientes).
+            // Insere o novo técnico na posição correta para manter a ordem alfabética.
             if (lista == NULL || strcmp(novo->tecnico.nome, lista->tecnico.nome) < 0) {
                 novo->prox = lista;
                 lista = novo;
@@ -234,22 +244,25 @@ NoTecnico* carregar_tecnicos_ordenados() {
         }
     }
     fclose(arq_tecnicos);
+    // Retorna a lista ordenada.
     return lista;
 }
 
-void listar_tecnicos_ordenados_alfabeticamente() {
+void listar_tecnicos_ordenados_alfabeticamente() { //Créditos Gemini
     limparTela();
     char titulo[40] = "TÉCNICOS ORDENADOS POR NOME";
     func_Ani_Left(titulo);
     printf("\n\n");
 
+    // Carrega os técnicos em uma lista já ordenada.
     NoTecnico* lista = carregar_tecnicos_ordenados();
     NoTecnico* p = lista;
+    // Percorre a lista, exibe os dados e libera a memória de cada nó.
     while (p != NULL) {
         exibir_tecnico(&p->tecnico);
         NoTecnico* temp = p;
-        p = p->prox;
-        free(temp); // Libera a memória do nó após exibi-lo
+        p = p->prox; // Avança para o próximo.
+        free(temp); 
     }
 
     pausar();
@@ -284,6 +297,7 @@ void relatorio_tecnico(){
 
 //###########################################  FUNÇÕES DO MODO RELATÓRIO SHOWS  ###########################################################
 
+// Função auxiliar: Abre e lê o arquivo de ingressos para contar quantos foram vendidos para um show específico.
 int contar_ingressos_por_show(int id_show) {
     FILE* arq_ingresso = fopen("arq_ingresso.dat", "rb");
     if (arq_ingresso == NULL) {
@@ -322,7 +336,7 @@ void listar_shows_ativos(){
     pausar();
 }
 
-void relatorio_ocupacao_shows() {
+void relatorio_ocupacao_shows() { //Créditos Gemini
     limparTela();
     char titulo[] = "RELATÓRIO DE OCUPAÇÃO POR SHOW";
     func_Ani_Left(titulo);
@@ -343,11 +357,13 @@ void relatorio_ocupacao_shows() {
     int shows_encontrados = 0;
     while (fread(&show, sizeof(Dados_S), 1, arq_shows) == 1) {
         if (show.status == true) {
+            // Para cada show, chama a função que abre e lê o arquivo de ingressos inteiro.
             int vendidos = contar_ingressos_por_show(show.id);
             float ocupacao = (vendidos / 100.0) * 100.0;
             printf("║ %-7d │ %-32s │ %-11d │ %-8.1f%% ║\n", show.id, show.nome, vendidos, ocupacao);
             shows_encontrados++;
         }
+        // Pula os dados de tamanho variável (DHD e persona) para ir ao próximo registro de show.
         fseek(arq_shows, show.tam_DHD + show.tam_personagem, SEEK_CUR);
     }
 
@@ -410,6 +426,7 @@ void relatorio_shows(){
 
 //########################################  FUNÇÕES DO MODO RELATÓRIO INGRESSO  ###########################################################
 
+// Função auxiliar: Abre e lê o arquivo de ingressos para contar quantos um cliente comprou.
 int contar_ingressos_por_cpf(const char* cpf) {
     FILE* arq_ingresso = fopen("arq_ingresso.dat", "rb");
     if (arq_ingresso == NULL) {
@@ -428,6 +445,7 @@ int contar_ingressos_por_cpf(const char* cpf) {
 }
 
 void exibir_ingresso_com_nome_cliente(Dados_I* ingresso) {
+    // Para cada ingresso, busca o nome do cliente em seu respectivo arquivo.
     Cliente* clt = buscar_cliente_por_cpf(ingresso->cpf);
     char nome_cliente[51] = "Cliente não encontrado";
 
@@ -475,7 +493,7 @@ void listar_ingressos_ativos(){
     free(dados);
 }
 
-void relatorio_resumo_compras_cliente() {
+void relatorio_resumo_compras_cliente() { //Créditos Gemini
     limparTela();
     char titulo[] = "RESUMO DE COMPRAS POR CLIENTE";
     func_Ani_Left(titulo);
@@ -495,7 +513,8 @@ void relatorio_resumo_compras_cliente() {
     Cliente clt;
     while (fread(&clt, sizeof(Cliente), 1, arq_clientes) == 1) {
         if (clt.status == true) {
-            int num_ingressos = contar_ingressos_por_cpf(clt.cpf);
+            // Para cada cliente, chama a função que abre e lê o arquivo de ingressos inteiro.
+            int num_ingressos = contar_ingressos_por_cpf(clt.cpf); // Ineficiente em larga escala.
             printf("║ %-50s │ %-20d ║\n", clt.nome, num_ingressos);
         }
     }
@@ -562,7 +581,6 @@ void relatorio_ingressos(){
 }
 
 
-//ESCOLHA DOS MODULOS
 void relatorio() {
     int executar_R;
     int opcao_tecnico;

@@ -29,7 +29,6 @@ void menu_cliente(){
         func_Ani(tempo_cliente);
         printf("║ ► 4. Excluir Cliente                             ║\n");
         func_Ani(tempo_cliente);
-
         printf("║                                                  ║\n");
         func_Ani(tempo_cliente);
         printf("╠══════════════════════════════════════════════════╣\n");
@@ -46,12 +45,12 @@ void menu_cliente(){
 void exibir_cliente(Cliente* clt) {
     
     printf("\n╔═════════════════════════════════════════════════════════════╗\n");
-    printf("║                     DADOS DO CLIENTE                          ║\n");
+    printf("║                     DADOS DO CLIENTE                        ║\n");
     printf("╠═════════════════════════════════════════════════════════════╣\n");
-    printf("║ CPF      : %-50s ║\n", clt->cpf);
-    printf("║ Nome     : %-50s ║\n", clt->nome);
-    printf("║ E-mail   : %-50s ║\n", clt->email);
-    printf("║ Telefone : %-50s ║\n", clt->telefone);
+    printf("║ CPF      :%-50s║\n", clt->cpf);
+    printf("║ Nome     :%-50s║\n", clt->nome);
+    printf("║ E-mail   :%-50s║\n", clt->email);
+    printf("║ Telefone :%-50s║\n", clt->telefone);
     printf("╚═════════════════════════════════════════════════════════════╝\n");
 }
 
