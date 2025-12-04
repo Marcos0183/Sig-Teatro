@@ -60,7 +60,6 @@ void vender_Ingresso(){
     if(arq_ingresso == NULL)return;
 
     char texto[] = "COMPRAR INGRESSO";
-    limparTela();
     if(parar)exibir_ingresso(dados,False);
     if(parar && ler_escolha(texto)){
         dados ->id = id_ingresso();
@@ -77,7 +76,7 @@ void vender_Ingresso(){
 
 void excluir_Ingresso(){
     int parar;
-    char id_lido[50];
+    char id_lido[6];
     FILE *arq_ingresso;
     Dados_I *dados;
 
@@ -86,19 +85,20 @@ void excluir_Ingresso(){
     func_Ani_Left(titulo);
     
     do{ 
-    printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O CODIGO DO INGRESSO: ");
-    ler_string(id_lido,50);
-    retira_char(id_lido,' ');
-    printf("-----------------------------------\n");
+        printf("\n \n");
+        printf("╔═════════════════════════════════╗\n");
+        printf("║   INSIRA O CÓDIGO DO INGRESSO:    ║\n");
+        printf("╚═════════════════════════════════╝\n");
+        printf("--> ");
+        ler_string(id_lido,6);
     }while(!valida_id(id_lido) && !converte_numero(id_lido) == 0);
 
-    arq_ingresso = fopen("arq_ingresso.dat","rb+");
+    arq_ingresso = fopen("arq_ingresso.dat","r+b");
     if(arq_ingresso == NULL)return;
+   
     parar = True;
-    while(parar && fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1){
-        if(dados ->id == converte_numero(id_lido) && dados ->status == True){
+    while(fread(dados,sizeof(Dados_I),1,arq_ingresso) == 1 && parar){
+        if(dados ->id == converte_numero(id_lido)){
             dados ->status = False;
             fseek(arq_ingresso,-sizeof(Dados_I),SEEK_CUR);
             fwrite(dados,sizeof(Dados_I),1,arq_ingresso);
@@ -123,12 +123,12 @@ void atualizar_Ingresso(){
     char titulo[19] = "ATUALIZAR INGRESSO";
     func_Ani_Left(titulo);
     do{ 
-        printf("\n \n");
-        printf("-----------------------------------\n");
-        printf("|  INSIRA O CODIGO DO INGRESSO: ");
+        printf("\n\n");
+        printf("╔═════════════════════════════════╗\n");
+        printf("║   INSIRA O CÓDIGO DO INGRESSO:    ║\n");
+        printf("╚═════════════════════════════════╝\n");
+        printf("--> ");
         ler_string(id_lido,6);
-        retira_char(id_lido,' ');
-        printf("-----------------------------------\n");
         
         arq_ingresso = fopen("arq_ingresso.dat","r+b");
         if(arq_ingresso == NULL){
@@ -177,12 +177,12 @@ void pesquisar_Ingresso(){
     func_Ani_Left(titulo);
 
 
-    printf("\n \n");
-    printf("-----------------------------------\n");
-    printf("|  INSIRA O SEU CPF: ");
+    printf("\n\n");
+    printf("╔═════════════════════════════════╗\n");
+    printf("║        INSIRA O SEU CPF:          ║\n");
+    printf("╚═════════════════════════════════╝\n");
+    printf("--> ");
     ler_string(cpf_lido,20);
-    retira_char(cpf_lido,' ');
-    printf("-----------------------------------\n\n");
 
     if(valida_cliente(cpf_lido) && valida_cpf(cpf_lido)){
         pesquisar_ingresso(dados,cpf_lido);
@@ -231,11 +231,3 @@ void ingresso(){
         }
     } while (executar_I[0] != '0');
 }
-
-
-
-
-
-
-
-

@@ -58,7 +58,6 @@ void cadastrar_Show(){
             if(!parar)break;
             parar = ler_duracao(cabecalho);
             if(!parar)break;
-            
         }
         }while(parar && !(parar == 2));
     }
@@ -137,12 +136,15 @@ void excluir_Show(){
         return;
     }
     
+    
     while(controle ->valida && fread(cabecalho ->dados,sizeof(Dados_S),1,cabecalho ->arq_shows) == 1){
+    
         if(converte_numero(leitura_id) == cabecalho ->dados ->id && cabecalho ->dados ->status == True){
             cabecalho ->DHD = (char *) malloc(cabecalho ->dados ->tam_DHD);
             cabecalho ->persona = (char *) malloc(cabecalho ->dados ->tam_personagem);
             fread(cabecalho ->DHD,cabecalho ->dados ->tam_DHD,1,cabecalho ->arq_shows);
             fread(cabecalho ->persona,cabecalho ->dados ->tam_personagem,1,cabecalho ->arq_shows);
+
             if(escolha_cad_show(cabecalho)){ 
                 cabecalho ->dados ->status = 0;
                 apaga_cadeiras(converte_numero(leitura_id));
@@ -159,6 +161,7 @@ void excluir_Show(){
                 break;
             }
         }
+        else fseek(cabecalho ->arq_shows,cabecalho ->dados ->tam_DHD + cabecalho ->dados ->tam_personagem,SEEK_CUR);
     }
     
     fclose(cabecalho ->arq_shows);
@@ -256,5 +259,3 @@ void shows(){
         }
     } while (executar_S != 0);
 }
-
-

@@ -43,15 +43,15 @@ void menu_Tecnicos(){
 
 void exibir_tecnico(Tecnico* tec) {
     
-    printf("\n+---------------------------------------------------------------+\n");
-    printf("|                     DADOS DO TÉCNICO                          |\n");
-    printf("+---------------------------------------------------------------+\n");   
-    printf("| CPF      : %-50s |\n", tec->cpf);
-    printf("| Nome     : %-50s |\n", tec->nome);
-    printf("| Função   : %-50s |\n", tec->funcao);
-    printf("| E-mail   : %-50s |\n", tec->email);
-    printf("| Telefone : %-50s |\n", tec->telefone);
-    printf("+---------------------------------------------------------------+\n");
+    printf("\n╔═════════════════════════════════════════════════════════════╗\n");
+    printf("║                     DADOS DO TÉCNICO                          ║\n");
+    printf("╠═════════════════════════════════════════════════════════════╣\n");
+    printf("║ CPF      : %-50s ║\n", tec->cpf);
+    printf("║ Nome     : %-50s ║\n", tec->nome);
+    printf("║ Função   : %-50s ║\n", tec->funcao);
+    printf("║ E-mail   : %-50s ║\n", tec->email);
+    printf("║ Telefone : %-50s ║\n", tec->telefone);
+    printf("╚═════════════════════════════════════════════════════════════╝\n");
 
 }  
 
@@ -104,10 +104,10 @@ int cpf_existente_tec(char *cpf) {
 
     while (fread(tec, sizeof(Tecnico), 1, arq_tecnicos) == 1) {                 // Percorre todos os técnicos cadastrados
         if ((strcmp(tec->cpf, cpf) == 0) && (tec->status == true)) {            // Verifica se o CPF já existe
-            printf("======================================================\n");
-            printf("CPF já cadastrado. Por favor, insira um CPF diferente.\n");
-            printf("operação cancelada.\n");
-            printf("======================================================\n");
+            printf("╔════════════════════════════════════════════════════════════╗\n");
+            printf("║ CPF já cadastrado. Por favor, insira um CPF diferente.     ║\n");
+            printf("║ Operação cancelada.                                        ║\n");
+            printf("╚════════════════════════════════════════════════════════════╝\n");
             fclose(arq_tecnicos);
             free(tec);
             return false;
@@ -172,7 +172,7 @@ void atualizar_Tecnico() {
     func_Ani_Left(titulo);
     
     ler_cpf(cpf_lido);
-    printf("==================================\n");
+    printf("══════════════════════════════════\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "r+b");
     if (arq_tecnicos == NULL) {
@@ -185,8 +185,8 @@ void atualizar_Tecnico() {
         if ((strcmp(tec->cpf, cpf_lido) == 0) && (tec->status == true)) {
             
             encontrado = 1;
-            printf("Insira os novos dados do técnico:\n");
-            printf("=================================\n");
+            printf("║ Insira os novos dados do técnico:\n");
+            printf("══════════════════════════════════\n");
             ler_nome(tec->nome);
             ler_funcao(tec->funcao);
             ler_email(tec->email);
@@ -201,13 +201,13 @@ void atualizar_Tecnico() {
             }
             fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
             fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
-            printf("\nTécnico com CPF %s atualizado com sucesso.\n", cpf_lido);
+            printf("\nTécnico com CPF '%s' atualizado com sucesso.\n", cpf_lido);
         }
     }
     fclose(arq_tecnicos);
     free(tec);
     if (!encontrado) {
-        printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
+        printf("Técnico com CPF '%s' não encontrado.\n", cpf_lido);
         return;
     }
 }
@@ -230,7 +230,7 @@ void pesquisar_Tecnico(){
     printf("\n \n");
     
     ler_cpf(cpf_lido);
-    printf("-----------------------------------\n");
+    printf("═══════════════════════════════════\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "rb");
     if (arq_tecnicos == NULL) {
@@ -274,7 +274,7 @@ void excluir_Tecnico(){
 
     
     ler_cpf(cpf_lido);
-    printf("==================================\n");
+    printf("══════════════════════════════════\n");
 
     arq_tecnicos = fopen("tecnicos.dat", "r+b");
     if (arq_tecnicos == NULL) {
@@ -294,7 +294,7 @@ void excluir_Tecnico(){
                 tec->status = false;
                 fseek(arq_tecnicos, -sizeof(Tecnico), SEEK_CUR);
                 fwrite(tec, sizeof(Tecnico), 1, arq_tecnicos);
-                printf("Técnico com CPF %s encontrado e excluido.\n", cpf_lido);
+                printf("Técnico com CPF '%s' encontrado e excluido.\n", cpf_lido);
             } else {
                 printf("Operação de exclusão cancelada.\n");
                 fclose(arq_tecnicos);
@@ -310,7 +310,7 @@ void excluir_Tecnico(){
     
 
     if (!encontrado) {
-        printf("Técnico com CPF %s não encontrado.\n", cpf_lido);
+        printf("Técnico com CPF '%s' não encontrado.\n", cpf_lido);
         pausar();
         return;
     }
